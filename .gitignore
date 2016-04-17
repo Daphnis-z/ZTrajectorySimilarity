@@ -1,0 +1,9 @@
+#--R--
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+#--Java--
+*.log
+*.csv
