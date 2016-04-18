@@ -9,11 +9,20 @@ public class ReadData {
 		return files;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String path="./src/daphnis/dataHandle/trajWithoutTime";
 		String[] files=getFilenames(path);
-		for(String s:files)
-			System.out.println(s);
+		for(String fn:files){
+			fn=path+'/'+fn;
+			BufferedReader in=new BufferedReader(new FileReader(fn));
+			in.readLine();
+			String s;
+			while((s=in.readLine())!=null){
+				String[] jw=s.split(",");
+				System.out.println(Double.parseDouble(jw[0])+"\t"+Double.parseDouble(jw[1]));
+			}
+			in.close();
+		}
 	}
 
 }
