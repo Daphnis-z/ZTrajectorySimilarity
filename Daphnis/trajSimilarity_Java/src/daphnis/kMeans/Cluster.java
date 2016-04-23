@@ -49,13 +49,13 @@ public class Cluster {
 	}
 	
 	public void plotCluster() {
-//		System.out.println("[Cluster: " + id+"]");
-//		System.out.println("[Centroid: " + centroid + "]");
-//		System.out.println("[Points: \n");
-//		for(Point p : points) {
-//			System.out.println(p);
-//		}
-//		System.out.println("]");
+		System.out.println("[Cluster: " + id+"]");
+		System.out.println("[Centroid id: " + centroid.getId() + "]");
+		System.out.println("[Trajectories id: \n");
+		for(Trajectory traj : trajs) {
+			System.out.println(traj.getId());
+		}
+		System.out.println("]");
 	}
 
 }

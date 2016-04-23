@@ -17,6 +17,11 @@ public class KMeansDemo {
 		}
 		in.close();
 		System.out.println(traj);
+		
+//    	KMeans kmeans = new KMeans();
+//    	kmeans.init();
+//    	kmeans.calculate();
+
 	}
 
 }

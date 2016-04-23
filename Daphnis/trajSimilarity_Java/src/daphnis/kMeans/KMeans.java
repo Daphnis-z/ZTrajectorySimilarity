@@ -8,10 +8,9 @@ import java.util.*;
 
 public class KMeans {
     private int clusterCnt;//cluster count    
-    private int trajCnt;//trajectory count
-    
-    private Vector<Trajectory> trajs;
-    private Vector<Cluster> clusters;
+    private int trajCnt;//trajectory count   
+    private Vector<Trajectory> trajs;//all trajectories
+    private Vector<Cluster> clusters;//存放聚类结果
     
     public KMeans(Vector<Trajectory> trajs,int clusterCnt) {
     	this.trajs=trajs;
@@ -22,63 +21,58 @@ public class KMeans {
         
     //Initializes the process
     public void init() {    	
-    	//Create Clusters
-    	//Set Random Centroids
+    	//Create Clusters and set random standard trajectory
     	for (int i = 0; i<clusterCnt; i++) {
     		Cluster cluster = new Cluster(i);
     		Random rd=new Random();
-    		Trajectory centroid = trajs.get(rd.nextInt(trajCnt));
+    		int n=rd.nextInt(trajCnt);
+    		Trajectory centroid = trajs.get(n);
+    		centroid.setId(n);
     		cluster.setCentroid(centroid);
     		clusters.add(cluster);
     	}
-    	
-    	//Print Initial state
-    	plotClusters();
+    	   	
+    	plotClusters();//Print Initial state
     }
 
 	private void plotClusters() {
-//    	for (int i = 0; i &lt; NUM_CLUSTERS; i++) {
-//    		Cluster c = clusters.get(i);
-//    		c.plotCluster();
-//    	}
+    	for (int i = 0; i<clusterCnt; i++) {
+    		Cluster c = clusters.get(i);
+    		c.plotCluster();
+    	}
     }
     
 	//The process to calculate the K Means, with iterating method.
     public void calculate() {
-//        boolean finish = false;
-//        int iteration = 0;
-//        
-//        // Add in new data, one at a time, recalculating centroids with each new one. 
-//        while(!finish) {
-//        	//Clear cluster state
-//        	clearClusters();
-//        	
-//        	Vector<Trajectory> lastCentroids = getCentroids();
-//        	
-//        	//Assign points to the closer cluster
-//        	assignCluster();
-//            
-//            //Calculate new centroids.
-//        	calculateCentroids();
-//        	
-//        	iteration++;
-//        	
-//        	List currentCentroids = getCentroids();
-//        	
-//        	//Calculates total distance between new and old Centroids
-//        	double distance = 0;
-//        	for(int i = 0; i &lt; lastCentroids.size(); i++) {
-//        		distance += Point.distance(lastCentroids.get(i),currentCentroids.get(i));
-//        	}
-//        	System.out.println("#################");
-//        	System.out.println("Iteration: " + iteration);
-//        	System.out.println("Centroid distances: " + distance);
-//        	plotClusters();
-//        	        	
-//        	if(distance == 0) {
-//        		finish = true;
-//        	}
-//        }
+        boolean finish = false;
+        int iteration = 0;
+        
+        // Add in new data, one at a time, recalculating centroids with each new one. 
+        while(!finish) {       	
+        	clearClusters();//Clear cluster state
+        	
+        	Vector<Trajectory> lastCentroids = getCentroids();        	
+            assignCluster();//Assign trajectories to the closer cluster                       
+        	calculateCentroids();//Calculate new centroids 
+        	
+        	iteration++;       	
+        	Vector<Trajectory> currentCentroids = getCentroids();
+        	
+        	//Calculates total distance between new and old Centroids
+        	double simi = 0;//calculate similarity
+        	for(int i = 0; i<lastCentroids.size(); i++) {
+        		simi += Trajectory.calSimilarity(lastCentroids.get(i),currentCentroids.get(i));
+        	}
+        	System.out.println("#################");
+        	System.out.println("Iteration: " + iteration);
+        	System.out.println("Centroid similarity: " + simi);
+        	plotClusters();
+        	   
+        	//判断是否已收敛，若收敛则结束迭代
+        	if(Math.abs(simi-1.0)<0.0005) {
+        		finish = true;
+        	}
+        }
     }
     
     private void clearClusters() {

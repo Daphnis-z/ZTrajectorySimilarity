@@ -9,6 +9,7 @@ import java.util.*;
 public class Trajectory {
 	private Vector<Point> points;
     private int clusterNum = 0;
+    private int id=-1;//trajectory num
     public boolean hasTimestamp=false;
 
     public Trajectory(){
@@ -29,6 +30,13 @@ public class Trajectory {
         return this.clusterNum;
     }
         
+    public void setId(int id){
+    	this.id=id;
+    }
+    public int getId(){
+    	return this.id;
+    }
+    
     /**
      * add a point into this trajectory
      * @param point
@@ -64,14 +72,14 @@ public class Trajectory {
 //    }
     
     public String toString() {    	
-    	StringBuilder ts=new StringBuilder("");
+    	StringBuilder ts=new StringBuilder(String.format("id: %d\n\t", id));
     	for(Point pt:points){
     		if(hasTimestamp){
-    			ts.append(String.format("[%f,%f,%s]", pt.getLongitude(),pt.getLatitude(),
+    			ts.append(String.format("[%f,%f,%s]",pt.getLongitude(),pt.getLatitude(),
     					pt.getTimestamp()));
     		}
     		else{
-    			ts.append(String.format("[%f,%f]", pt.getLongitude(),pt.getLatitude()));
+    			ts.append(String.format("[%f,%f]",pt.getLongitude(),pt.getLatitude()));
     		}
     	}
     	return ts.toString();
