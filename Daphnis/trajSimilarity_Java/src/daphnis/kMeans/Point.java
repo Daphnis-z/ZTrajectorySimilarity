@@ -4,7 +4,7 @@
  */
 package daphnis.kMeans;
 
-public class Point {
+public class Point implements Cloneable{
 	private double longitude;
 	private double latitude;
 	private String timestamp;
@@ -40,5 +40,20 @@ public class Point {
 	public String getTimestamp(){
 		return this.timestamp;
 	}
+		
+//	/**
+//	 * clone a object
+//	 */
+//	@Override
+//	public Object clone(){
+//		Point pt=null;
+//		try{
+//			pt=(Point)super.clone();
+//		}catch(CloneNotSupportedException e){
+//			e.printStackTrace();
+//		}
+//		return pt;
+//	}
+	
 	
 }

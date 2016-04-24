@@ -17,8 +17,7 @@ public class ReadTaxiData {
 			Trajectory traj=new Trajectory();
 			traj.setId(id++);
 			for(int i=0;i<strs.length-1;i+=2){
-				Point pt=new Point(Double.parseDouble(strs[i]),
-						Double.parseDouble(strs[i+1]));
+				Point pt=new Point(Double.parseDouble(strs[i]),Double.parseDouble(strs[i+1]));
 				traj.addPoint(pt);
 			}
 			trajs.addElement(traj);

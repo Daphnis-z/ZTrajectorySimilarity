@@ -6,7 +6,7 @@ package daphnis.kMeans;
 
 import java.util.*;
 
-public class Trajectory {
+public class Trajectory implements Cloneable{
 	private Vector<Point> points;
     private int clusterNum = 0;
     private int id=-1;//trajectory num
@@ -54,23 +54,7 @@ public class Trajectory {
     public static double calSimilarity(Trajectory traj1,Trajectory traj2){
     	return -1;
     }
-    
-//    //Creates random point
-//    protected static Point createRandomPoint(int min, int max) {
-//    	Random r = new Random();
-//    	double x = min + (max - min) * r.nextDouble();
-//    	double y = min + (max - min) * r.nextDouble();
-//    	return new Point(x,y);
-//    }
-//    
-//    protected static List createRandomPoints(int min, int max, int number) {
-//    	List points = new ArrayList(number);
-//    	for(int i = 0; i &lt; number; i++) {
-//    		points.add(createRandomPoint(min,max));
-//    	}
-//    	return points;
-//    }
-    
+        
     public String toString() {    	
     	StringBuilder ts=new StringBuilder(String.format("id: %d\n\t", id));
     	for(Point pt:points){
@@ -85,4 +69,15 @@ public class Trajectory {
     	return ts.toString();
     }
 
+//    @Override
+//    public Object clone(){
+//    	Trajectory traj=null;
+//    	try{
+//    		traj=(Trajectory)super.clone();
+//    	}catch(CloneNotSupportedException e){
+//    		e.printStackTrace();
+//    	}
+//    	traj.points=(Vector<Point>)this.points.clone();
+//    	return traj;
+//    }
 }

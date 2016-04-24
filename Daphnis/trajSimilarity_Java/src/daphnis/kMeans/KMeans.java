@@ -18,10 +18,12 @@ public class KMeans {
     	this.clusters = new Vector<Cluster>();
     	this.trajCnt=trajs.size();
     }
-        
-    //Initializes the process
+    
+    /**
+     * initialize the process
+     * create clusters and set random standard trajectory
+     */
     public void init() {    	
-    	//Create Clusters and set random standard trajectory
     	for (int i = 0; i<clusterCnt; i++) {
     		Cluster cluster = new Cluster(i);
     		Random rd=new Random();
@@ -32,17 +34,22 @@ public class KMeans {
     		clusters.add(cluster);
     	}
     	   	
-    	plotClusters();//Print Initial state
+    	showClusters();//Print Initial state
     }
 
-	private void plotClusters() {
+    /**
+     * show clusters state
+     */
+	private void showClusters() {
     	for (int i = 0; i<clusterCnt; i++) {
     		Cluster c = clusters.get(i);
-    		c.plotCluster();
+    		c.showCluster();
     	}
     }
     
-	//The process to calculate the K Means, with iterating method.
+	/**
+	 * The process to calculate the K Means, with iterating method.
+	 */
     public void calculate() {
         boolean finish = false;
         int iteration = 0;
@@ -66,7 +73,7 @@ public class KMeans {
         	System.out.println("#################");
         	System.out.println("Iteration: " + iteration);
         	System.out.println("Centroid similarity: " + simi);
-        	plotClusters();
+        	showClusters();
         	   
         	//判断是否已收敛，若收敛则结束迭代
         	if(Math.abs(simi-1.0)<0.0005) {
@@ -83,54 +90,52 @@ public class KMeans {
     
     private Vector<Trajectory> getCentroids() {
     	Vector<Trajectory> centroids = new Vector<Trajectory>();
-//    	for(Cluster cluster : clusters) {
-//    		Point aux = cluster.getCentroid();
-//    		Point point = new Point(aux.getX(),aux.getY());
-//    		centroids.add(point);
-//    	}
+    	for(Cluster cluster : clusters) {
+    		centroids.add(cluster.getCentroid());
+    	}
     	return centroids;
-    }
+    }  
     
     private void assignCluster() {
-//        double max = Double.MAX_VALUE;
-//        double min = max; 
-//        int cluster = 0;                 
-//        double distance = 0.0; 
-//        
-//        for(Point point : points) {
-//        	min = max;
-//            for(int i = 0; i &lt; NUM_CLUSTERS; i++) {
-//            	Cluster c = clusters.get(i);
-//                distance = Point.distance(point, c.getCentroid());
-//                if(distance &lt; min){
-//                    min = distance;
-//                    cluster = i;
-//                }
-//            }
-//            point.setCluster(cluster);
-//            clusters.get(cluster).addPoint(point);
-//        }
+    	for(Trajectory traj:trajs){
+        	double simi=0.0,tmp=0.0;
+        	int cluster=0;
+        	for(int i=0;i<clusterCnt;++i){
+        		tmp=Trajectory.calSimilarity(traj, clusters.get(i).getCentroid());
+        		if(simi<tmp){
+        			simi=tmp;
+        			cluster=i;
+        		}
+        	}
+        	traj.setClusterNum(cluster);
+        	clusters.get(cluster).addTraj(traj);
+    	}
     }
     
     private void calculateCentroids() {
-//        for(Cluster cluster : clusters) {
-//            double sumX = 0;
-//            double sumY = 0;
-//            List list = cluster.getPoints();
-//            int n_points = list.size();
-//            
-//            for(Point point : list) {
-//            	sumX += point.getX();
-//                sumY += point.getY();
-//            }
-//            
-//            Point centroid = cluster.getCentroid();
-//            if(n_points &gt; 0) {
-//            	double newX = sumX / n_points;
-//            	double newY = sumY / n_points;
-//                centroid.setX(newX);
-//                centroid.setY(newY);
-//            }
-//        }
+    	for(Cluster clu:clusters){
+    		int cnt=clu.getTrajs().size();
+    		double[] simis=new double[cnt];
+    		for(int i=0;i<cnt-1;++i){
+    			for(int j=i+1;j<cnt;++j){
+    				double simi=Trajectory.calSimilarity(clu.getTrajs().get(i), clu.getTrajs().get(j));
+    				simis[i]+=simi;
+    				simis[j]+=simi;
+    			}
+    		}
+    		clu.setCentroid(clu.getTrajs().get(findMax(simis)));
+    	}
     }
+    private int findMax(double[] arr){
+    	int ix=0;
+    	double val=arr[0];
+    	for(int i=1;i<arr.length;++i){
+    		if(val<arr[i]){
+    			val=arr[i];
+    			ix=i;
+    		}
+    	}
+    	return ix;
+    }
+    
 }
