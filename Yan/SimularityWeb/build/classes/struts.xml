@@ -11,7 +11,9 @@
             <result>jsp/default.jsp</result>  
         </action> 
     	<action name="doubleTrajCul" class="com.adx.action.DoubleTrajAction">
-    		<result>jsp/doubleTrajResult.jsp</result>
+    		<result name="success">jsp/doubleTrajResult.jsp</result>
+    	 	<result name="error">jsp/inputError.jsp</result> 
+    		
     	</action>
     </package>
 </struts>

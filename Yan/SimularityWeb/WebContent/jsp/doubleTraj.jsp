@@ -19,6 +19,8 @@
 	tSum最坏值：<input type="text" name="tsum_B" value=10 size=10/>
 	shapeSum最坏值：<input type="text" name="shapeSum_B" value=10 size=10/></p>
 	
+	<br/><b>请选择轨迹文件类型：</b>
+	<input type="checkbox" name="timeStamp" value="1" size="10"/>带时间戳<br/>
 	<br/><b>请提交目标轨迹文件</b><br/>
 	<input type="file" name="objectfile" size="30"/><br/>
 	<br/><b>请提交测试轨迹文件</b><br/>

@@ -15,7 +15,14 @@ public class SimularDef {
 	private double editDis_W;	//编辑距离度量权重
 	private double tsum_W;	//时间戳度量权重
 	private double shapeSum_W;	//形状度量权重
+	private int timeStamp;	//是否带时间戳，1为带，0为不带
 	
+	public int getTimeStamp() {
+		return timeStamp;
+	}
+	public void setTimeStamp(int timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 	public double getDtwDis_B() {
 		return dtwDis_B;
 	}

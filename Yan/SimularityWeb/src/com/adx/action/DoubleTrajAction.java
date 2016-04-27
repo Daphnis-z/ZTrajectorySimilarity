@@ -1,13 +1,9 @@
 package com.adx.action;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.StringTokenizer;
-
+import com.adx.datahandler.CSVReader;
 import com.adx.entity.SimularDef;
+import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -41,30 +37,15 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
 		setSimularDef();
-		System.out.println(simularDef.getDtwDis_B());
-		System.out.println(simularDef.getEditDis_B());
-		System.out.println(simularDef.getShapeSum_B());
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(objectfile));
-			// 读取直到最后一行
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				// 把一行数据分割成多个字段
-				StringTokenizer st = new StringTokenizer(line, ",");
-				while (st.hasMoreTokens()) {
-					// 每一行的多个字段用TAB隔开表示
-					System.out.print(st.nextToken() + "\t");
-				}
-				System.out.println();
-			}
-				br.close();
-		} catch (FileNotFoundException e) {
-			// 捕获File对象生成时的异常
-			e.printStackTrace();
-		} catch (IOException e) {
-			// 捕获BufferedReader对象关闭时的异常
-			e.printStackTrace();
-		} 
+		if(objectfile==null||testfile==null){
+			return ERROR;
+		}
+		CSVReader objReader=new CSVReader(objectfile, simularDef.getTimeStamp());
+		objReader.readFile();
+		Trajectory objTraj=objReader.getTraj();
+		CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
+		testReader.readFile();
+		Trajectory testTraj=testReader.getTraj();
 		return SUCCESS;
 	}
 
