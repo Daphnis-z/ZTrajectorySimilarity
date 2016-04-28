@@ -46,7 +46,6 @@ public class CSVReader {
 					}
 				}
 				traj.addPoint(point);
-				System.out.println(point.getLatitude()+":"+point.getLongitude()+":"+point.getTimestamp());
 				}
 			br.close();
 		}catch(FileNotFoundException e){

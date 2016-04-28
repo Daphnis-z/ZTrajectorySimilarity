@@ -8,12 +8,18 @@ import java.util.*;
 public class Trajectory implements Cloneable{
 	private Vector<Point> points;
     public int timeStamp;
+    public int size;
 
-    public Trajectory(int timeStamp){
+	
+	public Trajectory(int timeStamp){
     	this.points=new Vector<Point>();
     	this.timeStamp=timeStamp;
     	
     }
+	
+	public int getSize() {
+		return points.size();
+	}
     public Trajectory(Vector<Point> points,int timeStamp){
     	this.points=points;
     	this.timeStamp=timeStamp;

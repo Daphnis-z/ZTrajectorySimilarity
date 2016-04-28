@@ -2,6 +2,7 @@ package com.adx.action;
 
 import java.io.File;
 import com.adx.datahandler.CSVReader;
+import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
@@ -46,6 +47,12 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
 		testReader.readFile();
 		Trajectory testTraj=testReader.getTraj();
+		System.out.println(objTraj.getSize());
+		Point point=objTraj.getPoints().get(1);
+		System.out.println(point.getLatitude());
+		
+		System.out.println(testTraj.getPoints());
+		System.out.println(testTraj.getSize());
 		return SUCCESS;
 	}
 
