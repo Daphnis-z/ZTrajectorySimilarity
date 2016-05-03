@@ -1,11 +1,14 @@
 package com.adx.action;
 
 import java.io.File;
+import java.util.Vector;
+
 import com.adx.datahandler.CSVReader;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
+import com.adx.similaralg.DTWSimilarity;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -14,6 +17,7 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	private SimularDef simularDef=new SimularDef();
 	private File objectfile;
 	private File testfile;
+	
 	public File getObjectfile() {
 		return objectfile;
 	}
@@ -47,12 +51,13 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
 		testReader.readFile();
 		Trajectory testTraj=testReader.getTraj();
-		System.out.println(objTraj.getSize());
-		Point point=objTraj.getPoints().get(1);
-		System.out.println(point.getLatitude());
-		
-		System.out.println(testTraj.getPoints());
-		System.out.println(testTraj.getSize());
+		Vector<Point> points=testTraj.getPoints();
+		for(int i=0;i<points.size();i++){
+			Point point=points.get(i);
+		}
+		DTWSimilarity dtw=new DTWSimilarity(simularDef);
+		double simularity=dtw.getSimilarity(objTraj, testTraj, simularDef.getTimeStamp());
+		System.out.println(simularity);
 		return SUCCESS;
 	}
 

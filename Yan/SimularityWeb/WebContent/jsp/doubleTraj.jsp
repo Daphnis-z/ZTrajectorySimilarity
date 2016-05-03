@@ -9,15 +9,15 @@
 <body>
 	<form action="doubleTrajCul.action" method="post" enctype="multipart/form-data">
 	<p><b>请设置轨迹相似度各因素所占权重（值在0-0.5之间）</b><br/>
-	dtw权重：<input type="text" name="dtwDis_W" value=0.4 size=10/>
-	edit权重：<input type="text" name="editDis_W" value=0.3 size=10/>
-	tSum权重：<input type="text" name="tsum_W" value=0.1 size=10/>
-	shapeSum权重：<input type="text" name="shapeSum_W" value=0.2 size=10/>
+	dtw权重：<input type="text" name="dtwDis_W" value=0.55 size=10/>
+	edit权重：<input type="text" name="editDis_W" value=0.15 size=10/>
+	tSum权重：<input type="text" name="tsum_W" value=0.15 size=10/>
+	shapeSum权重：<input type="text" name="shapeSum_W" value=0.15 size=10/>
 	<br/><b>请设置轨迹相似度各因素最坏值</b><br/>
-	dtw最坏值：<input type="text" name="dtwDis_B" value=10 size=10/>
-	edit最坏值：<input type="text" name="editDis_B" value=10 size=10/>
-	tSum最坏值：<input type="text" name="tsum_B" value=10 size=10/>
-	shapeSum最坏值：<input type="text" name="shapeSum_B" value=10 size=10/></p>
+	dtw最坏值：<input type="text" name="dtwDis_B" value=100 size=10/>
+	edit最坏值：<input type="text" name="editDis_B" value=5000 size=10/>
+	tSum最坏值：<input type="text" name="tsum_B" value=100000000 size=10/>
+	shapeSum最坏值：<input type="text" name="shapeSum_B" value=100 size=10/></p>
 	
 	<br/><b>请选择轨迹文件类型：</b>
 	<input type="checkbox" name="timeStamp" value="1" size="10"/>带时间戳<br/>
