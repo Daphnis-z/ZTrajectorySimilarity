@@ -14,8 +14,10 @@
     		<result name="success">jsp/doubleTrajResult.jsp</result>
     	 	<result name="error">jsp/inputError.jsp</result>  		
     	</action>
-    	<action name="showPolyline" class="com.daphnis.gis.PolylineDemo">
-    		<result>jsp/gis/polyDemo.jsp</result>
+    	
+    	<!-- 在GIS系统中显示轨迹 -->
+    	<action name="showPolyline" class="com.daphnis.gis.TrajPolyline">
+    		<result>jsp/gis/showPolylineTraj.jsp</result>
     	</action>   
  </package>
 </struts>
