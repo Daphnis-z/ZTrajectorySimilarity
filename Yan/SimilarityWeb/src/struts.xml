@@ -10,10 +10,28 @@
         <action name="index">  
             <result>jsp/default.jsp</result>  
         </action> 
+        <action name="doublePattern">  
+            <result>jsp/doubleTraj.jsp</result>  
+        </action> 
+        <action name="morePattern">  
+            <result>jsp/moreTraj.jsp</result>  
+        </action> 
     	<action name="doubleTrajCul" class="com.adx.action.DoubleTrajAction">
     		<result name="success">jsp/doubleTrajResult.jsp</result>
-    	 	<result name="error">jsp/inputError.jsp</result> 
-    		
+    		<result name="input">jsp/doubleTrajResult.jsp</result>
+    		<result name="error">jsp/doubleTrajResult.jsp</result>
+    		<result name="none">jsp/doubleTrajResult.jsp</result>
     	</action>
+    	<action name="moreTrajCul" class="com.adx.action.MoreTrajAction">
+    		<result name="success">jsp/moreTrajResult.jsp</result>
+    		<result name="input">jsp/moreTrajResult.jsp</result>
+    		<result name="error">jsp/moreTrajResult.jsp</result>
+    		<result name="none">jsp/moreTrajResult.jsp</result>
+    	</action>
+    	
+    	<!-- 在GIS系统中显示轨迹 -->
+    	<action name="showPolyline" class="com.adx.action.TrajPolyline">
+    		<result>jsp/showPolylineTraj.jsp</result>
+    	</action>   
     </package>
 </struts>
