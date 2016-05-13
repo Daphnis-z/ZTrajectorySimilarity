@@ -17,6 +17,7 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	private SimularDef simularDef=new SimularDef();
 	private File objectfile;
 	private File testfile;
+	private double similarity;
 	
 	public File getObjectfile() {
 		return objectfile;
@@ -38,6 +39,10 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		Constant.simularDef=simularDef;
 	}
 	
+	public double getSimilarity() {
+		return similarity;
+	}
+
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
@@ -51,13 +56,17 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
 		testReader.readFile();
 		Trajectory testTraj=testReader.getTraj();
+		
 		Vector<Point> points=testTraj.getPoints();
+		System.out.println(points.size());
 		for(int i=0;i<points.size();i++){
 			Point point=points.get(i);
-		}
+			System.out.println(point.getLatitude()+"::"+point.getLongitude());
+			}
+		
 		DTWSimilarity dtw=new DTWSimilarity(simularDef);
-		double simularity=dtw.getSimilarity(objTraj, testTraj, simularDef.getTimeStamp());
-		System.out.println(simularity);
+		similarity=dtw.getSimilarity(objTraj, testTraj, simularDef.getTimeStamp());
+		System.out.println(similarity);
 		return SUCCESS;
 	}
 

@@ -14,6 +14,7 @@ public class ReadData {
 	
 	/**
 	 * 从一个文件里读取一条轨迹数据
+	 * 忽略时间戳
 	 * @param fileName
 	 * @return Trajectory
 	 * @throws IOException

@@ -6,7 +6,6 @@
 package com.daphnis.gis;
 
 import com.opensymphony.xwork2.Action;
-import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -56,18 +55,13 @@ public class TrajPolyline {
 	 * 显示轨迹演示
 	 * @throws IOException
 	 */
-	private void showTrajDemo() throws IOException{
-//		File dir=new File("");
-//		System.out.println(dir.getCanonicalPath());
-//		System.out.println(dir.getAbsolutePath());
-		
+	private void showTrajDemo() throws IOException{		
 //		String rootPath="Y:/PROGRAMMING/others/ZTrajectorySimilarity/Daphnis/SimularityWeb";
 //		Trajectory traj=ReadData.readATraj(rootPath+"/src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
 //		showATraj(traj);
 		
-		String rootPath="Y:/PROGRAMMING/others/ZTrajectorySimilarity/Daphnis/SimularityWeb/src/com/daphnis/dataHandle/trajWithoutTime";
-		Trajectory traj1=ReadData.readATraj(rootPath+"/坐标点信息2(不含时间).csv"),
-				traj2=ReadData.readATraj(rootPath+"/坐标点信息3(不含时间).csv");
+		Trajectory traj1=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithTime/坐标点信息2(含时间).csv"),
+				traj2=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
 		Vector<Trajectory> vt=new Vector<Trajectory>();
 		vt.addElement(traj1);
 		vt.addElement(traj2);

@@ -11,6 +11,11 @@ import java.util.StringTokenizer;
 import com.adx.entity.Point;
 import com.adx.entity.Trajectory;
 
+/**
+ * CSVReader
+ * @author Agnes
+ *用于读取轨迹csv文件的点的数据
+ */
 public class CSVReader {
 	private File file;
 	private Trajectory traj;
