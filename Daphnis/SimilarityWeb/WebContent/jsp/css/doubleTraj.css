@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+#topHead{
+	margin: -7px -7px 11px -7px;
+	padding: 20px;
+	text-align:center;
+	background:green;
+	color:white;
+}
+
+td,th{
+	border:1px solid #98bf21;
+}
+
+#sth{
+	background: #EAF2D3;
+}
+
+table{
+	margin:auto;
+	border-collapse: collapse;
+	border:2px solid #98bf21;
+}
+
+input[type="text"]{
+	border:0;
+}
+
+input[type="submit"]{
+	padding: 5px 40px;
+	background:#EAF2D3;
+}

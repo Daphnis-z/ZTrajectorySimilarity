@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>i'm agnes<h1/>
+	<b>两条轨迹的相似度为：${similarity}</b>
 </body>
 </html>
