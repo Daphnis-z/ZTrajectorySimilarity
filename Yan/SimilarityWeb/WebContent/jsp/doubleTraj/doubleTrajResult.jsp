@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>相似度计算结果</title>
+<link rel="stylesheet" href="./jsp/css/common.css">
+<link rel="stylesheet" href="./jsp/css/doubleTrajResult.css">
 </head>
 <body>
 	<%! String result=""; %>
@@ -17,16 +19,22 @@
 	}else if(tem.equals("error")){
 		result="输入文件名找不到，文件传输有误";
 	}else{
-		result="未输入文件";
+		result="未输入文件！！";
 	}
 	%>
-	<h1><%= result%></h1>
-	<br/>
-	<form action="showPolyline.action" method="post" enctype="multipart/form-data">
-	<b>是否轨迹可视化？</b>
-	<input type="submit" value="确定"/>
-	</form>
-	
-	
+	<h1 id="sysHeader">轨迹相似度计算系统</h1>
+	<table border="1">
+		<tr>
+			<td colspan="2"><%= result%></td>
+		</tr>
+		<tr>
+			<th>是否轨迹可视化？</th>
+			<td>
+				<form action="showPolyline.action" method="post" enctype="multipart/form-data">
+				<input type="submit" value="确定"/>
+				</form>
+			</td>
+		</tr>
+	</table>		
 </body>
 </html>

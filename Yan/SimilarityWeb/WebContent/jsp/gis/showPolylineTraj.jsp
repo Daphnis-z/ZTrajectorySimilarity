@@ -8,11 +8,13 @@
 	<title>Trajectory（折线）</title>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
 	<style type="text/css">
-		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
-		#allmap {height:100%; width: 90%;}
+		body, html{width: 100%;height: 100%;margin:0;}
+		#allmap {height:100%;width: 100%;}
 	</style>
+	<link rel="stylesheet" href="./jsp/css/common.css">	
 </head>
 <body>
+	<h1 id="sysHeader">轨迹相似度计算系统</h1>
 	<div id="allmap"></div>
 </body>
 </html>
@@ -36,7 +38,7 @@
 		
 	// 百度地图API功能
 	var map = new BMap.Map("allmap");
-	map.centerAndZoom(new BMap.Point(center[0], center[1]), 12);
+	map.centerAndZoom(new BMap.Point(center[0], center[1]), 11);
 	map.enableScrollWheelZoom();
 
 	//绘制折线轨迹

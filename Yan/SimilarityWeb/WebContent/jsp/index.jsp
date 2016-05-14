@@ -5,15 +5,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Similarity</title>
+<link rel="stylesheet" href="./jsp/css/common.css">
+<link rel="stylesheet" href="./jsp/css/start.css">
 </head>
 <body>
-	<h1 align="center">Welcome to Similarity</h1>
-	<b>请选择不同的轨迹相似度计算模式：</b><br/>
-	<form action="doublePattern.action" method="post" enctype="multipart/form-data">
-	<input type="submit" value="双轨迹计算模式"/>
-	</form><br/>
-	<form action="morePattern.action" method="post" enctype="multipart/form-data">
-	<input type="submit" value="多轨迹计算模式"/>
-	</form><br/>
+	<h1 id="sysHeader">轨迹相似度计算系统</h1>
+	<table border="1">
+		<tr>
+			<th colspan="2" id="sth"><h2>请选择不同的轨迹相似度计算模式</h2></th>
+		</tr>
+		<tr>
+			<td>
+				<form action="doublePattern.action" method="post" enctype="multipart/form-data">
+					<input type="submit" value="双轨迹计算模式"/>
+				</form>
+			</td>
+			<td>
+				<form action="morePattern.action" method="post" enctype="multipart/form-data">
+				<input type="submit" value="多轨迹计算模式"/>
+				</form>
+			</td>
+		</tr>
+	</table>
+
 </body>
 </html>
