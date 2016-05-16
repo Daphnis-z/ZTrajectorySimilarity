@@ -8,7 +8,7 @@ import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
-import com.adx.similaralg.DTWSimilarity;
+import com.adx.similarity.DTWSimilarity;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 

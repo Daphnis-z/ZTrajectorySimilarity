@@ -1,4 +1,4 @@
-package com.adx.similaralg;
+package com.adx.similarity;
 
 import java.util.Vector;
 

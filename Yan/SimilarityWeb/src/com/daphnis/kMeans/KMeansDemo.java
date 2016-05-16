@@ -5,7 +5,7 @@ import java.util.*;
 
 import com.adx.entity.*;
 import com.daphnis.dataHandle.*;
-import com.adx.similaralg.*;
+import com.adx.similarity.*;
 
 public class KMeansDemo {
 	

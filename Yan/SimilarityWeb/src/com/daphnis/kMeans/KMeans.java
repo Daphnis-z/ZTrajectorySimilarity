@@ -7,7 +7,7 @@ package com.daphnis.kMeans;
 
 import java.util.*;
 import com.adx.entity.*;
-import com.adx.similaralg.*;
+import com.adx.similarity.*;
 
 public class KMeans {
     private int clusterCnt;//cluster count    
@@ -112,7 +112,13 @@ public class KMeans {
         			cluster=i;
         		}
         	}
-        	traj.setClusterNum(cluster);
+  
+        	
+        	//
+//        	改到这里..
+//        	traj.setClusterNum(cluster);
+        	
+        	
         	clusters.get(cluster).addTraj(traj);
     	}
     }
