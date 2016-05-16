@@ -2,10 +2,6 @@ package com.daphnis.kMeans;
 
 import java.io.*;
 import java.util.*;
-<<<<<<< HEAD
-=======
-import com.daphnis.dataHandle.*;
->>>>>>> e87b7cd21c62a7903181b95cd0e31d4922349090
 
 import com.adx.entity.*;
 import com.daphnis.dataHandle.*;

@@ -101,9 +101,6 @@ public class DTWSimilarity implements SimilarityReactor{
 		similarity=sDef.getDtwDis_W()*(sDef.getDtwDis_B()-avr_dtw_dis)/sDef.getDtwDis_B()+
 				sDef.getEditDis_W()*(sDef.getEditDis_B()-edit_dis)/sDef.getEditDis_B()+
 				sDef.getShapeSum_W()*(sDef.getShapeSum_B()-dtw_s)/sDef.getShapeSum_B();
-		if(similarity<0){
-			similarity=0;
-		}
 	}
 	//带时间戳的轨迹计算
 	private void DTWWithTime(Trajectory objTraj,Trajectory testTraj) {
@@ -113,7 +110,7 @@ public class DTWSimilarity implements SimilarityReactor{
 		int edit_dis=0;//编辑距离
 		long t_average=0;//平均时间差
 		double avr_dtw_dis,dtw_s;//平均dtw距离，dtw匹配距离方差
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		
 		raw_dis=SimilarityUtility.traj_distance(objTraj, testTraj);
 		
