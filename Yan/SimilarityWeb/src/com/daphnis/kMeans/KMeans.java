@@ -1,10 +1,13 @@
 /**
  * modified KMeans
- * author: Daphnis
+ * @author Daphnis
+ * 20150515
  */
-package daphnis.kMeans;
+package com.daphnis.kMeans;
 
 import java.util.*;
+import com.adx.entity.*;
+import com.adx.similaralg.*;
 
 public class KMeans {
     private int clusterCnt;//cluster count    
@@ -48,7 +51,7 @@ public class KMeans {
     }
     
 	/**
-	 * The process to calculate the K Means, with iterating method.
+	 * The process to calculate the KMeans with iterating method.
 	 */
     public void calculate() {
         boolean finish = false;
@@ -56,8 +59,7 @@ public class KMeans {
         
         // Add in new data, one at a time, recalculating centroids with each new one. 
         while(!finish) {       	
-        	clearClusters();//Clear cluster state
-        	
+        	clearClusters();//Clear cluster state       	
         	Vector<Trajectory> lastCentroids = getCentroids();        	
             assignCluster();//Assign trajectories to the closer cluster                       
         	calculateCentroids();//Calculate new centroids 
@@ -68,7 +70,7 @@ public class KMeans {
         	//Calculates total distance between new and old Centroids
         	double simi = 0;//calculate similarity
         	for(int i = 0; i<lastCentroids.size(); i++) {
-        		simi += Trajectory.calSimilarity(lastCentroids.get(i),currentCentroids.get(i));
+        		simi += SimpleDTW.DTW(lastCentroids.get(i),currentCentroids.get(i));
         	}
         	System.out.println("#################");
         	System.out.println("Iteration: " + iteration);
@@ -82,6 +84,9 @@ public class KMeans {
         }
     }
     
+    /**
+     * clear clusters
+     */
     private void clearClusters() {
     	for(Cluster cluster : clusters) {
     		cluster.clear();
@@ -101,7 +106,7 @@ public class KMeans {
         	double simi=0.0,tmp=0.0;
         	int cluster=0;
         	for(int i=0;i<clusterCnt;++i){
-        		tmp=Trajectory.calSimilarity(traj, clusters.get(i).getCentroid());
+        		tmp=SimpleDTW.DTW(traj, clusters.get(i).getCentroid());
         		if(simi<tmp){
         			simi=tmp;
         			cluster=i;
@@ -112,13 +117,16 @@ public class KMeans {
     	}
     }
     
+    /**
+     * ¼ÆËã±ê×¼¹ì¼£
+     */
     private void calculateCentroids() {
     	for(Cluster clu:clusters){
     		int cnt=clu.getTrajs().size();
     		double[] simis=new double[cnt];
     		for(int i=0;i<cnt-1;++i){
     			for(int j=i+1;j<cnt;++j){
-    				double simi=Trajectory.calSimilarity(clu.getTrajs().get(i), clu.getTrajs().get(j));
+    				double simi=SimpleDTW.DTW(clu.getTrajs().get(i), clu.getTrajs().get(j));
     				simis[i]+=simi;
     				simis[j]+=simi;
     			}
@@ -139,3 +147,5 @@ public class KMeans {
     }
     
 }
+
+

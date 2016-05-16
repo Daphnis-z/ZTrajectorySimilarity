@@ -1,13 +1,14 @@
 /**
  * point of trajectory
- * author: Daphnis
+ * @author Daphnis
+ * 20160515
  */
 package com.adx.entity;
 
 public class Point {
-	private double longitude;
-	private double latitude;
-	private String timestamp;
+	private double longitude;//经度
+	private double latitude;//纬度
+	private String timestamp;//时间戳
 	
 	/**
 	 * point without timestamp
@@ -34,7 +35,6 @@ public class Point {
 	public double getLongitude() {
 		return longitude;
 	}
-
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
@@ -42,7 +42,6 @@ public class Point {
 	public double getLatitude() {
 		return latitude;
 	}
-
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
@@ -50,10 +49,9 @@ public class Point {
 	public String getTimestamp() {
 		return timestamp;
 	}
-
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
-
 	
 }
+

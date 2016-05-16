@@ -33,5 +33,11 @@
     	<action name="showPolyline" class="com.adx.action.TrajPolyline">
     		<result>jsp/gis/showPolylineTraj.jsp</result>
     	</action>   
+    	
+    	<!-- 调试KMeans用 -->
+    	<action name="km" class="com.daphnis.kMeans.KMeansDemo">
+    		<result>jsp/index.jsp</result>
+    	</action>
     </package>
 </struts>
+
