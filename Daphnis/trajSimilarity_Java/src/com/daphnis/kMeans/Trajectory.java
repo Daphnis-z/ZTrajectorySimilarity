@@ -2,7 +2,7 @@
  * trajectory
  * author: Daphnis
  */
-package com.daphnis.kMeans;
+package daphnis.kMeans;
 
 import java.util.*;
 
@@ -18,7 +18,11 @@ public class Trajectory implements Cloneable{
     public Trajectory(Vector<Point> points){
     	this.points=points;
     }
-                
+        
+    public Vector<Point> getPoints(){
+    	return this.points;
+    }
+        
     public void setClusterNum(int n) {
         this.clusterNum = n;
     }  
@@ -31,10 +35,6 @@ public class Trajectory implements Cloneable{
     }
     public int getId(){
     	return this.id;
-    }
-    
-    public Vector<Point> getPoints(){
-    	return this.points;
     }
     
     /**

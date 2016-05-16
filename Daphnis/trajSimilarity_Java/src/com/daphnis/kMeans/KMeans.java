@@ -2,7 +2,7 @@
  * modified KMeans
  * author: Daphnis
  */
-package com.daphnis.kMeans;
+package daphnis.kMeans;
 
 import java.util.*;
 
