@@ -2,7 +2,7 @@
  * trajectory
  * author: Daphnis
  */
-package daphnis.kMeans;
+package com.daphnis.kMeans;
 
 import java.util.*;
 

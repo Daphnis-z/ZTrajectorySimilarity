@@ -2,7 +2,7 @@
  * point of trajectory
  * author: Daphnis
  */
-package daphnis.kMeans;
+package com.daphnis.kMeans;
 
 public class Point implements Cloneable{
 	private double longitude;

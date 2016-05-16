@@ -1,8 +1,8 @@
-package daphnis.dataHandle;
+package com.daphnis.dataHandle;
 
 import java.io.*;
 import java.util.Vector;
-import daphnis.kMeans.*;
+import com.daphnis.kMeans.*;
 
 public class ReadTaxiData {
 

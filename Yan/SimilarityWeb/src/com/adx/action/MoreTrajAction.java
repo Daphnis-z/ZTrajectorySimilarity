@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
+import com.adx.datahandler.FileDerecterReader;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
@@ -16,7 +17,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public class MoreTrajAction extends ActionSupport implements ModelDriven<SimularDef>{
 	private SimularDef simularDef=new SimularDef();
 	private File objectfile;
-	private File[] testfile;
+	private String testfilePath;
 	private double[] similarity;
 	private String actionResult;
 	private int fileLength;
@@ -25,6 +26,10 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		return fileLength;
 	}
 
+	public void setTestfilePath(String testfilePath) {
+		this.testfilePath = testfilePath;
+	}
+	
 	public String getActionResult() {
 		return actionResult;
 	}
@@ -35,14 +40,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 
 	public void setObjectfile(File objectfile) {
 		this.objectfile = objectfile;
-	}
-
-	public File[] getTestfile() {
-		return testfile;
-	}
-
-	public void setTestfile(File[] testfile) {
-		this.testfile = testfile;
 	}
 
 	private void setSimularDef(){
@@ -58,11 +55,8 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		// TODO Auto-generated method stub
 		setSimularDef();
 		Constant.pattern=1;
-		fileLength=testfile.length;
-		Trajectory[] testTraj=new Trajectory[fileLength];
-		int[] status_test=new int[fileLength];
-		similarity=new double[fileLength];
-		if(objectfile==null||testfile==null){
+		
+		if(objectfile==null||testfilePath.equals("")){
 			actionResult=NONE;
 			return actionResult;//未输入文件
 		}
@@ -70,41 +64,29 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		int status_obj=objReader.readFile();
 		Trajectory objTraj=objReader.getTraj();
 		Constant.objTraj=objTraj;
-		for (int i=0;i<fileLength;i++){
-			CSVReader testReader=new CSVReader(testfile[i], simularDef.getTimeStamp());
-			status_test[i]=testReader.readFile();
-			testTraj[i]=testReader.getTraj();
-		}
 		
-		if(status_obj==0||checkStatus(status_test,0)){
+		FileDerecterReader testFileReader=new FileDerecterReader(testfilePath,simularDef.getTimeStamp());
+		int status_test=testFileReader.readAllFile();
+		Trajectory[] testGroup=testFileReader.getTrajGroup();
+		
+		if(status_obj==0||status_test==0){
 			actionResult=ERROR;
 			return actionResult;//输入文件名找不到，文件传输有误
 		}
-		if(status_obj==-1||checkStatus(status_test,-1)){
+		if(status_obj==-1||status_test==-1){
 			actionResult=INPUT;
 			return actionResult;//所计算轨迹文件类型与输入文件不匹配
 		}
-		Constant.testTraj_more=testTraj;
+		fileLength=testGroup.length;
+		similarity=new double[fileLength];
 		DTWSimilarity dtw=new DTWSimilarity(simularDef);
-		for (int i=0;i<testfile.length;i++){
-			similarity[i]=dtw.getSimilarity(objTraj, testTraj[i], simularDef.getTimeStamp());
-			System.out.println(similarity[i]);
+		for (int i=0;i<fileLength;i++){
+			similarity[i]=dtw.getSimilarity(objTraj, testGroup[i], simularDef.getTimeStamp());
 		}
 		actionResult=SUCCESS;
 		return actionResult;
 	}
 	
-	public boolean checkStatus(int[] status,int flag){
-		int i=0;
-		while(status[i]==flag){
-			System.out.println("status:"+i+status[i]);
-			i++;
-		}
-		if(i!=status.length-1){
-			return false;
-		}
-		return true;
-	}
 	//模型驱动实现请求数据的封装
 	@Override
 	public SimularDef getModel() {

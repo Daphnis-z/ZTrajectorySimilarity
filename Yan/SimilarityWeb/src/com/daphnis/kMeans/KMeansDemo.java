@@ -1,8 +1,8 @@
-package daphnis.kMeans;
+package com.daphnis.kMeans;
 
 import java.io.*;
 import java.util.*;
-import daphnis.dataHandle.*;
+import com.daphnis.dataHandle.*;
 
 public class KMeansDemo {
 

@@ -49,6 +49,11 @@
 	<form action="doubleTrajCul.action" method="post" enctype="multipart/form-data">
 		<table border="5">
 			<tr>
+				<th colspan="2" align="right">请选择轨迹文件类型：</th>
+				<td colspan="6"><input type="checkbox" id="timeStampId" name="timeStamp" value="1" size="10" 
+				onchange="changeSimilarValue()"/>带时间戳</td>
+			</tr>
+			<tr>
 				<td id="sth" colspan="8" align="center"><h4>设置轨迹相似度各因素所占权重（值在0-0.5之间）和最坏值</h4></td>
 			</tr>
 			<tr>
@@ -64,21 +69,17 @@
 				<th>权重</th><th>最坏值</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="dtwDis_W" value=0.55 size=10 /></td>
-				<td><input type="text" name="dtwDis_B" value=100 size=10 /></td>
-				<td><input type="text" name="editDis_W" value=0.15 size=10 /></td>
-				<td><input type="text" name="editDis_B" value=5000 size=10 /></td>
-				<td><input type="text" name="tsum_W" value=0.15 size=10 /></td>
-				<td><input type="text" name="tsum_B" value=100000000 size=10 /></td>
-				<td><input type="text" name="shapeSum_W" value=0.15 size=10 /></td>
-				<td><input type="text" name="shapeSum_B" value=100 size=10 /></td>
+				<td><input type="text" name="dtwDis_W" id="dtwDis_W_Id" value=<%= dtwDis_W %> size=10 /></td>
+				<td><input type="text" name="dtwDis_B" id="dtwDis_B_Id" value=<%= dtwDis_B %> size=10 /></td>
+				<td><input type="text" name="editDis_W" id="editDis_W_Id" value=<%= editDis_W %> size=10 /></td>
+				<td><input type="text" name="editDis_B" id="editDis_B_Id" value=<%= editDis_B %> size=10 /></td>
+				<td><input type="text" name="tsum_W" id="tsum_W_Id" value=<%= tsum_W %> size=10 /></td>
+				<td><input type="text" name="tsum_B" id="tsum_B_Id" value=<%= tsum_B %> size=10 /></td>
+				<td><input type="text" name="shapeSum_W" id="shapeSum_W_Id" value=<%= shapeSum_W %> size=10 /></td>
+				<td><input type="text" name="shapeSum_B" id="shapeSum_B_Id" value=<%= shapeSum_B %> size=10 /></td>
 			</tr>
 			<tr>
 				<td id="sth" colspan="8" align="center"><h4>其他</h4></td>
-			</tr>
-			<tr>
-				<th colspan="2" align="right">请选择轨迹文件类型：</th>
-				<td colspan="6"><input type="checkbox" name="timeStamp" value="1" size="10" />带时间戳</td>
 			</tr>
 			<tr>
 				<th colspan="2" align="right">提交目标轨迹文件：</th>

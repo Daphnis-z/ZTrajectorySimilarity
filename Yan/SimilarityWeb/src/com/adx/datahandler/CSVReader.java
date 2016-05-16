@@ -81,7 +81,7 @@ public class CSVReader {
 		}
 		return 1;
 	}
-	public  boolean readNAFile(File file){
+	private  boolean readNAFile(File file){
 		Vector<Point> points=traj.getPoints();
 		points.removeAllElements();
 		try{

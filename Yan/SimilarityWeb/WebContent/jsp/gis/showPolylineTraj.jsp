@@ -18,10 +18,18 @@
 	<div id="allmap"></div>
 </body>
 </html>
+<%! int i=0;%>
 <script type="text/javascript">
 	//生成随机颜色
 	function getRandomColor(){
 		strCol="0123456789"
+		//if(i==0){
+		//	color="blue";
+			//i++;
+		//}else{
+		//	color="red";
+			//i=0;
+		//}
 		color="#"
 		for(var i=0;i<6;i++){
 			n=Math.random()*10000

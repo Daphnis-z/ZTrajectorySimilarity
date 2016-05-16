@@ -10,4 +10,5 @@ public class Constant {
 	public static Trajectory testTraj;
 	public static Trajectory[] testTraj_more;
 	public static int pattern;//Ä£Ê½1£¬0
+	
 }
