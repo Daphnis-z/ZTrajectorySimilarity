@@ -62,10 +62,8 @@
 	
 	<br/><b>请提交目标轨迹文件</b><br/>
 	<input type="file" name="objectfile" size="30"/><br/>
-	<br/><b>请提交测试轨迹文件</b><br/>
-	<input type="file" name="testfile" size=30 ><br/><br/>
-	<input type="file" name="testfile" size=30 ><br/><br/>
-	<input type="file" name="testfile" size=30 ><br/><br/>
+	<br/><b>请提交测试轨迹文件夹绝对路径</b><br/>
+	<input type="text" name="testfilePath" size=30 ><br/><br/>
 	<input type="submit" value="提交">
 	</form>
 	<br>
