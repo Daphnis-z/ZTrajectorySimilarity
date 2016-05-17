@@ -1,10 +1,12 @@
 /**
  * a cluster
- * author: Daphnis
+ * @author Daphnis
+ * 20150515
  */
-package daphnis.kMeans;
+package com.daphnis.kMeans;
 
 import java.util.*;
+import com.adx.entity.*;
 
 public class Cluster {	
 	private Vector<Trajectory> trajs;
@@ -16,8 +18,7 @@ public class Cluster {
 		this.trajs = new Vector<Trajectory>();
 		this.centroid = null;
 	}
-	
-	
+		
 	public Vector<Trajectory> getTrajs() {
 		return this.trajs;
 	}
@@ -35,8 +36,7 @@ public class Cluster {
 	public int getId() {
 		return id;
 	}
-	
-	
+		
 	/**
 	 * add a trajectory into this cluster
 	 * @param traj
@@ -45,6 +45,9 @@ public class Cluster {
 		trajs.addElement(traj);
 	}
 	
+	/**
+	 * clear trajectories
+	 */
 	public void clear() {
 		trajs.clear();
 	}
@@ -60,3 +63,4 @@ public class Cluster {
 	}
 
 }
+
