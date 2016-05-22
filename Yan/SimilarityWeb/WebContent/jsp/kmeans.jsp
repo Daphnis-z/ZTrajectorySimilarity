@@ -31,6 +31,13 @@
 		return color
 	}
 	
+	// 添加点
+	function addMarker(point,msg){
+	  var marker = new BMap.Marker(point,{title:msg});
+	  map.addOverlay(marker);
+	}
+
+	
 	//接收来自后台的轨迹数据
 	strTrajs = "${strTrajs}"
 	strTrajs = strTrajs.split('@')
@@ -40,14 +47,16 @@
 	var map = new BMap.Map("allmap");
 	map.centerAndZoom(new BMap.Point(center[0], center[1]), 11);
 	map.enableScrollWheelZoom();
-
+	
 	//绘制折线轨迹
 	for (var ix = 0; ix < strTrajs.length; ix++) {
 		strTraj = strTrajs[ix].split(',')
 		var traj = new Array(strTraj.length / 2)
 		for (var i = 0, j = 0; i < strTraj.length; i += 2, j++) {
 			traj[j] = new BMap.Point(strTraj[i], strTraj[i + 1])
+			addMarker(traj[j],strTraj[i]+'，'+strTraj[i + 1])
 		}
+		
 				
 		color=getRandomColor()		
 		var polyline = new BMap.Polyline(traj, {
@@ -56,7 +65,13 @@
 			strokeOpacity : 0
 		}); //创建折线
 		map.addOverlay(polyline); //增加折线
-		polyline.enableEditing();//启用编辑
+// 		polyline.enableEditing();//启用编辑
+
+		var overlays=map.getOverlays()
+		map.removeOverlay(overlays[0]);
+		var myIcon = new BMap.Icon("./resources/start.png", new BMap.Size(32,32));
+		var marker = new BMap.Marker(new BMap.Point(center[0], center[1]),{title:"开始点",icon:myIcon})
+		map.addOverlay(marker);
 	}
 </script>
 
