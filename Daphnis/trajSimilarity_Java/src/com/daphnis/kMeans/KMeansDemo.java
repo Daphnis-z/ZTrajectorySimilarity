@@ -1,50 +1,33 @@
 package com.daphnis.kMeans;
 
-import java.io.*;
-import java.util.*;
-
-import com.adx.entity.*;
-import com.daphnis.dataHandle.*;
+import java.io.IOException;
+import com.adx.entity.Trajectory;
+import com.daphnis.dataHandle.ReadData;
 
 public class KMeansDemo {
 	
-	public static void main(String args[])throws IOException{
-		Vector<Trajectory> trajs=ReadTaxiData.readTrajs("./src/com/daphnis/dataHandle/taxiData.txt");
+	public static void main(String args[]) throws IOException{
+		Trajectory traj=ReadData.readATraj("./src/com/daphnis/dataHandle/坐标点信息2(不含时间).csv");
 		long t1=System.currentTimeMillis();
-    	KMeans kmeans = new KMeans(trajs,20);
+    	KMeans kmeans = new KMeans(traj.getPoints());
     	kmeans.init();
-		System.out.println(trajs.size());   	
     	kmeans.calculate();
-		long t2=System.currentTimeMillis();
-		System.out.println("耗时："+(t2-t1)+"ms");
     	
-//		Trajectory tj1=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息2(不含时间).csv");
-//		Trajectory tj2=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
-//		
-//		Trajectory tj1=trajs.get(19),tj2=trajs.get(319);
-//		System.out.println(tj1);
-//		System.out.println(tj2);
-//		System.out.println(SimpleDTW.DTW(tj1, tj2));
+    	for(Cluster cluster:kmeans.getClusters()){
+    		if(cluster.getPoints().size()==1){
+    			traj.getPoints().remove(cluster.getPoints().get(0));
+    		}
+    	}
+
+//		for(int i=0;i<10000;++i){
+//	    	KMeans kmeans = new KMeans(traj.getPoints());
+//	    	kmeans.init();
+//	    	kmeans.calculate();
+//		}
+    	long t2=System.currentTimeMillis();
+    	System.out.println("耗时："+(t2-t1)+" ms");
+		
 	}
 	
-//	public String execute(){
-//		Vector<Trajectory> trajs=ReadTaxiData.readTrajs("./src/com/daphnis/dataHandle/taxiData.txt");
-//    	KMeans kmeans = new KMeans(trajs,20);
-//    	kmeans.init();
-//		System.out.println(trajs.size());
-//    	
-//    	kmeans.calculate();
-//		
-////		Trajectory tj1=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息2(不含时间).csv");
-////		Trajectory tj2=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
-////		
-////		Trajectory tj1=trajs.get(19),tj2=trajs.get(319);
-////		System.out.println(tj1);
-////		System.out.println(tj2);
-////		System.out.println(SimpleDTW.DTW(tj1, tj2));
-//		
-//		return "success";
-//	}
-
 }
 

@@ -1,170 +1,135 @@
-/**
- * modified KMeans
- * @author Daphnis
- * 20150515
- */
 package com.daphnis.kMeans;
 
-import java.util.*;
-import com.adx.entity.*;
-import com.adx.similarity.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import com.adx.entity.Point;
 
 public class KMeans {
-    private int clusterCnt;//cluster count    
-    private int trajCnt;//trajectory count   
-    private Vector<Trajectory> trajs;//all trajectories
-    private Vector<Cluster> clusters;//存放聚类结果
+	
+	private final int POINT_NUM_CLUSTER=5;//期待的一个群中含有的点的数量   
+    private List<Point> points;
     
-    public KMeans(Vector<Trajectory> trajs,int clusterCnt) {
-    	this.trajs=trajs;
-    	this.clusterCnt=clusterCnt;
-    	this.clusters = new Vector<Cluster>();
-    	this.trajCnt=trajs.size();
+    private List<Cluster> clusters;   
+    public List<Cluster> getClusters() {
+		return clusters;
+	}
+
+	public KMeans(List<Point> points) {
+    	this.points = points;
+    	this.clusters = new ArrayList<Cluster>();    
     }
-    
-    /**
-     * initialize the process
-     * create clusters and set random standard trajectory
-     */
-    public void init() {    	
+        
+    //Initializes the process
+    public void init() {
+    	//Create Clusters
+    	//Set Random Centroids
+    	int clusterCnt=points.size()/POINT_NUM_CLUSTER;
     	for (int i = 0; i<clusterCnt; i++) {
     		Cluster cluster = new Cluster(i);
-    		
-    		//随机设置每个群的标准轨迹
     		Random rd=new Random();
-    		int n=rd.nextInt(trajCnt);
-    		Trajectory centroid = trajs.get(n);
-    		centroid.setId(n);
-    		centroid.clusterNum=i;
+    		Point centroid = points.get(rd.nextInt(points.size()));
     		cluster.setCentroid(centroid);
-    		
     		clusters.add(cluster);
     	}
-    	   	
-    	showClusters();//Print Initial state
-    	System.out.println("The clusters have initialized..");
     }
 
-    /**
-     * show clusters state
-     */
-	private void showClusters() {
-    	for (int i = 0; i<clusterCnt; i++) {
+	private void plotClusters() {
+    	for (int i = 0; i<clusters.size(); i++) {
     		Cluster c = clusters.get(i);
-    		c.showCluster();
+    		c.plotCluster();
     	}
     }
     
-	/**
-	 * The process to calculate the KMeans with iterating method.
-	 */
+	//The process to calculate the KMeans, with iterating method.
     public void calculate() {
         boolean finish = false;
         int iteration = 0;
         
-        // Add in new data, one at a time, recalculating centroids with each new one. 
         while(!finish) {       	
-        	clearClusters();//Clear cluster state       	
-        	Vector<Trajectory> lastCentroids = getCentroids();        	
-            assignCluster();//Assign trajectories to the closer cluster                       
-        	calculateCentroids();//Calculate new centroids 
+        	clearClusters();//Clear cluster state        	
+        	List<Point> lastCentroids = getCentroids();
+        	assignCluster();
+            calculateCentroids();        	
+        	iteration++;        	
+        	List<Point> currentCentroids = getCentroids();
         	
-        	iteration++;       	
-        	Vector<Trajectory> currentCentroids = getCentroids();
-        	
-        	//Calculates total distance between new and old Centroids
-        	double simi = 0;//calculate similarity
-        	for(int i = 0; i<lastCentroids.size(); i++) {
-        		simi += SimpleDTW.DTW(lastCentroids.get(i),currentCentroids.get(i));
+        	double distance = 0;
+        	for(int i = 0; i<lastCentroids.size(); ++i) {
+        		distance += twoPointsDistance(lastCentroids.get(i),currentCentroids.get(i));
         	}
-        	
-        	System.out.println("\n#########CLUSTERS############");
-        	showClusters();
-        	System.out.println("Iteration: " + iteration);
-        	System.out.println("Centroid similarity: " + simi);
-        	System.out.println("###########END###############");
-        	   
-        	//判断是否已收敛，若收敛则结束迭代
-        	if(simi<0.0005) {
+        	        	
+        	if(distance<0.00005) {
         		finish = true;
         	}
         }
+    	plotClusters();
+    	System.out.println("#######KMeans End##########");
+    	System.out.println("Iteration: " + iteration);
     }
     
-    /**
-     * clear clusters
-     */
     private void clearClusters() {
     	for(Cluster cluster : clusters) {
     		cluster.clear();
     	}
     }
     
-    /**
-     * 获取标准轨迹
-     * @return
-     */
-    private Vector<Trajectory> getCentroids() {
-    	Vector<Trajectory> centroids = new Vector<Trajectory>();
+    private List<Point> getCentroids() {
+    	List<Point> centroids = new ArrayList<Point>(clusters.size());
     	for(Cluster cluster : clusters) {
-    		centroids.add(cluster.getCentroid());
+    		Point cent = cluster.getCentroid();
+    		Point point = new Point(cent.getLongitude(),cent.getLatitude());
+    		centroids.add(point);
     	}
     	return centroids;
-    }  
+    }
     
-    /**
-     * 轨迹分群
-     */
     private void assignCluster() {
-    	for(Trajectory traj:trajs){
-        	double simi=100000.0,tmp=0.0;
-        	int cluster=0;
-        	for(int i=0;i<clusterCnt;++i){
-        		tmp=SimpleDTW.DTW(traj, clusters.get(i).getCentroid());
-        		if(simi>tmp){
-        			simi=tmp;
-        			cluster=i;
-        		}
-        	}         	
-        	traj.clusterNum=cluster;        	        	
-        	clusters.get(cluster).addTraj(traj);
-    	}
+        int clusterNum = 0;                 
+        double distance = 0.0; 
+        
+        for(Point point : points) {
+        	double min = Double.MAX_VALUE;
+            for(int i = 0; i<clusters.size(); ++i) {
+            	Cluster cluster = clusters.get(i);
+                distance = twoPointsDistance(point, cluster.getCentroid());
+                if(distance<min){
+                    min = distance;
+                    clusterNum = i;
+                }
+            }
+            clusters.get(clusterNum).addPoint(point);
+        }
     }
     
     /**
-     * 计算标准轨迹
+     * Calculate two points' distance
+     * @param pt1
+     * @param pt2
+     * @return
      */
-    private void calculateCentroids() {
-    	for(Cluster clu:clusters){
-    		int cnt=clu.getTrajs().size();
-    		if(cnt==0){
-    			continue;
-    		}
-    		double[] simis=new double[cnt];
-    		for(int i=0;i<cnt-1;++i){
-    			for(int j=i+1;j<cnt;++j){
-    				double simi=SimpleDTW.DTW(clu.getTrajs().get(i), clu.getTrajs().get(j));
-    				simis[i]+=simi;
-    				simis[j]+=simi;
-    			}
-    		}    		
-    		clu.setCentroid(clu.getTrajs().get(findMin(simis)));
-    	}
-    }
-    private int findMin(double[] arr){
-    	if(arr.length==0){
-    		return -1;
-    	}
-    	int ix=0;
-    	double val=arr[0];
-    	for(int i=1;i<arr.length;++i){
-    		if(val>arr[i]){
-    			val=arr[i];
-    			ix=i;
-    		}
-    	}
-    	return ix;
+    private double twoPointsDistance(Point pt1,Point pt2){
+    	double d1=Math.pow(pt1.getLongitude()-pt2.getLongitude(), 2);
+    	double d2=Math.pow(pt1.getLatitude()-pt2.getLatitude(), 2);
+    	return d1+d2;
     }
     
+    private void calculateCentroids() {
+        for(Cluster cluster : clusters) {
+            double sumLon = 0,sumLat = 0;
+            List<Point> points = cluster.getPoints();           
+            for(Point point : points) {
+            	sumLon += point.getLongitude();
+                sumLat += point.getLatitude();
+            }
+            
+            if(points.size()>0) {
+            	Point p=new Point(sumLon / points.size(),sumLat / points.size());
+            	cluster.setCentroid(p);
+            }
+        }
+    }
+
 }
 

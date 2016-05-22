@@ -9,9 +9,8 @@ import java.util.*;
 public class Trajectory implements Cloneable{
 	private Vector<Point> points;
 	private int id;
-	private boolean hasTimeStamp;
-	
-	public int clusterNum;
+	private boolean hasTimeStamp;	
+	public int clusterNum;//À˘ Ù»∫±‡∫≈
 	
     public int timeStamp;
     public int size;   

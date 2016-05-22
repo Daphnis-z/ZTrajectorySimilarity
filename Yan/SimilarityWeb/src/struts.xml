@@ -36,7 +36,7 @@
     	
     	<!-- 用于调试聚类 -->
     	<action name="kmeans" class="com.daphnis.kMeans.KMeansDemo">
-    		<result>jsp/index.jsp</result>
+    		<result>jsp/kmeans.jsp</result>
     	</action>
     </package>
 </struts>

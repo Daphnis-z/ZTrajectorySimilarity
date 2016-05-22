@@ -9,7 +9,7 @@ public class Point {
 	private double longitude;//经度
 	private double latitude;//纬度
 	private String timestamp;//时间戳
-	
+		
 	/**
 	 * point without timestamp
 	 * @param longitude

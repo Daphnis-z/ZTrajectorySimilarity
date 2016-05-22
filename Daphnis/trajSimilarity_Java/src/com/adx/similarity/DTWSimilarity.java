@@ -12,10 +12,12 @@ public class DTWSimilarity implements SimilarityReactor{
 	public static int[][] tip=new int[199][2];//该矩阵维护匹配点
 	private double similarity;
 	private SimularDef sDef;
+	
 	public DTWSimilarity(SimularDef sDef) {
 		// TODO Auto-generated constructor stub
 		this.sDef=sDef;
 	}
+	
 	//不带时间戳的轨迹计算
 	private void DTWNoTime(Trajectory objTraj,Trajectory testTraj){
 		int objTrajSize=objTraj.getSize(); //目标轨迹的长度
@@ -102,6 +104,7 @@ public class DTWSimilarity implements SimilarityReactor{
 				sDef.getEditDis_W()*(sDef.getEditDis_B()-edit_dis)/sDef.getEditDis_B()+
 				sDef.getShapeSum_W()*(sDef.getShapeSum_B()-dtw_s)/sDef.getShapeSum_B();
 	}
+	
 	//带时间戳的轨迹计算
 	private void DTWWithTime(Trajectory objTraj,Trajectory testTraj) {
 		int objTrajSize=objTraj.getSize(); //目标轨迹的长度
@@ -201,6 +204,7 @@ public class DTWSimilarity implements SimilarityReactor{
 				sDef.getShapeSum_W()*(sDef.getShapeSum_B()-dtw_s)/sDef.getShapeSum_B()+
 				sDef.getTsum_W()*(sDef.getTsum_B()-t_average)/sDef.getTsum_B();
 	}
+	
 	@Override
 	public double getSimilarity(Trajectory objTraj, Trajectory testTraj,int timestamp) {
 		// TODO Auto-generated method stub
@@ -211,4 +215,6 @@ public class DTWSimilarity implements SimilarityReactor{
 		}
 		return similarity;
 	}
+	
 }
+

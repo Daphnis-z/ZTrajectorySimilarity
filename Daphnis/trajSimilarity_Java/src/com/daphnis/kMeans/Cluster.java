@@ -1,65 +1,59 @@
-/**
- * a cluster
- * @author Daphnis
- * 20150515
- */
 package com.daphnis.kMeans;
 
-import java.util.*;
-import com.adx.entity.*;
+import java.util.ArrayList;
+import java.util.List;
+import com.adx.entity.Point;
 
-public class Cluster {	
-	private Vector<Trajectory> trajs;
-	private Trajectory centroid;//standard trajectory
-	private int id;
+public class Cluster {
 	
-	public Cluster(int id) {
-		this.id = id;
-		this.trajs = new Vector<Trajectory>();
+	private List<Point> points;
+	private Point centroid;//中心点
+	
+	public int clusterNum;//群编号
+	
+	public Cluster(int clusterNum) {
+		this.clusterNum = clusterNum;
+		this.points = new ArrayList<Point>();
 		this.centroid = null;
 	}
-		
-	public Vector<Trajectory> getTrajs() {
-		return this.trajs;
+	
+	public List<Point> getPoints() {
+		return points;
 	}
-	public void setTrajs(Vector<Trajectory> trajs) {
-		this.trajs=trajs;
+	public void setPoints(List<Point> points) {
+		this.points = points;
 	}
-
-	public Trajectory getCentroid() {
-		return this.centroid;
+	
+	public Point getCentroid() {
+		return centroid;
 	}
-	public void setCentroid(Trajectory centroid) {
+	public void setCentroid(Point centroid) {
 		this.centroid = centroid;
 	}
 
-	public int getId() {
-		return id;
-	}
-		
 	/**
-	 * add a trajectory into this cluster
-	 * @param traj
+	 * Add a point into this cluster
+	 * @param point
 	 */
-	public void addTraj(Trajectory traj) {
-		trajs.addElement(traj);
+	public void addPoint(Point point) {
+		points.add(point);
 	}
 	
 	/**
-	 * clear trajectories
+	 * Clear points of this cluster
 	 */
 	public void clear() {
-		trajs.clear();
+		points.clear();
 	}
 	
-	public void showCluster() {
-		System.out.println("[Cluster: " + id+"]");
-		System.out.println("[Centroid id: " + centroid.getId() + "]");
-		System.out.print("[Trajectories id: ");
-		for(Trajectory traj : trajs) {
-			System.out.print(traj.getId()+" ");
+	public void plotCluster() {
+		System.out.println("[Cluster: " +(clusterNum+1)+"]");
+		System.out.println("[Centroid: " + centroid.getLongitude()+','+centroid.getLatitude() + "]");
+		System.out.println("[Points:");
+		for(Point p : points) {
+			System.out.println(String.format("\t(%f,%f)", p.getLongitude(),p.getLatitude()));
 		}
-		System.out.println("]\n");
+		System.out.println("]");
 	}
 
 }

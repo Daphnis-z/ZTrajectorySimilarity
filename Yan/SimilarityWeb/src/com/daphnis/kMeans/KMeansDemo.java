@@ -1,50 +1,42 @@
+/**
+ * KMeans Demo
+ * @author Daphnis
+ * 20160522
+ */
 package com.daphnis.kMeans;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import com.adx.entity.Point;
+import com.adx.entity.Trajectory;
+import com.daphnis.dataHandle.ReadData;
 
-import com.adx.entity.*;
-import com.daphnis.dataHandle.*;
-
-public class KMeansDemo {
-	
-	public static void main(String args[])throws IOException{
-		Vector<Trajectory> trajs=ReadTaxiData.readTrajs("./src/com/daphnis/dataHandle/taxiData.txt");
-		long t1=System.currentTimeMillis();
-    	KMeans kmeans = new KMeans(trajs,20);
-    	kmeans.init();
-		System.out.println(trajs.size());   	
-    	kmeans.calculate();
-		long t2=System.currentTimeMillis();
-		System.out.println("耗时："+(t2-t1)+"ms");
-    	
-//		Trajectory tj1=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息2(不含时间).csv");
-//		Trajectory tj2=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
-//		
-//		Trajectory tj1=trajs.get(19),tj2=trajs.get(319);
-//		System.out.println(tj1);
-//		System.out.println(tj2);
-//		System.out.println(SimpleDTW.DTW(tj1, tj2));
+public class KMeansDemo {	
+	private String strTrajs;	
+	public String getStrTrajs() {
+		return strTrajs;
 	}
-	
-//	public String execute(){
-//		Vector<Trajectory> trajs=ReadTaxiData.readTrajs("./src/com/daphnis/dataHandle/taxiData.txt");
-//    	KMeans kmeans = new KMeans(trajs,20);
-//    	kmeans.init();
-//		System.out.println(trajs.size());
-//    	
-//    	kmeans.calculate();
-//		
-////		Trajectory tj1=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息2(不含时间).csv");
-////		Trajectory tj2=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
-////		
-////		Trajectory tj1=trajs.get(19),tj2=trajs.get(319);
-////		System.out.println(tj1);
-////		System.out.println(tj2);
-////		System.out.println(SimpleDTW.DTW(tj1, tj2));
-//		
-//		return "success";
-//	}
+	public void setStrTrajs(String strTrajs) {
+		this.strTrajs = strTrajs;
+	}
 
+	public String execute() throws IOException{
+		Trajectory traj=ReadData.readATraj("./trajData/坐标点信息3(含时间).csv");
+    	KMeans kmeans = new KMeans(traj.getPoints());
+    	kmeans.init();
+    	kmeans.calculate();
+    	kmeans.removeUnusefulPoints();
+    	
+    	showATraj(traj);
+		return "success";
+	}
+		
+	public void showATraj(Trajectory traj){
+		StringBuilder sb=new StringBuilder();
+		for(Point p:traj.getPoints()){
+			sb.append(","+p.getLongitude()+","+p.getLatitude());
+		}
+		setStrTrajs(sb.substring(1));
+	}
+		
 }
 
