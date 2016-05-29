@@ -1,25 +1,37 @@
-@CHARSET "UTF-8";
 
-td,th{
-	padding: 11px 11px;
-	border:1px solid #98bf21;
+/*系统顶部标题栏*/
+#sysHeader{
+	margin: -8px -8px;
+	padding: 17px;
+	text-align:center;
+	background:#17C145;
+	color:white;
 }
 
-#sth{
-	background: #EAF2D3;
+div#leftDiv{
+	background: #B1D0B9;
+	margin: 0px -8px 100px;
 }
 
-	table{
-	margin:auto;
-	border-collapse: collapse;
-	border:2px solid #98bf21;
+ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
 }
-
-input[type="text"]{
-	border:0;
+li{
+	float:left;
 }
-
-input[type="submit"]{
-	padding: 5px 40px;
-	background:#EAF2D3;
+a:link,a:visited{
+	display:block;
+	width:120px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:#B1D0B9;
+	text-align:center;
+	padding:4px;
+	text-decoration:none;
+}
+a:hover,a:active{
+	background-color:#17C145;
 }

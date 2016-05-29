@@ -1,9 +1,10 @@
-@CHARSET "UTF-8";
+/*
+	公共样式表
+*/
 
-#sysHeader{
-	margin: -7px -7px 1px -7px;
-	padding: 20px;
-	text-align:center;
-	background:green;
-	color:white;
+/*显示地图*/
+body,html,#allmap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }

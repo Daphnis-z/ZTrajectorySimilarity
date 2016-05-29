@@ -2,8 +2,12 @@ table{
 	margin: auto;
 	background: #F2F4F3;
 	width: 98%;
-	height: 81%;
 }
+table#map{
+	margin-top: 1%;
+	height: 75%;
+}
+
 td{
 	padding: 2px 2px;
 }

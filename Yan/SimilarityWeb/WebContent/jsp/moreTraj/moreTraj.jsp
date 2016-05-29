@@ -3,12 +3,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+    <link href="../css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/multiTraj.css">
+
+	<title>多轨迹模式</title>
 </head>
 <body>
-	<%! double dtwDis_W=0.55,editDis_W=0.2,tsum_W=0,shapeSum_W=0.25;
+<!-- 	<%! double dtwDis_W=0.55,editDis_W=0.2,tsum_W=0,shapeSum_W=0.25;
 		double dtwDis_B=100,editDis_B=5000,shapeSum_B=100;
 		long tsum_B=0;
 	%>
@@ -43,29 +50,55 @@
 		}
 	}
 	</script>
+ -->
+ 
+   <!-- 导航条 -->
+   <nav class="navbar navbar-default navbar-fixed-top">
+     <div class="container">
+       <div class="navbar-header">
+         <a class="navbar-brand" href="../../">轨迹相似度计算系统</a>
+       </div>
+       <div id="navbar" class="collapse navbar-collapse">
+         <ul class="nav navbar-nav">
+           <li><a href="../doubleTraj/doubleTraj.jsp">双轨迹模式</a></li>
+           <li class="active"><a href="moreTraj.jsp">多轨迹模式</a></li>
+           <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
+         </ul>
+       </div>
+     </div>
+   </nav>
+   <div class="container"></div>
+   <footer class="footer">
+     <div class="container">
+       <p class="text-muted">Similarity_HHU SC2016 </p>
+     </div>
+   </footer>
 
-	<form action="moreTrajCul.action" method="post" enctype="multipart/form-data">
-	<br/><b>请选择轨迹文件类型：</b>
-	<input type="checkbox" name="timeStamp" id="timeStampId" value="1" size="10" 
-			onchange="changeSimilarValue()"/>带时间戳<br/>
-
-	<p><b>请设置轨迹相似度各因素所占权重（值在0-0.6之间）</b><br/>
-	dtw权重：<input type="text" name="dtwDis_W" id="dtwDis_W_Id" value=<%= dtwDis_W %> size=10/>
-	edit权重：<input type="text" name="editDis_W" id="editDis_W_Id" value=<%= editDis_W %> size=10/>
-	tSum权重：<input type="text" name="tsum_W" id="tsum_W_Id" value=<%= tsum_W %> size=10/>
-	shapeSum权重：<input type="text" name="shapeSum_W" id="shapeSum_W_Id" value=<%= shapeSum_W %> size=10/>
-	<br/><b>请设置轨迹相似度各因素最坏值</b><br/>
-	dtw最坏值：<input type="text" name="dtwDis_B" id="dtwDis_B_Id" value=<%= dtwDis_B %> size=10/>
-	edit最坏值：<input type="text" name="editDis_B" id="editDis_B_Id" value=<%= editDis_B %> size=10/>
-	tSum最坏值：<input type="text" name="tsum_B" id="tsum_B_Id" value=<%= tsum_B %> size=10/>
-	shapeSum最坏值：<input type="text" name="shapeSum_B" id="shapeSum_B_Id" value=<%= shapeSum_B %> size=10/></p>
-	
-	<br/><b>请提交目标轨迹文件</b><br/>
-	<input type="file" name="objectfile" size="30"/><br/>
-	<br/><b>请提交测试轨迹文件夹绝对路径</b><br/>
-	<input type="text" name="testfilePath" size=30 ><br/><br/>
-	<input type="submit" value="提交">
-	</form>
-	<br>
+   <form action="doubleTrajCul.action" method="post" enctype="multipart/form-data">
+     <table border="0">
+       <tr>
+         <td><b>各要素权重：</td>
+         <td>DTW距离</td>
+         <td><input type="text" name="dtwDis_W" value=0.55 size=10 /></td>
+         <td>Edit距离</td>
+         <td align="center"><input type="text" name="editDis_W" value=0.15 size=10 /></td>
+         <td>时间差之和</td>
+         <td><input type="text" name="tsum_W" value=0.15 size=10 /></td>
+         <td>形状差异值</td>
+         <td align="center"><input type="text" name="shapeSum_W" value=0.15 size=10 /></td>
+       </tr>
+       <tr>
+         <td><b>上传文件：</td>
+         <td>轨迹文件：</td>
+         <td colspan="6"><input type="file" name="objectfile" size="10" /></td>
+         <td><input type="checkbox" name="timeStamp" value="1" size="10" />带时间戳</td>
+       </tr>
+       <tr>
+ <!--        <td colspan="9" align="center"><input type="submit" value="开始计算"></td>
+  -->
+         <td ><a href="moreTrajResult.jsp">开始计算</a></td>  
+       </tr>
+     </table>
+   </form>
 </body>
 </html>
