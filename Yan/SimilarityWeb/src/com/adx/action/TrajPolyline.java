@@ -62,7 +62,7 @@ public class TrajPolyline {
 	 */
 	private void showTrajDemo() throws IOException{
 		Trajectory traj1=Constant.objTraj;
-		Trajectory traj2;
+		Trajectory traj2=Constant.testTraj;
 		System.out.println("pattern:"+Constant.pattern);
 		if(Constant.pattern==0){
 			traj2=Constant.testTraj;

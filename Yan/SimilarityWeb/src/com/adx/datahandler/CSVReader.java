@@ -12,7 +12,6 @@ import java.util.Vector;
 
 import com.adx.entity.Point;
 import com.adx.entity.Trajectory;
-import com.adx.resource.Constant;
 
 /**
  * CSVReader
@@ -54,8 +53,8 @@ public class CSVReader {
 			while((line=br.readLine())!=null){
 				StringTokenizer st=new StringTokenizer(line, ",");
 				if(st.hasMoreTokens()){
-					double longitude=Double.parseDouble(st.nextToken());
-					double latitude=Double.parseDouble(st.nextToken());
+						double longitude=Double.parseDouble(st.nextToken());
+						double latitude=Double.parseDouble(st.nextToken());
 					if(timeStamp==1){
 						String time=st.nextToken();
 						point=new Point(longitude, latitude, time);
@@ -66,11 +65,20 @@ public class CSVReader {
 				traj.addPoint(point);
 				}
 			br.close();
-			Constant.TrajIsFull=true;
+			traj.isNA=false;
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+			if(readNAFile(file)){
+				return 1;
+			}else{
+				return -1;
+			}
 		}catch(NoSuchElementException e){
-			readNAFile(file);
-			Constant.TrajIsFull=false;
-			return 1;
+			if(readNAFile(file)){
+				return 1;
+			}else{
+				return -1;
+			}
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 			return 0;
@@ -81,7 +89,7 @@ public class CSVReader {
 		}
 		return 1;
 	}
-	public  boolean readNAFile(File file){
+	private  boolean readNAFile(File file){
 		Vector<Point> points=traj.getPoints();
 		points.removeAllElements();
 		try{
@@ -89,21 +97,35 @@ public class CSVReader {
 			String line="";
 			Point point=null;
 			line=br.readLine();
-			String buf="",time="";
-			double longitude=0,latitude=0;
-			int attribute=0;
+			String buf="";
 			while((line=br.readLine())!=null){
-				int length=line.length();
+				double longitude=0,latitude=0;
+				String time="";
+				int attribute=0;
 				buf="";
+				int length=line.length();
 				for(int i=0;i<length;i++){
 					char tem=line.charAt(i);
-					if(tem==','){
+					if(tem==','||i==length-1){
+						if(i==length-1&&tem!=','){
+							buf=buf+tem;
+						}
 						switch (attribute) {
 						case 0:
+							if(buf==""||buf==null){
+								buf="0.0";
+							}
 							longitude=Double.parseDouble(buf);
+							attribute=1;
 							break;
 						case 1:
+							if(buf==""||buf==null){
+								buf="0.0";
+							}
 							latitude=Double.parseDouble(buf);
+							if(timeStamp==1){
+								attribute=2;
+							}
 							break;
 						case 2:
 							time=buf;
@@ -111,7 +133,6 @@ public class CSVReader {
 						default:
 							break;
 						}
-						attribute++;
 						buf="";
 					}else{
 					buf=buf+tem;
@@ -124,7 +145,12 @@ public class CSVReader {
 				}
 			traj.addPoint(point);
 			}
-			br.close();		
+			traj.isNA=true;
+			br.close();	
+		}catch (NumberFormatException e) {
+				// TODO: handle exception
+			e.printStackTrace();
+			return false;
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 			return false;

@@ -1,61 +1,69 @@
 /**
- * @author Daphnis
- * 20150515
+ * author: Daphnis
  */
 package com.adx.entity;
 
 import java.util.*;
 
 public class Trajectory implements Cloneable{
-	private Vector<Point> points;
-	private int id;
-	private boolean hasTimeStamp;
-	
-	public int clusterNum;
-	
-    public int timeStamp;
-    public int size;   
-	
+	protected  Vector<Point> points;
+	public ArrayList<Integer> subTrajs_index;
+	public int timeStamp;
+	public boolean isNA;
+
 	public Trajectory(int timeStamp){
     	this.points=new Vector<Point>();
-    	this.timeStamp=timeStamp;    	
-    }
-    public Trajectory(Vector<Point> points,int timeStamp){
-    	this.points=points;
+    	this.subTrajs_index=new ArrayList<Integer>();
     	this.timeStamp=timeStamp;
     }
-	public Trajectory(int id,boolean hasTimeStamp){
-		this.id=id;
-		this.hasTimeStamp=hasTimeStamp;
-		points=new Vector<Point>();
+	public Trajectory(){
+		this.points=new Vector<Point>();
+		this.subTrajs_index=new ArrayList<Integer>();
 	}
-    
+	public Trajectory(Vector<Point> points,int timeStamp){
+		this.subTrajs_index=new ArrayList<Integer>();
+		this.points=points;
+		this.timeStamp=timeStamp;
+	}
+	
+	public Vector<Trajectory> getSubTrajs() {
+		int size=subTrajs_index.size(),corner=0,now=0;
+		Vector<Trajectory> subTrajs=new Vector<Trajectory>();
+		for(int j=0;j<size;j++){
+			Trajectory subTraj=new Trajectory();
+			corner=subTrajs_index.get(j);
+			while(now!=corner&&now<points.size()){
+				subTraj.addPoint(points.get(now));
+				now++;
+			}
+			subTrajs.add(subTraj);
+		}
+		Trajectory subTraj_last=new Trajectory();
+		for(int i=now;i<points.size();i++){
+			subTraj_last.addPoint(points.get(i));
+		}
+		subTrajs.add(subTraj_last);
+		return subTrajs;
+	}
+
+	public int getSize() {
+		return points.size();
+	}
+        
     public Vector<Point> getPoints(){
     	return this.points;
     }
         
-    public int getId() {
-		return id;
+    public void setPoints(Vector<Point> points) {
+		this.points = points;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+
 	public int getTimeStamp() {
 		return timeStamp;
 	}
 	public void setTimeStamp(int timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
-	/**
-	 * 获取此轨迹所含点的个数
-	 * @return int
-	 */
-	public int getSize() {
-		return points.size();
-	}
-	
 	/**
      * add a point into this trajectory
      * @param point
@@ -63,16 +71,11 @@ public class Trajectory implements Cloneable{
     public void addPoint(Point point){
     	points.addElement(point);
     }
-	
-    @Override
-	public String toString() {
-    	StringBuilder sb=new StringBuilder("[");
-    	for(Point p:points){
-    		sb.append(p.getLongitude()+","+p.getLatitude()+","+p.getTimestamp()+";");
-    	}
-    	sb.append(']');
-		return "{id:"+id+",size="+this.getSize()+",points=" + sb.toString() + "}";
+    /**
+     * add a index into this trajectory
+     */
+	public void addSubTrajs(int subTraj) {
+		subTrajs_index.add(subTraj);
 	}
-   
-}
 
+}

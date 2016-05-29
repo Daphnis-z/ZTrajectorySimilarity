@@ -1,12 +1,15 @@
 package com.adx.action;
 
 import java.io.File;
+import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
+import com.adx.datahandler.DataHandlerImp;
+import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
-import com.adx.similarity.DTWSimilarity;
+import com.adx.similaralg.DTWSimilarity;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -59,11 +62,9 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		CSVReader objReader=new CSVReader(objectfile, simularDef.getTimeStamp());
 		int status_obj=objReader.readFile();
 		Trajectory objTraj=objReader.getTraj();
-		System.out.println("status_obj:"+status_obj);
 		CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
 		int status_test=testReader.readFile();
 		Trajectory testTraj=testReader.getTraj();
-		System.out.println("status_test:"+status_test);
 		if(status_obj==0||status_test==0){
 			actionResult=ERROR;
 			return actionResult;//输入文件名找不到，文件传输有误
@@ -72,14 +73,21 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 			actionResult=INPUT;
 			return actionResult;//所计算轨迹文件类型与输入文件不匹配
 		}
+		//数据预处理
+		DataHandlerImp obj_handler=new DataHandlerImp(objTraj);
+		objTraj=obj_handler.dataHandle();
+		DataHandlerImp test_handler=new DataHandlerImp(testTraj,objTraj.getSubTrajs().size());
+		testTraj=test_handler.dataHandle();
+		
 		Constant.objTraj=objTraj;
 		Constant.testTraj=testTraj;
-//		Vector<Point> points=testTraj.getPoints();
-//		System.out.println("points.size:"+points.size());
+		
+		//已分割的轨迹调用实例
+		Vector<Point> points=testTraj.getSubTrajs().get(0).getPoints();
 //		for(int i=0;i<points.size();i++){
 //			Point point=points.get(i);
 //			System.out.println(point.getLatitude()+"::"+point.getLongitude()+"::"+point.getTimestamp());
-//			}
+//		}
 		
 		DTWSimilarity dtw=new DTWSimilarity(simularDef);
 		System.out.println("timestamp:"+simularDef.getTimeStamp());
