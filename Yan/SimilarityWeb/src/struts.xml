@@ -30,8 +30,9 @@
     	</action>
     	
     	<!-- 在GIS系统中显示轨迹 -->
-    	<action name="showPolyline" class="com.adx.action.TrajPolyline">
-    		<result>jsp/gis/showPolylineTraj.jsp</result>
+    	<action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
+    		<result>viewTraj.jsp</result>
     	</action>   
     </package>
 </struts>
+

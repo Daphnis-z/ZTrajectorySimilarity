@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../css/viewTraj.css">
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
+	<script type="text/javascript" src="../js/zBaiduMap.js"></script>
 
 	<title>可视化轨迹</title>
 </head>
@@ -42,9 +43,11 @@
 
   <table>
     <tr height="8%">
-      <td><b>上传文件：</td>
-      <td><input type="file" name="objectfile" size="10" /></td>
-      <td><a href="">显示轨迹</a></td>
+    	<form action="viewTraj.action" method="post" enctype="multipart/form-data">
+			<td><b>上传文件：</td>
+			<td><input type="file" name="trajFile" size="10" /></td>
+			<td><input type="submit" value="显示轨迹" /></td>
+		</form>
     </tr>
   </table>
   <table id="map">
@@ -55,13 +58,7 @@
 </body>
 </html>
 <script type="text/javascript">
-  // 百度地图API功能
-  var map = new BMap.Map("allmap");
-  map.centerAndZoom(new BMap.Point(118.95761,31.80705), 10);
-  map.enableScrollWheelZoom();
-
-  //添加地图控件
-  map.addControl(new BMap.MapTypeControl()); 
-  map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT}));//左上角比例尺        
-  map.addControl(new BMap.NavigationControl());//左上角默认缩放控件    
+	strTrajs = "${strTrajs}"
+	showMap(strTrajs)
 </script>
+

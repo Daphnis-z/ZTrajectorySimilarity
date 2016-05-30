@@ -14,7 +14,7 @@
 
 	<title>多轨迹模式</title>
 </head>
-<body>
+<body background="../css/images/bg.jpg">
 <!-- 	<%! double dtwDis_W=0.55,editDis_W=0.2,tsum_W=0,shapeSum_W=0.25;
 		double dtwDis_B=100,editDis_B=5000,shapeSum_B=100;
 		long tsum_B=0;

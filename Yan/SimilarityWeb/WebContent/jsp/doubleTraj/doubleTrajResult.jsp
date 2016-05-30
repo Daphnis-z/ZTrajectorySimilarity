@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../css/doubleTrajResult.css">
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
+	<script type="text/javascript" src="../js/zBaiduMap.js"></script>
 
 	<title>结果显示</title>
 </head>
@@ -64,34 +65,14 @@
 			<td rowspan="2"><div id="allmap"><h2>地图<h2></div></td>
 		</tr>
 		<tr>
-			<td align="center" height="10%"><button onclick="showMap()">可视化轨迹</button></td>
+			<td align="center" height="10%"><button onclick="drawTraj()">可视化轨迹</button></td>
 		</tr>
 	</table>
 </body>
 </html>
 <script type="text/javascript">
-	function showMap(){
-		// 百度地图API功能
-		var map = new BMap.Map("allmap");
-		map.centerAndZoom(new BMap.Point(118.95761,31.80705), 12);
-		map.enableScrollWheelZoom();
-
-		//添加地图控件
-		map.addControl(new BMap.MapTypeControl()); 
-		map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT}));//左上角比例尺        
-		map.addControl(new BMap.NavigationControl());//左上角默认缩放控件    
-
-		//轨迹数据
-		var traj=new Array()
-		traj[0]=new BMap.Point(118.92761,31.92705)
-		traj[1]=new BMap.Point(118.93761,31.91705)
-		traj[2]=new BMap.Point(118.94761,31.90705)
-		traj[3]=new BMap.Point(118.95761,31.80705)
-		traj[4]=new BMap.Point(118.96761,31.81705)
-		traj[5]=new BMap.Point(118.97761,31.82705)
-		traj[6]=new BMap.Point(118.98761,31.83705)
-
-		var polyline = new BMap.Polyline(traj, {strokeColor:"purple", strokeWeight:5, strokeOpacity:0});   //创建折线
-		map.addOverlay(polyline);   //增加折线
+	function drawTraj(){
+		showMap("")
 	}
 </script>
+

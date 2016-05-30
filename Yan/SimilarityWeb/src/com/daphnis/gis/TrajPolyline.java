@@ -5,17 +5,19 @@
  */
 package com.daphnis.gis;
 
-import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import com.adx.datahandler.CSVReader;
 import com.adx.entity.Point;
 import com.adx.entity.Trajectory;
 import com.daphnis.dataHandle.ReadData;
 
-public class TrajPolyline {
-	private String strTrajs;	
-	
+@SuppressWarnings("serial")
+public class TrajPolyline extends ActionSupport{
+	private String strTrajs;		
 	public String getStrTrajs() {
 		return strTrajs;
 	}
@@ -23,6 +25,14 @@ public class TrajPolyline {
 		this.strTrajs = strTrajs;
 	}
 
+	private File trajFile;	
+	public File getTrajFile() {
+		return trajFile;
+	}
+	public void setTrajFile(File trajFile) {
+		this.trajFile = trajFile;
+	}
+	
 	/**
 	 * show a trajectory
 	 * @param traj
@@ -68,9 +78,16 @@ public class TrajPolyline {
 		showSomeTrajs(vt);
 	}
 	
-	public String execute() throws IOException{
-		showTrajDemo();
-		return Action.SUCCESS;
-	}
+	@Override
+	public String execute() throws Exception {
+		// TODO Auto-generated method stub
+		CSVReader objReader=new CSVReader(trajFile,-1);
+		objReader.readFile();
+		Trajectory objTraj=objReader.getTraj();
+		showATraj(objTraj);
 
+		return super.execute();
+	}
+		
 }
+
