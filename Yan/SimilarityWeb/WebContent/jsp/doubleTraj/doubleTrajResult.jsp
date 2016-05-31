@@ -20,20 +20,20 @@
 </head>
 <body>
 
-<!-- 	<%! String result=""; %>
-<%-- 	<%  --%>
-// 	String tem=request.getAttribute("actionResult").toString();
-// 	if (tem.equals("success")){
-// 		result="两条轨迹的相似度为:"+request.getAttribute("similarity").toString();
-// 	}else if(tem.equals("input")){
-// 		result="所选择计算轨迹文件类型与输入文件不匹配";
-// 	}else if(tem.equals("error")){
-// 		result="输入文件名找不到，文件传输有误";
-// 	}else{
-// 		result="未输入文件！！";
-// 	}
-<%-- 	%> --%>
- -->	
+ <%! String result=""; %>
+	<%  
+ 	String tem=request.getAttribute("actionResult").toString();
+ 	if (tem.equals("success")){
+		result="两条轨迹的相似度为:"+request.getAttribute("similarity").toString();
+ 	}else if(tem.equals("input")){
+ 		result="所选择计算轨迹文件类型与输入文件不匹配";
+ 	}else if(tem.equals("error")){
+ 		result="输入文件名找不到，文件传输有误";
+ 	}else{
+ 		result="未输入文件！！";
+ 	}
+ 	%>
+	
  
  <!-- 导航条 -->
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -60,7 +60,7 @@
 	<table border="0">
 		<tr>
 			<td width="30%" valign="top">
-				计算结果：<br/>&nbsp;&nbsp 相似度：92.13151235%
+				计算结果：<br/>&nbsp;&nbsp <%= result %>
 			</td>
 			<td rowspan="2"><div id="allmap"><h2>地图<h2></div></td>
 		</tr>

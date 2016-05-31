@@ -52,8 +52,11 @@ public class TrajectorySegment {
 				index_j++;
 			}
 		}
-		if((traj.getSize()-1-index.get(index.size()-1))<5){
-			index.remove(index.size()-1);
+		//对最后边界点进行调整
+		if(index.size()>0){
+			if((traj.getSize()-1-index.get(index.size()-1))<5){
+				index.remove(index.size()-1);
+			}
 		}
 		System.out.println("调整index:"+index);
 		return true;
