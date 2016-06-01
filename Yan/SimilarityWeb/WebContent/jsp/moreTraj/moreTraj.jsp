@@ -15,7 +15,7 @@
 	<title>多轨迹模式</title>
 </head>
 <body background="../css/images/bg.jpg">
-<!-- 	<%! double dtwDis_W=0.55,editDis_W=0.2,tsum_W=0,shapeSum_W=0.25;
+ 	<%! double dtwDis_W=0.55,editDis_W=0.2,tsum_W=0,shapeSum_W=0.25;
 		double dtwDis_B=100,editDis_B=5000,shapeSum_B=100;
 		long tsum_B=0;
 	%>
@@ -43,15 +43,14 @@
 			document.getElementById("editDis_W_Id").value=editDis_W;
 			document.getElementById("tsum_W_Id").value=tsum_W;
 			document.getElementById("shapeSum_W_Id").value=shapeSum_W;
-			document.getElementById("dtwDis_B_Id").value=dtwDis_B;
-			document.getElementById("editDis_B_Id").value=editDis_B;
-			document.getElementById("tsum_B_Id").value=tsum_B;
-			document.getElementById("shapeSum_B_Id").value=shapeSum_B;
+			//document.getElementById("dtwDis_B_Id").value=dtwDis_B;
+			//document.getElementById("editDis_B_Id").value=editDis_B;
+			//document.getElementById("tsum_B_Id").value=tsum_B;
+			//document.getElementById("shapeSum_B_Id").value=shapeSum_B;
 		}
 	}
 	</script>
- -->
- 
+
    <!-- 导航条 -->
    <nav class="navbar navbar-default navbar-fixed-top">
      <div class="container">
@@ -74,29 +73,35 @@
      </div>
    </footer>
 
-   <form action="doubleTrajCul.action" method="post" enctype="multipart/form-data">
+   <form action="moreTrajCul.action" method="post" enctype="multipart/form-data">
      <table border="0">
        <tr>
          <td><b>各要素权重：</td>
          <td>DTW距离</td>
-         <td><input type="text" name="dtwDis_W" value=0.55 size=10 /></td>
+         <td><input type="text" name="dtwDis_W" id="dtwDis_W_Id" value=0.55 size=10 /></td>
          <td>Edit距离</td>
-         <td align="center"><input type="text" name="editDis_W" value=0.15 size=10 /></td>
+         <td align="center"><input type="text" name="editDis_W" id="editDis_W_Id" value=0.15 size=10 /></td>
          <td>时间差之和</td>
-         <td><input type="text" name="tsum_W" value=0.15 size=10 /></td>
+         <td><input type="text" name="tsum_W" value=0.15 id="tsum_W_Id" size=10 /></td>
          <td>形状差异值</td>
-         <td align="center"><input type="text" name="shapeSum_W" value=0.15 size=10 /></td>
+         <td align="center"><input type="text" name="shapeSum_W" id="shapeSum_W_Id" value=0.15 size=10 /></td>
        </tr>
        <tr>
          <td><b>上传文件：</td>
-         <td>轨迹文件：</td>
+         <td>目标轨迹文件：</td>
          <td colspan="6"><input type="file" name="objectfile" size="10" /></td>
-         <td><input type="checkbox" name="timeStamp" value="1" size="10" />带时间戳</td>
+         <td><input type="checkbox" name="timeStamp"id="timeStampId" checked="checked"
+						value="1" size="10" onchange="changeSimilarValue()" />带时间戳</td>
        </tr>
        <tr>
- <!--        <td colspan="9" align="center"><input type="submit" value="开始计算"></td>
-  -->
-         <td ><a href="moreTrajResult.jsp">开始计算</a></td>  
+       <td></td>
+         <td>测试轨迹文件路径：</td>
+         <td colspan="6"><input type="text" name="testfilePath" size="30" /></td>
+       </tr>
+       <tr>
+         <td colspan="9" align="center"><input type="submit" value="开始计算"></td>
+  
+       <!--  <td ><a href="moreTrajResult.jsp">开始计算</a></td>   -->
        </tr>
      </table>
    </form>

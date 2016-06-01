@@ -1,6 +1,7 @@
 package com.adx.action;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.DataHandlerImp;
@@ -19,6 +20,11 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	private String testfilePath;
 	private double[] similarity;
 	private String actionResult;
+	private ArrayList<String> fileName;
+	public ArrayList<String> getFileName() {
+		return fileName;
+	}
+
 	private int fileLength;
 	
 	public int getFileLength() {
@@ -53,6 +59,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
 		setSimularDef();
+		fileName=new ArrayList<String>();
 		Constant.pattern=1;
 		
 		if(objectfile==null||testfilePath.equals("")){
@@ -66,6 +73,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		
 		FileDerecterReader testFileReader=new FileDerecterReader(testfilePath,simularDef.getTimeStamp());
 		int status_test=testFileReader.readAllFile();
+		fileName=testFileReader.fileName;
 		Trajectory[] testGroup=testFileReader.getTrajGroup();
 		
 		if(status_obj==0||status_test==0){

@@ -13,6 +13,7 @@ import com.adx.entity.Trajectory;
 public class FileDerecterReader {
 	private String path="";
 	private ArrayList<String> filePath;
+	public ArrayList<String> fileName;
 	private Trajectory[] trajGroup;
 	private int timeStamp;
 
@@ -20,6 +21,7 @@ public class FileDerecterReader {
 		// TODO Auto-generated constructor stub
 		this.path=path;
 		filePath=new ArrayList<String>();
+		fileName=new ArrayList<String>();
 		this.timeStamp=timeStamp;
 	}
 	
@@ -33,6 +35,7 @@ public class FileDerecterReader {
 		File[] fs=rootDir.listFiles();
 		for(int i=0;i<fs.length;i++){
 			String tem=fs[i].getAbsolutePath();
+			fileName.add(fs[i].getName());
 			if(fs[i].isDirectory()){
 				return false;
 			}

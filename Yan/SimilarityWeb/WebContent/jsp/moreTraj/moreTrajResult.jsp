@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.adx.resource.Constant"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
@@ -20,28 +21,26 @@
 	<title>结果显示</title>
 </head>
 <body>
-<!-- 	<%! String result=""; %>
-<%-- 	<%  --%>
-// 	String tem=request.getAttribute("actionResult").toString();
-// 	if (tem.equals("success")){
-// 		int length=Integer.parseInt(request.getAttribute("fileLength").toString());
-// 		for(int i=0;i<length;i++){
-// 			result="目标轨迹与测试轨迹"+(i+1)+"的相似度为:"+request.getAttribute("similarity["+i+"]").toString();
-// 			out.println("<h1>"+result+"</h1>");
-// 		}
-// 	}else if(tem.equals("input")){
-// 		result="所选择计算轨迹文件类型与输入文件不匹配";
-// 		out.print("<h1>"+result+"</h1>");
-// 	}else if(tem.equals("error")){
-// 		result="输入文件名找不到，文件传输有误";
-// 		out.print("<h1>"+result+"</h1>");
-// 	}else{
-// 		result="未输入文件";
-// 		out.print("<h1>"+result+"</h1>");
-// 	}
-<%-- 	%> --%>
+ 	<%! String result=""; %>
+	<%  
+ 	String tem=request.getAttribute("actionResult").toString();
+ 	if (tem.equals("success")){
+ 		int length=Integer.parseInt(request.getAttribute("fileLength").toString());
+ 		result="";
+ 		for(int i=0;i<length;i++){
+ 			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get("+i+")").toString()+
+ 					"的相似度为:"+request.getAttribute("similarity["+i+"]").toString();
+ 		}
+ 	}else if(tem.equals("input")){
+ 		result="所选择计算轨迹文件类型与输入文件不匹配";
+ 	}else if(tem.equals("error")){
+ 		result="输入文件名找不到，文件传输有误";
+ 	}else{
+ 		result="未输入文件";
+ 	}
+ 	%>
 	<br/>	
- -->	
+	
 
 	 <!-- 导航条 -->
 	 <nav class="navbar navbar-default navbar-fixed-top">
@@ -68,9 +67,16 @@
 	 <table border="0">
 	 	<tr>
 	 		<td width="30%" valign="top">
-	 			计算结果：
-	             <br/>&nbsp;&nbsp 与目标轨迹相似度最高的轨迹：traj_11
-	             <br/>&nbsp;&nbsp 相似度：86.47261235%
+	 			<b>计算结果：</b>
+	             <br/>&nbsp;&nbsp <%= result %>
+	 		</td>
+	 		<td rowspan="2"><div id="allmap"><h2>地图<h2></div></td>
+	 	</tr>
+	 	<tr>
+	 		<td width="30%" >
+	 			<b>最相似的轨迹结果：</b>
+	            <br/>&nbsp;&nbsp 与目标轨迹相似度最高的轨迹：traj_11
+	            <br/>&nbsp;&nbsp 相似度：86.47261235%
 	 		</td>
 	 		<td rowspan="2"><div id="allmap"><h2>地图<h2></div></td>
 	 	</tr>
