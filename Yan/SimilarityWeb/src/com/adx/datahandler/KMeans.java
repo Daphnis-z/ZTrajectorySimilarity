@@ -33,8 +33,7 @@ public class KMeans {
     	int clusterCnt=points.size()/POINT_NUM_CLUSTER;
     	for (int i = 0; i<clusterCnt; i++) {
     		Cluster cluster = new Cluster(i);
-    		Random rd=new Random();
-    		Point centroid = points.get(rd.nextInt(points.size()));
+    		Point centroid = points.get(i*POINT_NUM_CLUSTER);
     		cluster.setCentroid(centroid);
     		clusters.add(cluster);
     	}
