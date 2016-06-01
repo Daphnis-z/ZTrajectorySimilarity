@@ -15,7 +15,6 @@ function getRandomColor() {
 
 function showMap(strTrajs) {
 	// 接收来自后台的轨迹数据
-//	strTrajs = "${strTrajs}"
 	strTrajs = strTrajs.split('@')
 	center = strTrajs[0].split(',')// 为了设置地图中心点
 	if(center.length<2){
@@ -36,6 +35,9 @@ function showMap(strTrajs) {
 	//绘制折线轨迹
 	for (var ix = 0; ix < strTrajs.length; ix++) {
 		strTraj = strTrajs[ix].split(',')
+		if(strTraj.length<2){
+			break;
+		}
 		var traj = new Array(strTraj.length / 2)
 		for (var i = 0, j = 0; i < strTraj.length; i += 2, j++) {
 			traj[j] = new BMap.Point(strTraj[i], strTraj[i + 1])

@@ -89,12 +89,12 @@
 			<tr>
 				<td><b>上传文件：</td>
 				<td>目标轨迹文件：</td>
-				<td colspan="7"><input type="file" name="objectfile" size="10" /></td>
+				<td colspan="7"><input type="file" name="objectfile" size="40" /></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>测试轨迹文件：</td>
-				<td colspan="6"><input type="file" name="testfile" size="20"/></td>
+				<td colspan="6"><input type="file" name="testfile" size="40"/></td>
 				<td><input type="checkbox" name="timeStamp" id="timeStampId" checked="checked"
 						value="1" size="10" onchange="changeSimilarValue()"/>带时间戳</td>
 			</tr>

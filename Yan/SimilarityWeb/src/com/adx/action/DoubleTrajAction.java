@@ -13,6 +13,8 @@ import com.adx.similaralg.DTWSimilarity;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import com.daphnis.gis.ShowTraj;
+
 @SuppressWarnings("serial")
 public class DoubleTrajAction extends ActionSupport implements ModelDriven<SimularDef>{
 	private SimularDef simularDef=new SimularDef();
@@ -21,7 +23,11 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	private double similarity;
 	private String actionResult;
 	
-	
+	private String strTrajs;
+	public String getStrTrajs() {
+		return strTrajs;
+	}
+
 	public String getActionResult() {
 		return actionResult;
 	}
@@ -93,8 +99,17 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		System.out.println("timestamp:"+simularDef.getTimeStamp());
 		similarity=dtw.getSimilarity(objTraj, testTraj, simularDef.getTimeStamp());
 		System.out.println(similarity);
+		readyForViewTraj(objTraj,testTraj);
+			
 		actionResult=SUCCESS;
 		return actionResult;
+	}
+	
+	private void readyForViewTraj(Trajectory traj1,Trajectory traj2){
+		Vector<Trajectory> vt=new Vector<Trajectory>();
+		vt.addElement(traj1);
+		vt.addElement(traj2);
+		strTrajs=ShowTraj.convertSomeTrajs(vt);
 	}
 
 	//模型驱动实现请求数据的封装

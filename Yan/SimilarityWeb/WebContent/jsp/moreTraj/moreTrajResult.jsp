@@ -73,18 +73,9 @@
 	 		<td rowspan="2"><div id="allmap"><h2>地图<h2></div></td>
 	 	</tr>
 	 	<tr>
-	 		<td width="30%" >
-	 			<b>最相似的轨迹结果：</b>
-	            <br/>&nbsp;&nbsp 与目标轨迹相似度最高的轨迹：traj_11
-	            <br/>&nbsp;&nbsp 相似度：86.47261235%
-	 		</td>
-	 		<td rowspan="2"><div id="allmap"><h2>地图<h2></div></td>
-	 	</tr>
-	 	<tr>
 	 		<td align="center" height="10%"><button onclick="drawTraj()">可视化轨迹</button></td>
 	 	</tr>
 	 </table>
-
 	
 </body>
 </html>

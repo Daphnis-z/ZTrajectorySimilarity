@@ -45,7 +45,7 @@
     <tr height="8%">
     	<form action="viewTraj.action" method="post" enctype="multipart/form-data">
 			<td><b>上传轨迹文件：</td>
-			<td><input type="file" name="trajFile" size="10" /></td>
+			<td><input type="file" name="trajFile" size="50" /></td>
 			<td><input type="submit" value="显示轨迹" /></td>
 		</form>
     </tr>

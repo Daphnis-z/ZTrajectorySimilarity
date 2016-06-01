@@ -72,7 +72,8 @@
 </html>
 <script type="text/javascript">
 	function drawTraj(){
-		showMap("")
+		strTrajs = "${strTrajs}";
+		showMap(strTrajs);
 	}
 </script>
 
