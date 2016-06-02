@@ -25,6 +25,7 @@
 	        <li><a href="./jsp/doubleTraj/doubleTraj.jsp">双轨迹模式</a></li>
 	        <li><a href="./jsp/moreTraj/moreTraj.jsp">多轨迹模式</a></li>
 	        <li><a href="./jsp/viewTraj/viewTraj.jsp">可视化轨迹</a></li>
+	        <li><a href="./jsp/setting/setting.jsp">设置</a></li>
 	      </ul>
 	    </div>
 	  </div>

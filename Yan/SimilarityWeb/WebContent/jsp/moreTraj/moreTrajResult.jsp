@@ -53,6 +53,7 @@
            <li><a href="../doubleTraj/doubleTraj.jsp">双轨迹模式</a></li>
            <li class="active"><a href="moreTraj.jsp">多轨迹模式</a></li>
            <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
+           <li><a href="../setting/setting.jsp">设置</a></li>           
          </ul>
        </div>
 	   </div>

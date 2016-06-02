@@ -34,6 +34,10 @@
     		<result name="success">viewTraj.jsp</result>
     		<result name="none">viewTraj.jsp</result>
     	</action>     
+    	<action name="setting" class="com.adx.action.SettingAction">
+    		<result name="success">setting.jsp</result>
+    		<result name="none">setting.jsp</result>
+    	</action>     
     </package>
 </struts>
 

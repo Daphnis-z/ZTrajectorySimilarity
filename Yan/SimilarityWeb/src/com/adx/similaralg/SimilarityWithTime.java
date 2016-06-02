@@ -155,10 +155,9 @@ public class SimilarityWithTime extends Similarity{
 	}
 	
 	public void calculate_SimilarerMatch(){
-		if(similarity<=0.6){
-			System.out.println("i am if");
-			int matchcnt=3+objTraj.getSize()/10;
-			similarer_match=new int[matchcnt][2];
+		if(similarity<=0){
+			int matchcnt=5+objTraj.getSize()/5;
+			similarestPoint=new Point[2];
 			MatchPoint [] mp=new MatchPoint[objTraj.getSize()];
 			for(int i=0;i<objTraj.getSize();i++){
 				mp[i]=new MatchPoint();
@@ -173,16 +172,39 @@ public class SimilarityWithTime extends Similarity{
 				}
 			}
 			Arrays.sort(mp,new Mycomparator());
-			for(int i=0;i<matchcnt;i++){
-				similarer_match[i][0]=mp[i].t_index;
-				similarer_match[i][1]=mp[i].o_index;
+			similarestPoint[0]=testTraj.getPoints().get(mp[0].t_index);
+			similarestPoint[1]=objTraj.getPoints().get(mp[0].o_index);
+			Vector sest=new Vector();
+			for(int i=0;i<matchcnt-1;i++){
+				sest.add(i);
+				int t=i;
+				for(int j=i+1;j<matchcnt;j++){
+					if(Math.abs(mp[t].t_index-mp[j].t_index)==1&&(mp[t].o_index!=mp[j].o_index)){
+						sest.add(j);
+						t=j;
+					}
+				}
+				if(sest.size()>=2) break;
+				else sest.removeAllElements();
 			}
+		    if(sest.size()>=2){
+		    	similarestTraj=new Trajectory[2];
+		    	similarestTraj[0]=new Trajectory();
+		    	similarestTraj[1]=new Trajectory();
+		    	for(int i=0;i<sest.size();i++){
+		    		int t1=mp[(int) sest.get(i)].t_index;
+		    		int t2=mp[(int) sest.get(i)].o_index;
+		    		similarestTraj[0].addPoint(testTraj.getPoints().get(t1));
+		    		similarestTraj[1].addPoint(objTraj.getPoints().get(t2));
+		    	}
+		    }
+		    else similarestTraj=null;
+			
 			
 		}
 		else{
-			System.out.println("i am else");
-			int matchcnt=3+matchsize/10;
-			similarer_match=new int[matchcnt][2];
+			int matchcnt=5+matchsize/5;
+			int [][] similarest_match=new int[1][2];
 			MatchPoint []mp=new MatchPoint[matchsize];
 			for(int i=0;i<matchsize;i++){
 				mp[i]=new MatchPoint();
@@ -191,11 +213,34 @@ public class SimilarityWithTime extends Similarity{
 				mp[i].distance=raw_dis[match[i][0]][match[i][1]];
 			}
 			Arrays.sort(mp,new Mycomparator());
-			for(int i=0;i<matchcnt;i++){
-				similarer_match[i][0]=mp[i].t_index;
-				similarer_match[i][1]=mp[i].o_index;
-				
+			similarestPoint[0]=testTraj.getPoints().get(mp[0].t_index);
+			similarestPoint[1]=objTraj.getPoints().get(mp[0].o_index);
+			Vector sest=new Vector();
+			for(int i=0;i<matchcnt-1;i++){
+				sest.add(i);
+				int t=i;
+				for(int j=i+1;j<matchcnt;j++){
+					if(Math.abs(mp[t].t_index-mp[j].t_index)==1&&(mp[t].o_index!=mp[j].o_index)){
+						sest.add(j);
+						t=j;
+					}
+				}
+				if(sest.size()>=2) break;
+				else sest.removeAllElements();
 			}
+		    if(sest.size()>=2){
+		    	similarestTraj=new Trajectory[2];
+		    	similarestTraj[0]=new Trajectory();
+		    	similarestTraj[1]=new Trajectory();
+		    	for(int i=0;i<sest.size();i++){
+		    		int t1=mp[(int) sest.get(i)].t_index;
+		    		int t2=mp[(int) sest.get(i)].o_index;
+		    		similarestTraj[0].addPoint(testTraj.getPoints().get(t1));
+		    		similarestTraj[1].addPoint(objTraj.getPoints().get(t2));
+		    	}
+		    }
+		    else similarestTraj=null;
+			
 		}
 	}
 }

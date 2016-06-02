@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="com.sun.glass.ui.Window"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,12 +10,11 @@
     <link href="../css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/viewTraj.css">
+    <link rel="stylesheet" type="text/css" href="../css/setting.css">
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
-	<script type="text/javascript" src="../js/zBaiduMap.js"></script>
 
-	<title>可视化轨迹</title>
+	<title>设置</title>
 </head>
 <body>
   <!-- 导航条 -->
@@ -29,8 +27,8 @@
         <ul class="nav navbar-nav">
           <li><a href="../doubleTraj/doubleTraj.jsp">双轨迹模式</a></li>
           <li><a href="../moreTraj/moreTraj.jsp">多轨迹模式</a></li>
-          <li class="active"><a href="viewTraj.jsp">可视化轨迹</a></li>
-          <li><a href="../setting/setting.jsp">设置</a></li>          
+          <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
+          <li class="active"><a href="setting.jsp">设置</a></li>
         </ul>
       </div>
     </div>
@@ -41,29 +39,31 @@
       <p class="text-muted">Similarity_HHU SC2016 </p>
     </div>
   </footer>
-
-  <table>
-    <tr height="8%">
-    	<form action="viewTraj.action" method="post" enctype="multipart/form-data">
-			<td><b>上传轨迹文件：</td>
-			<td><input type="file" name="trajFile" id="trajFile" size="50" /></td>
-			<td><input type="submit" value="显示轨迹" onclick="checkValue()" /></td>
-		</form>
-    </tr>
-  </table>
-  <table id="map">
-    <tr>
-      <td colspan="3"><div id="allmap"><h2>地图<h2></div></td>
-    </tr>
-  </table>
+  <script>
+  	msg="${msg}"
+  	if(msg!=""){
+  	  	alert(msg);
+  	}
+  </script>
+  
+    <form action="setting.action" method="post" enctype="multipart/form-data">
+      <table border="0">
+        <tr>
+          <td><b>各要素最坏值：</td>
+          <td>轨迹距离</td>
+          <td><input type="text"  name="dtwDis_B"  size=10 /></td>
+          <td>轨迹顺序</td>
+          <td align="center"><input type="text" name="editDis_B" size=10 /></td>
+          <td>时间差</td>
+          <td><input type="text"  name="tsum_B" size=10 /></td>
+          <td>形状差异</td>
+          <td align="center"><input type="text" name="shapeSum_B"  size=10 /></td>
+        </tr>            
+        <tr>
+          <td colspan="9" align="center"><input type="submit" value="应用设置"></td>
+        </tr>
+      </table>
+    </form>
 </body>
 </html>
-<script type="text/javascript">
-	function checkValue(){
-		if(document.getElementById("trajFile").value==""){
-			alert("未选择文件！！")
-		}
-	}
-	showMap("${strTrajs}","${subtraj}")
-</script>
 

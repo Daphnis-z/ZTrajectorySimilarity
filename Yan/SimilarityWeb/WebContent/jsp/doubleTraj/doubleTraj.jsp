@@ -50,6 +50,7 @@
 	        <li class="active"><a href="doubleTraj.jsp">双轨迹模式</a></li>
 	        <li><a href="../moreTraj/moreTraj.jsp">多轨迹模式</a></li>
 	        <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
+	        <li><a href="../setting/setting.jsp">设置</a></li>	        
 	      </ul>
 	    </div>
 	  </div>
@@ -65,13 +66,13 @@
 		<table border="0">
 			<tr>
 				<td><b>各要素权重：</td>
-				<td>DTW距离</td>
+				<td>轨迹距离</td>
 				<td><input type="text" name="dtwDis_W" value=<%= dtwDis_W%> id="dtwDis_W_Id" size=10 /></td>
-				<td>Edit距离</td>
+				<td>轨迹顺序</td>
 				<td align="center"><input type="text" name="editDis_W" id="editDis_W_Id" value=<%= editDis_W%> size=10 /></td>
-				<td>时间差之和</td>
+				<td>时间差</td>
 				<td><input type="text" name="tsum_W" value=<%= tsum_W%> id="tsum_W_Id" size=10 /></td>
-				<td>形状差异值</td>
+				<td>形状差异</td>
 				<td align="center"><input type="text" name="shapeSum_W" id="shapeSum_W_Id" value=<%= shapeSum_W%> size=10 /></td>
 			</tr>            
 			<tr>

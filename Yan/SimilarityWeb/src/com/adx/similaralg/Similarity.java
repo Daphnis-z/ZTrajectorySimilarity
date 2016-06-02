@@ -2,6 +2,7 @@ package com.adx.similaralg;
 
 import java.util.Comparator;
 
+import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 
@@ -10,17 +11,28 @@ public abstract class Similarity {
 	protected double[][] raw_dis;
 	protected double[][] dtw_dis;
 	protected int[][] match;
-	public double getSimilarity() {
-		return similarity;
-	}
 	protected int matchsize;
 	protected double dis,shape,edit;
 	protected long time;
 	protected double disS,shapeS,editS,timeS;
 	protected double similarity;
-	protected int[][] similarer_match;
+	protected Trajectory []similarestTraj;
+	protected Point []similarestPoint;
+
 	protected SimularDef sDef;
 	
+	public double getSimilarity() {
+		return similarity;
+	}	
+	
+	public Trajectory[] getSimilarestTraj() {
+		return similarestTraj;
+	}
+
+	public Point[] getSimilarestPoint() {
+		return similarestPoint;
+	}
+
 	public abstract void init(Trajectory objTraj,Trajectory testTraj,SimularDef sDef);
 	public abstract void calculate_Params();
 	public abstract void calculate_Similarity();
@@ -40,5 +52,6 @@ class Mycomparator implements Comparator<MatchPoint>{
 		else return 0;
 	}
 }
+
 
 

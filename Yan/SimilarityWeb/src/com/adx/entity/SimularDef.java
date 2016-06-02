@@ -8,6 +8,10 @@ package com.adx.entity;
  */
 public class SimularDef {
 
+	private double dtwDis_B=2;	//dtw的距离度量最坏值
+	private double editDis_B=1000;	//编辑距离度量最坏值
+	private long tsum_B=1440;	//时间戳度量最坏值
+	private double shapeSum_B=100;	//形状度量最坏值
 	private double dtwDis_W;	//dtw的距离度量权重
 	private double editDis_W;	//编辑距离度量权重
 	private double tsum_W;	//时间戳度量权重
@@ -21,19 +25,17 @@ public class SimularDef {
 		this.timeStamp = timeStamp;
 	}
 	public double getDtwDis_B() {
-		double dtwDis_B=2;
 		return dtwDis_B;
 	}
-//	public void setDtwDis_B(double dtwDis_B) {
-//		this.dtwDis_B = dtwDis_B;
-//	}
+	public void setDtwDis_B(double dtwDis_B) {
+		this.dtwDis_B = dtwDis_B;
+	}
 	public double getEditDis_B() {
-		double editDis_B=1000;
 		return editDis_B;
 	}
-//	public void setEditDis_B(double editDis_B) {
-//		this.editDis_B = editDis_B;
-//	}
+	public void setEditDis_B(double editDis_B) {
+		this.editDis_B = editDis_B;
+	}
 	public double getEditDis_W() {
 		return editDis_W;
 	}
@@ -41,19 +43,17 @@ public class SimularDef {
 		this.editDis_W = editDis_W;
 	}
 	public long getTsum_B() {
-		long tsum_B=1440;
 		return tsum_B;
 	}
-//	public void setTsum_B(double tsum_B) {
-//		this.tsum_B = tsum_B;
-//	}
+	public void setTsum_B(long tsum_B) {
+		this.tsum_B = tsum_B;
+	}
 	public double getShapeSum_B() {
-		double shapeSum_B=100;
 		return shapeSum_B;
 	}
-//	public void setShapeSum_B(double shapeSum_B) {
-//		this.shapeSum_B = shapeSum_B;
-//	}
+	public void setShapeSum_B(double shapeSum_B) {
+		this.shapeSum_B = shapeSum_B;
+	}
 	public double getDtwDis_W() {
 		return dtwDis_W;
 	}
