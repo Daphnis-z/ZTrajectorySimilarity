@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <link href="../css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/multiTraj.css">
+    <link href="./jsp/css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="./jsp/css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./jsp/css/multiTraj.css">
 
 	<title>多轨迹模式</title>
 </head>
-<body background="../css/images/bg.jpg">
+<body background="./jsp/css/images/bg.jpg">
  	<%! double dtwDis_W=0.45,editDis_W=0.1,tsum_W=0,shapeSum_W=0.45;
 	%>
 	<script type="text/javascript">
@@ -43,14 +43,14 @@
    <nav class="navbar navbar-default navbar-fixed-top">
      <div class="container">
        <div class="navbar-header">
-         <a class="navbar-brand" href="../../">轨迹相似度计算系统</a>
+         <a class="navbar-brand" href="./">轨迹相似度计算系统</a>
        </div>
        <div id="navbar" class="collapse navbar-collapse">
          <ul class="nav navbar-nav">
-           <li><a href="../doubleTraj/doubleTraj.jsp">双轨迹模式</a></li>
-           <li class="active"><a href="moreTraj.jsp">多轨迹模式</a></li>
-           <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
-           <li><a href="../setting/setting.jsp">设置</a></li>           
+	        <li><a href="doublePattern.action">双轨迹模式</a></li>
+	        <li class="active"><a href="">多轨迹模式</a></li>
+	        <li><a href="viewTraj.action">可视化轨迹</a></li>
+	        <li><a href="setting.action">设置</a></li>
          </ul>
        </div>
      </div>

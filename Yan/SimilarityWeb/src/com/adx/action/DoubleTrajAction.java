@@ -66,7 +66,6 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
 		Constant.pattern=0;
 		if(objectfile==null||testfile==null){
 			actionResult=NONE;
@@ -133,3 +132,4 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		return simularDef;
 	}
 }
+

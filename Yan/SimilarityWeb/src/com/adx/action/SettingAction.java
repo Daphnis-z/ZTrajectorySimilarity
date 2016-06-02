@@ -51,7 +51,7 @@ public class SettingAction extends ActionSupport {
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
 		if(dtwDis_B==0||editDis_B==0||tsum_B==0||shapeSum_B==0){
-			msg="设置失败！！请填写值";
+			msg="请填写所有的值";
 			return NONE;
 		}
 		Constant.dtwDis_B=dtwDis_B;

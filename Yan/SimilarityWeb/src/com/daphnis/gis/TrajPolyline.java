@@ -68,18 +68,15 @@ public class TrajPolyline extends ActionSupport{
 		
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
-		if(trajFile==null){
-			return NONE;//未输入文件
+		if(trajFile!=null){
+			CSVReader objReader=new CSVReader(trajFile,-1);
+			objReader.readFile();
+			Trajectory objTraj=objReader.getTraj();
+			showATraj(objTraj);
+						
+			//相似度最高的轨迹段测试		
+			subtraj="3,7";
 		}
-		CSVReader objReader=new CSVReader(trajFile,-1);
-		objReader.readFile();
-		Trajectory objTraj=objReader.getTraj();
-		showATraj(objTraj);
-		
-		
-		//相似度最高的轨迹段测试		
-		subtraj="3,7";
 
 		return super.execute();
 	}

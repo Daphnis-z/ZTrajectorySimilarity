@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <link href="../css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/doubleTraj.css">
+    <link href="./jsp/css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="./jsp/css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./jsp/css/doubleTraj.css">
 
 	<title>双轨迹模式</title>
 </head>
-<body background="../css/images/bg.jpg">
+<body background="./jsp/css/images/bg.jpg">
 	<%! double dtwDis_W=0.45,editDis_W=0.1,tsum_W=0,shapeSum_W=0.45;
 	%>
 	<script type="text/javascript">
@@ -43,14 +43,14 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="../../">轨迹相似度计算系统</a>
+	      <a class="navbar-brand" href="./">轨迹相似度计算系统</a>
 	    </div>
 	    <div id="navbar" class="collapse navbar-collapse">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="doubleTraj.jsp">双轨迹模式</a></li>
-	        <li><a href="../moreTraj/moreTraj.jsp">多轨迹模式</a></li>
-	        <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
-	        <li><a href="../setting/setting.jsp">设置</a></li>	        
+	        <li class="active"><a href="">双轨迹模式</a></li>
+	        <li><a href="morePattern.action">多轨迹模式</a></li>
+	        <li><a href="viewTraj.action">可视化轨迹</a></li>
+	        <li><a href="setting.action">设置</a></li>
 	      </ul>
 	    </div>
 	  </div>
@@ -62,7 +62,7 @@
 	  </div>
 	</footer>
 
-	<form action="doubleTrajCul.action" method="post" enctype="multipart/form-data">
+	<form action="doublePattern.action" method="post" enctype="multipart/form-data" onsubmit="return checkFile()">
 		<table border="0">
 			<tr>
 				<td><b>各要素权重：</td>
@@ -78,21 +78,32 @@
 			<tr>
 				<td><b>上传文件：</td>
 				<td>目标轨迹文件：</td>
-				<td colspan="7"><input type="file" name="objectfile" size="40" /></td>
+				<td colspan="7">
+					<input type="file" name="objectfile" id="ofile" size="40"/>
+				</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>测试轨迹文件：</td>
-				<td colspan="6"><input type="file" name="testfile" size="40"/></td>
+				<td colspan="6"><input type="file" name="testfile" id="tfile" size="40"/></td>
 				<td><input type="checkbox" name="timeStamp" id="timeStampId" 
 						value="1" size="10" onchange="changeSimilarValue()"/>带时间戳</td>
 			</tr>
 			<tr>
  				<td colspan="9" align="center"><input type="submit" value="开始计算"></td>
- 
-				<!--  <td ><a href="doubleTrajResult.jsp">开始计算</a></td>	-->
-			</tr>
+ 			</tr>
 		</table>
 	</form>
 </body>
 </html>
+<script type="text/javascript">	
+	function checkFile(){
+		if(document.getElementById("ofile").value==""||
+				document.getElementById("tfile").value==""){
+			alert("请选择目标轨迹和测试轨迹文件！！")
+			return false
+		}
+		return true
+	}
+</script>
+

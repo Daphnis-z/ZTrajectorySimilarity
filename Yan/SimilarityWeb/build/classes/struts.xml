@@ -3,19 +3,30 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	 <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="false" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
     <package name="default" namespace="/" extends="struts-default">
-       <default-action-ref name="index"></default-action-ref>
+        <default-action-ref name="index"></default-action-ref>
         <action name="index">  
             <result>jsp/default.jsp</result>  
         </action> 
-        <action name="doublePattern">  
-            <result>jsp/doubleTraj/doubleTraj.jsp</result>  
+        <action name="doublePattern" class="com.adx.action.DoubleTrajAction">  
+            <result name="none">jsp/doubleTraj/doubleTraj.jsp</result> 
+            <result name="success">jsp/doubleTraj/doubleTrajResult.jsp</result>
+    		<result name="input">jsp/doubleTraj/doubleTrajResult.jsp</result>
+    		<result name="error">jsp/doubleTraj/doubleTrajResult.jsp</result>
         </action> 
         <action name="morePattern">  
             <result>jsp/moreTraj/moreTraj.jsp</result>  
         </action> 
+        <action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
+    		<result>/jsp/viewTraj/viewTraj.jsp</result>
+    	</action>     
+    	<action name="setting" class="com.adx.action.SettingAction">
+    		<result name="success">/jsp/setting/setting.jsp</result>
+    		<result name="none">/jsp/setting/setting.jsp</result>    		
+    	</action>     
+        
     	<action name="doubleTrajCul" class="com.adx.action.DoubleTrajAction">
     		<result name="success">doubleTrajResult.jsp</result>
     		<result name="input">doubleTrajResult.jsp</result>
@@ -29,15 +40,6 @@
     		<result name="none">moreTrajResult.jsp</result>
     	</action>
     	
-    	<!-- 在GIS系统中显示轨迹 -->
-    	<action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
-    		<result name="success">viewTraj.jsp</result>
-    		<result name="none">viewTraj.jsp</result>
-    	</action>     
-    	<action name="setting" class="com.adx.action.SettingAction">
-    		<result name="success">setting.jsp</result>
-    		<result name="none">setting.jsp</result>
-    	</action>     
     </package>
 </struts>
 

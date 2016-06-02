@@ -20,7 +20,7 @@ function getRandomColor() {
 function createBaiduMap(logitude,latitude){
 	// 百度地图API功能
 	var map = new BMap.Map("allmap")
-	map.centerAndZoom(new BMap.Point(center[0],center[1]), 10)
+	map.centerAndZoom(new BMap.Point(logitude,latitude), 10)
 	map.enableScrollWheelZoom()
 
 	// 添加地图控件
@@ -55,7 +55,7 @@ function showMap(strTrajs) {
 		}
 				
 		var polyline = new BMap.Polyline(
-			traj, {strokeColor : ix==0? "red":"green",strokeWeight : 4,strokeOpacity : 0}
+			traj, {strokeColor : ix==0? "#B40404":"#07FC17",strokeWeight : 4,strokeOpacity : 0}
 		) //创建折线
 		map.addOverlay(polyline)//增加折线
 	}
@@ -63,36 +63,32 @@ function showMap(strTrajs) {
 
 function showMapWithSubtraj(strTraj,subtraj){
 	// 接收来自后台的轨迹数据
-	center = strTraj.split(',')// 为了设置地图中心点
-	if(center.length<2){
-		center[0]=118.82761
-		center[1]=31.97705
+	if(strTraj==""){
+		createBaiduMap(118.82761,31.97705)
+		return
 	}
-	map=createBaiduMap(center[0],center[1])
-
-	strTraj=center
-	var traj = new Array(strTraj.length / 2)
+	strTraj = strTraj.split(',')
+	map=createBaiduMap(strTraj[0],strTraj[1])
+	traj = new Array(strTraj.length / 2)
 	for (var i = 0, j = 0; i < strTraj.length; i += 2, j++) {
 		traj[j] = new BMap.Point(strTraj[i], strTraj[i + 1])
 		map.addOverlay(new BMap.Marker(traj[j]))
 	}			
 	var polyline = new BMap.Polyline(
-		traj, {strokeColor : "red",strokeWeight : 4,strokeOpacity : 0}
+		traj, {strokeColor : "#B40404",strokeWeight : 4,strokeOpacity : 0}
 	) //创建折线
 	map.addOverlay(polyline)//增加折线
-
 
 	//绘制子轨迹
 	subtraj=subtraj.split(',')
 	straj=new Array(subtraj[1]-subtraj[0]+1)
 	for(i=0,ix=subtraj[0];ix<=subtraj[1];++i,++ix){
 		straj[i]=traj[ix]
+		map.addOverlay(new BMap.Marker(straj[i],{title:"我是相似度最高的子轨迹"}))
 	}
 	polyline = new BMap.Polyline(
-		straj, {strokeColor : "#A4FD14",strokeWeight : 5,strokeOpacity : 0}
+		straj, {strokeColor : "#07FCF8",strokeWeight : 5,strokeOpacity : 0}
 	) //创建折线
 	map.addOverlay(polyline)//增加折线
-
-
 }
 
