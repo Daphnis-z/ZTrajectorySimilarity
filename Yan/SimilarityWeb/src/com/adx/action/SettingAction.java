@@ -50,15 +50,14 @@ public class SettingAction extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
-		if(Constant.simularDef==null){
-			msg="设置失败！！请先去进行轨迹相似度计算";
+		if(dtwDis_B==0||editDis_B==0||tsum_B==0||shapeSum_B==0){
+			msg="设置失败！！请填写值";
 			return NONE;
 		}
-		Constant.simularDef.setDtwDis_B(dtwDis_B);
-		Constant.simularDef.setEditDis_B(editDis_B);;
-		Constant.simularDef.setShapeSum_B(shapeSum_B);;
-		Constant.simularDef.setTsum_B(tsum_B);;
-		System.out.println("dtwDis_B"+dtwDis_B);
+		Constant.dtwDis_B=dtwDis_B;
+		Constant.editDis_B=editDis_B;
+		Constant.shapeSum_B=shapeSum_B;
+		Constant.tsum_B=tsum_B;;
 		msg="设置成功！！";
 		return SUCCESS;
 	}

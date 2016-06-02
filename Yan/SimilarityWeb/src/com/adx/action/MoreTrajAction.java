@@ -8,6 +8,7 @@ import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.DataHandlerImp;
 import com.adx.datahandler.FileDerecterReader;
 import com.adx.datahandler.Utility;
+import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
@@ -28,14 +29,22 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	private ArrayList<String> fileName;
 	private int[] indexes;
 	private String strTrajs;
+	private int fileLength;
+	private Trajectory[] similarestTraj;
+	private Point[] similarestPoint;
 	public String getStrTrajs() {
 		return strTrajs;
 	}
 	public ArrayList<String> getFileName() {
 		return fileName;
 	}
+	public Trajectory[] getSimilarestTraj() {
+		return similarestTraj;
+	}
 
-	private int fileLength;
+	public Point[] getSimilarestPoint() {
+		return similarestPoint;
+	}
 	
 	public int getFileLength() {
 		return fileLength;
@@ -59,10 +68,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		this.objectfile = objectfile;
 	}
 
-	private void setSimularDef(){
-		Constant.simularDef=simularDef;
-	}
-	
 	public double[] getSimilarity() {
 		return similarity;
 	}
@@ -77,7 +82,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
-		setSimularDef();
 		fileName=new ArrayList<String>();
 		Constant.pattern=1;
 		
@@ -109,6 +113,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		fileLength=testGroup.length;
 		indexes=new int[fileLength];
 		similarity=new double[fileLength];
+		ArrayList<Similarity> dtwExample=new ArrayList<Similarity>();
 		Similarity dtw;
 		for (int i=0;i<fileLength;i++){
 			DataHandlerImp test_handler=new DataHandlerImp(testGroup[i]);
@@ -118,11 +123,14 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 			}else{
 				 dtw=new SimilarityWithTime(objTraj,testGroup[i],simularDef);
 			}
+			dtwExample.add(dtw);
 			System.out.println("timestamp:"+simularDef.getTimeStamp());
 			similarity[i]=dtw.getSimilarity();
 		}
 		indexes=Utility.orderByValue(similarity);
-		readyForViewTraj(objTraj,testGroup[indexes[1]]);
+		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
+		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
+		readyForViewTraj(objTraj,testGroup[indexes[0]]);
 		
 		actionResult=SUCCESS;
 		return actionResult;

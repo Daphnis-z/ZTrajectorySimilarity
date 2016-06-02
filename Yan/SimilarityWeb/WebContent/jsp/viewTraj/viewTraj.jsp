@@ -64,6 +64,6 @@
 			alert("未选择文件！！")
 		}
 	}
-	showMap("${strTrajs}","${subtraj}")
+	showMapWithSubtraj("${strTrajs}","${subtraj}")
 </script>
 

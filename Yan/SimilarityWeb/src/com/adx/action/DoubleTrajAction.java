@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.DataHandlerImp;
+import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
@@ -22,6 +23,16 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	private File objectfile;
 	private File testfile;
 	private double similarity;
+	private Trajectory[] similarestTraj;
+	private Point[] similarestPoint;
+	public Trajectory[] getSimilarestTraj() {
+		return similarestTraj;
+	}
+
+	public Point[] getSimilarestPoint() {
+		return similarestPoint;
+	}
+
 	private String actionResult;
 	
 	private String strTrajs;
@@ -48,10 +59,6 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	public void setTestfile(File testfile) {
 		this.testfile = testfile;
 	}
-
-	private void setSimularDef(){
-		Constant.simularDef=simularDef;
-	}
 	
 	public double getSimilarity() {
 		return similarity;
@@ -60,7 +67,6 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
-		setSimularDef();
 		Constant.pattern=0;
 		if(objectfile==null||testfile==null){
 			actionResult=NONE;
@@ -105,6 +111,8 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		
 		similarity=dtw.getSimilarity();
 		System.out.println(similarity);
+		similarestTraj=dtw.getSimilarestTraj();
+		similarestPoint=dtw.getSimilarestPoint();
 		readyForViewTraj(objTraj,testTraj);
 			
 		actionResult=SUCCESS;

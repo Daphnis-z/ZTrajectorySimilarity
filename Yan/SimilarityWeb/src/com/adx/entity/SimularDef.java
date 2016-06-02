@@ -1,5 +1,7 @@
 package com.adx.entity;
 
+import com.adx.resource.Constant;
+
 /**
  * SimularDef
  * 相似度的定义模型的实体
@@ -8,10 +10,10 @@ package com.adx.entity;
  */
 public class SimularDef {
 
-	private double dtwDis_B=2;	//dtw的距离度量最坏值
-	private double editDis_B=1000;	//编辑距离度量最坏值
-	private long tsum_B=1440;	//时间戳度量最坏值
-	private double shapeSum_B=100;	//形状度量最坏值
+	private double dtwDis_B;	//dtw的距离度量最坏值
+	private double editDis_B;	//编辑距离度量最坏值
+	private long tsum_B;	//时间戳度量最坏值
+	private double shapeSum_B;	//形状度量最坏值
 	private double dtwDis_W;	//dtw的距离度量权重
 	private double editDis_W;	//编辑距离度量权重
 	private double tsum_W;	//时间戳度量权重
@@ -25,12 +27,14 @@ public class SimularDef {
 		this.timeStamp = timeStamp;
 	}
 	public double getDtwDis_B() {
+		dtwDis_B=Constant.dtwDis_B;
 		return dtwDis_B;
 	}
 	public void setDtwDis_B(double dtwDis_B) {
 		this.dtwDis_B = dtwDis_B;
 	}
 	public double getEditDis_B() {
+		editDis_B=Constant.editDis_B;
 		return editDis_B;
 	}
 	public void setEditDis_B(double editDis_B) {
@@ -43,12 +47,14 @@ public class SimularDef {
 		this.editDis_W = editDis_W;
 	}
 	public long getTsum_B() {
+		tsum_B=Constant.tsum_B;
 		return tsum_B;
 	}
 	public void setTsum_B(long tsum_B) {
 		this.tsum_B = tsum_B;
 	}
 	public double getShapeSum_B() {
+		shapeSum_B=Constant.shapeSum_B;
 		return shapeSum_B;
 	}
 	public void setShapeSum_B(double shapeSum_B) {
