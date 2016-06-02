@@ -61,3 +61,38 @@ function showMap(strTrajs) {
 	}
 }
 
+function showMapWithSubtraj(strTraj,subtraj){
+	// 接收来自后台的轨迹数据
+	center = strTraj.split(',')// 为了设置地图中心点
+	if(center.length<2){
+		center[0]=118.82761
+		center[1]=31.97705
+	}
+	map=createBaiduMap(center[0],center[1])
+
+	strTraj=center
+	var traj = new Array(strTraj.length / 2)
+	for (var i = 0, j = 0; i < strTraj.length; i += 2, j++) {
+		traj[j] = new BMap.Point(strTraj[i], strTraj[i + 1])
+		map.addOverlay(new BMap.Marker(traj[j]))
+	}			
+	var polyline = new BMap.Polyline(
+		traj, {strokeColor : "red",strokeWeight : 4,strokeOpacity : 0}
+	) //创建折线
+	map.addOverlay(polyline)//增加折线
+
+
+	//绘制子轨迹
+	subtraj=subtraj.split(',')
+	straj=new Array(subtraj[1]-subtraj[0]+1)
+	for(i=0,ix=subtraj[0];ix<=subtraj[1];++i,++ix){
+		straj[i]=traj[ix]
+	}
+	polyline = new BMap.Polyline(
+		straj, {strokeColor : "#A4FD14",strokeWeight : 5,strokeOpacity : 0}
+	) //创建折线
+	map.addOverlay(polyline)//增加折线
+
+
+}
+

@@ -58,7 +58,6 @@
 </body>
 </html>
 <script type="text/javascript">
-	strTrajs = "${strTrajs}"
-	showMap(strTrajs)
+	showMap("${strTrajs}","${subtraj}")
 </script>
 

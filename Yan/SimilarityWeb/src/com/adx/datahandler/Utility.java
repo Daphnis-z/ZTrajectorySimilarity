@@ -1,7 +1,30 @@
 package com.adx.datahandler;
 
 public class Utility {
+	public static int[] orderByValue(double[] similarity){
+		int index=0;
+		int[] indexes=new int[similarity.length];
+		double[] tem=similarity.clone();
+		for(int i=0;i<similarity.length;i++){
+			index=getMax(tem);
+			tem[index]=-1;
+			indexes[i]=index;
+		}
+		return indexes;
+	}
 	
+
+	public static int getMax(double[] sizes){
+		int index=0;
+		double max=0;
+		for(int i=0;i<sizes.length;i++){
+			if(max<sizes[i]){
+				max=sizes[i];
+				index=i;
+			}
+		}
+		return index;
+	}
 
 	public static int getMax(int[] sizes){
 		int index=0;

@@ -7,7 +7,6 @@ package com.adx.datahandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.adx.entity.Point;
 

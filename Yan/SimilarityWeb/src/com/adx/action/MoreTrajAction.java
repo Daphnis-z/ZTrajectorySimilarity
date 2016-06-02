@@ -2,14 +2,19 @@ package com.adx.action;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.DataHandlerImp;
 import com.adx.datahandler.FileDerecterReader;
+import com.adx.datahandler.Utility;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
-import com.adx.similaralg.DTWSimilarity;
+import com.adx.similaralg.Similarity;
+import com.adx.similaralg.SimilarityWithTime;
+import com.adx.similaralg.SimilarityWithoutTime;
+import com.daphnis.gis.ShowTraj;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -21,6 +26,11 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	private double[] similarity;
 	private String actionResult;
 	private ArrayList<String> fileName;
+	private int[] indexes;
+	private String strTrajs;
+	public String getStrTrajs() {
+		return strTrajs;
+	}
 	public ArrayList<String> getFileName() {
 		return fileName;
 	}
@@ -30,7 +40,9 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	public int getFileLength() {
 		return fileLength;
 	}
-
+	public int[] getIndexes() {
+		return indexes;
+	}
 	public void setTestfilePath(String testfilePath) {
 		this.testfilePath = testfilePath;
 	}
@@ -53,6 +65,13 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	
 	public double[] getSimilarity() {
 		return similarity;
+	}
+	
+	private void readyForViewTraj(Trajectory traj1,Trajectory traj2){
+		Vector<Trajectory> vt=new Vector<Trajectory>();
+		vt.addElement(traj1);
+		vt.addElement(traj2);
+		strTrajs=ShowTraj.convertSomeTrajs(vt);
 	}
 
 	@Override
@@ -86,15 +105,25 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		}
 		DataHandlerImp obj_handler=new DataHandlerImp(objTraj);
 		objTraj=obj_handler.dataHandle();
-		
+
 		fileLength=testGroup.length;
+		indexes=new int[fileLength];
 		similarity=new double[fileLength];
-		DTWSimilarity dtw=new DTWSimilarity(simularDef);
+		Similarity dtw;
 		for (int i=0;i<fileLength;i++){
 			DataHandlerImp test_handler=new DataHandlerImp(testGroup[i]);
 			testGroup[i]=test_handler.dataHandle();
-			similarity[i]=dtw.getSimilarity(objTraj, testGroup[i], simularDef.getTimeStamp());
+			if(simularDef.getTimeStamp()==0){
+				 dtw=new SimilarityWithoutTime(objTraj, testGroup[i],simularDef);
+			}else{
+				 dtw=new SimilarityWithTime(objTraj,testGroup[i],simularDef);
+			}
+			System.out.println("timestamp:"+simularDef.getTimeStamp());
+			similarity[i]=dtw.getSimilarity();
 		}
+		indexes=Utility.orderByValue(similarity);
+		readyForViewTraj(objTraj,testGroup[indexes[1]]);
+		
 		actionResult=SUCCESS;
 		return actionResult;
 	}

@@ -31,8 +31,9 @@
     	
     	<!-- 在GIS系统中显示轨迹 -->
     	<action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
-    		<result>viewTraj.jsp</result>
-    	</action>   
+    		<result name="success">viewTraj.jsp</result>
+    		<result name="none">viewTraj.jsp</result>
+    	</action>     
     </package>
 </struts>
 

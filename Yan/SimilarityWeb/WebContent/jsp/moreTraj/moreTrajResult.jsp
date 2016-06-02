@@ -29,7 +29,7 @@
  		result="";
  		for(int i=0;i<length;i++){
  			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get("+i+")").toString()+
- 					"的相似度为:"+request.getAttribute("similarity["+i+"]").toString();
+ 					"的相似度为:"+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%";
  		}
  	}else if(tem.equals("input")){
  		result="所选择计算轨迹文件类型与输入文件不匹配";
@@ -81,7 +81,7 @@
 </html>
 <script type="text/javascript">
 	function drawTraj(){
-		showMap("")
+		showMap("${strTrajs}");
 	}
 </script>
 

@@ -7,10 +7,7 @@ package com.adx.entity;
  *2016.4.17
  */
 public class SimularDef {
-//	private double dtwDis_B;	//dtw的距离度量最坏值
-//	private double editDis_B;	//编辑距离度量最坏值
-//	private long tsum_B;	//时间戳度量最坏值
-//	private double shapeSum_B;	//形状度量最坏值
+
 	private double dtwDis_W;	//dtw的距离度量权重
 	private double editDis_W;	//编辑距离度量权重
 	private double tsum_W;	//时间戳度量权重
@@ -18,21 +15,20 @@ public class SimularDef {
 	private int timeStamp;	//是否带时间戳，1为带，0为不带
 	
 	public int getTimeStamp() {
-		
 		return timeStamp;
 	}
 	public void setTimeStamp(int timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 	public double getDtwDis_B() {
-		double dtwDis_B=100;
+		double dtwDis_B=2;
 		return dtwDis_B;
 	}
 //	public void setDtwDis_B(double dtwDis_B) {
 //		this.dtwDis_B = dtwDis_B;
 //	}
 	public double getEditDis_B() {
-		double editDis_B=5000;
+		double editDis_B=1000;
 		return editDis_B;
 	}
 //	public void setEditDis_B(double editDis_B) {
@@ -44,8 +40,8 @@ public class SimularDef {
 	public void setEditDis_W(double editDis_W) {
 		this.editDis_W = editDis_W;
 	}
-	public double getTsum_B() {
-		long tsum_B=100000000;
+	public long getTsum_B() {
+		long tsum_B=1440;
 		return tsum_B;
 	}
 //	public void setTsum_B(double tsum_B) {

@@ -1,7 +1,6 @@
 package com.adx.datahandler;
 
 import com.adx.entity.Trajectory;
-import com.daphnis.kMeans.KMeans;
 
 public class DataHandlerImp implements DataHandler {
 	private Trajectory traj;

@@ -24,7 +24,7 @@
 	<%  
  	String tem=request.getAttribute("actionResult").toString();
  	if (tem.equals("success")){
-		result="两条轨迹的相似度为:"+request.getAttribute("similarity").toString();
+		result="两条轨迹的相似度为:"+request.getAttribute("similarity").toString()+"%";
  	}else if(tem.equals("input")){
  		result="所选择计算轨迹文件类型与输入文件不匹配";
  	}else if(tem.equals("error")){
@@ -72,8 +72,7 @@
 </html>
 <script type="text/javascript">
 	function drawTraj(){
-		strTrajs = "${strTrajs}";
-		showMap(strTrajs);
+		showMap("${strTrajs}");
 	}
 </script>
 

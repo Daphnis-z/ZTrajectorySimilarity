@@ -5,11 +5,12 @@ import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.DataHandlerImp;
-import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
 import com.adx.resource.Constant;
-import com.adx.similaralg.DTWSimilarity;
+import com.adx.similaralg.Similarity;
+import com.adx.similaralg.SimilarityWithTime;
+import com.adx.similaralg.SimilarityWithoutTime;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -89,15 +90,20 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		Constant.testTraj=testTraj;
 		
 		//已分割的轨迹调用实例
-		Vector<Point> points=testTraj.getSubTrajs().get(0).getPoints();
+//		Vector<Point> points=testTraj.getSubTrajs().get(0).getPoints();
 //		for(int i=0;i<points.size();i++){
 //			Point point=points.get(i);
 //			System.out.println(point.getLatitude()+"::"+point.getLongitude()+"::"+point.getTimestamp());
 //		}
-		
-		DTWSimilarity dtw=new DTWSimilarity(simularDef);
+		Similarity dtw;
 		System.out.println("timestamp:"+simularDef.getTimeStamp());
-		similarity=dtw.getSimilarity(objTraj, testTraj, simularDef.getTimeStamp());
+		if(simularDef.getTimeStamp()==0){
+			 dtw=new SimilarityWithoutTime(objTraj, testTraj,simularDef);
+		}else{
+			 dtw=new SimilarityWithTime(objTraj,testTraj,simularDef);
+		}
+		
+		similarity=dtw.getSimilarity();
 		System.out.println(similarity);
 		readyForViewTraj(objTraj,testTraj);
 			

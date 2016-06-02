@@ -33,6 +33,11 @@ public class TrajPolyline extends ActionSupport{
 		this.trajFile = trajFile;
 	}
 	
+	private String subtraj;	
+	public String getSubtraj() {
+		return subtraj;
+	}
+	
 	/**
 	 * show a trajectory
 	 * @param traj
@@ -60,31 +65,21 @@ public class TrajPolyline extends ActionSupport{
 		}
 		setStrTrajs(sbs.substring(1));	
 	}
-	
-	/**
-	 * 显示轨迹演示
-	 * @throws IOException
-	 */
-	private void showTrajDemo() throws IOException{		
-//		String rootPath="Y:/PROGRAMMING/others/ZTrajectorySimilarity/Daphnis/SimularityWeb";
-//		Trajectory traj=ReadData.readATraj(rootPath+"/src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
-//		showATraj(traj);
 		
-		Trajectory traj1=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithTime/坐标点信息2(含时间).csv"),
-				traj2=ReadData.readATraj("./src/com/daphnis/dataHandle/trajWithoutTime/坐标点信息3(不含时间).csv");
-		Vector<Trajectory> vt=new Vector<Trajectory>();
-		vt.addElement(traj1);
-		vt.addElement(traj2);
-		showSomeTrajs(vt);
-	}
-	
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
+		if(trajFile==null){
+			return NONE;//未输入文件
+		}
 		CSVReader objReader=new CSVReader(trajFile,-1);
 		objReader.readFile();
 		Trajectory objTraj=objReader.getTraj();
 		showATraj(objTraj);
+		
+		
+		//相似度最高的轨迹段测试		
+		subtraj="3,7";
 
 		return super.execute();
 	}
