@@ -45,9 +45,18 @@
   	  	alert(msg);
   	}
   </script>
-  	<b align="center">初始化的相似度轨迹模型的最坏值为轨迹距离：<br/> 轨迹顺序：1000	<br/> 时间差：1440<br/>形状差异：100</b>
     <form action="setting.action" method="post" enctype="multipart/form-data">
       <table border="0">
+      	<tr>
+      		<td colspan="3">初始化的相似度轨迹模型的最坏值为：</td>
+      	</tr>      
+      	<tr>
+      		<td></td>
+      		<td colspan="2">轨迹距离：2</td>
+      		<td colspan="2">轨迹顺序：1000</td>
+      		<td colspan="2">时间差：1440</td>
+      		<td colspan="2">形状差异：100</td>     		
+      	</tr>
         <tr>
           <td><b>各要素最坏值：</td>
           <td>轨迹距离</td>

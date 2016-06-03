@@ -80,7 +80,7 @@ function showMapWithSubtraj(trajs,subtrajs,points){
 	}
 	
 	//绘制最相似的轨迹点
-	zIcon = new BMap.Icon("./jsp/css/images/ptFlat.png", new BMap.Size(40,60))
+	zIcon = new BMap.Icon("./jsp/css/images/ptFlat.png", new BMap.Size(36,36))
 	points=points.split(',')
 	for(var i=0;i<points.length;i+=2){
 		pt=new BMap.Point(points[i],points[i+1])
