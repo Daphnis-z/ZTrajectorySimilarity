@@ -60,6 +60,9 @@ public class Cluster {
 	 * Print cluster state
 	 */
 	public void plotCluster() {
+		System.out.println("[Cluster: " +(cid+1)+"]");
+		System.out.println("[Centroid: " + centroid.getLongitude()+','+centroid.getLatitude() + "]");
+		System.out.println("[Points:");
 		for(Point p : points) {
 			System.out.println(String.format("\t(%f,%f)", p.getLongitude(),p.getLatitude()));
 		}

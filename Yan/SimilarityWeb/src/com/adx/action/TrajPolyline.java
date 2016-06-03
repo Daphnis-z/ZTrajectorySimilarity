@@ -47,6 +47,7 @@ public class TrajPolyline {
 		StringBuilder sbs=new StringBuilder();
 		for(Trajectory traj:trajs){
 			StringBuilder sb=new StringBuilder();
+			System.out.println("points"+traj.getPoints());
 			for(Point p:traj.getPoints()){
 				sb.append(","+p.getLongitude()+","+p.getLatitude());
 			}
@@ -62,11 +63,13 @@ public class TrajPolyline {
 	private void showTrajDemo() throws IOException{
 		Trajectory traj1=Constant.objTraj;
 		Trajectory traj2=Constant.testTraj;
+		System.out.println("pattern:"+Constant.pattern);
 		if(Constant.pattern==0){
 			traj2=Constant.testTraj;
 		}else{
 			traj2=Constant.testTraj_more[numTestTraj];
 			Vector<Point> points=traj2.getPoints();
+			System.out.println("points.size:"+points.size());
 		}
 		Vector<Trajectory> vt=new Vector<Trajectory>();
 		vt.addElement(traj1);

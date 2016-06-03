@@ -156,14 +156,18 @@ public class SimilarityWithoutTime extends Similarity{
 			System.out.print(mp[i].index+":");
 			int t=match[mp[i].index][0];
 			int o=match[mp[i].index][1];
+			int flag=mp[i].index;
 			for(int j=mp[i].index;j>0;j--){
 				int jt=match[j][0];
 				int jo=match[j][1];
 				System.out.println(raw_dis[jt][jo]+"/"+raw_dis[t][o]+"="+(raw_dis[jt][jo]/raw_dis[t][o]<1.1));
 				if((raw_dis[jt][jo]/raw_dis[t][o])<1.05){
-					sest.add(j);
+					flag=j;
 				}
 				else break;
+			}
+			for(int j=flag;j<=mp[i].index;j++){
+				sest.add(j);
 			}
 			for(int j=mp[i].index+1;j<matchsize;j++){
 				int jt=match[j][0];
@@ -178,12 +182,10 @@ public class SimilarityWithoutTime extends Similarity{
 			if(sest.size()>=3) break;
 			else sest.clear();
 		}
-		
+		similarestTraj=new Trajectory[2];
+    	similarestTraj[0]=new Trajectory();
+    	similarestTraj[1]=new Trajectory();
 	    if(sest.size()>=3){
-	    	
-	    	similarestTraj=new Trajectory[2];
-	    	similarestTraj[0]=new Trajectory();
-	    	similarestTraj[1]=new Trajectory();
 	    	for(int i=0;i<sest.size();i++){
 	    		System.out.println(match[(int)sest.get(i)][0]+"----"+match[(int)sest.get(i)][1]);
 	    		int t1=match[(int)sest.get(i)][0];
@@ -192,7 +194,10 @@ public class SimilarityWithoutTime extends Similarity{
 	    		similarestTraj[1].addPoint(objTraj.getPoints().get(t2));
 	    	}
 	    }
-	    else similarestTraj=null;
+	    else{
+	    	similarestTraj[0].addPoint(similarestPoint[0]);
+    		similarestTraj[1].addPoint(similarestPoint[1]);
+	    }
 	}
 
 }
