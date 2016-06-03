@@ -35,9 +35,21 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 
 	private String actionResult;
 	
+	//用于轨迹可视化
 	private String strTrajs;
 	public String getStrTrajs() {
 		return strTrajs;
+	}
+
+	private String strSubtrajs;	
+	public String getStrSubtrajs() {
+		return strSubtrajs;
+	}
+
+	//可视化最相似的轨迹点
+	private String strPoints;	
+	public String getStrPoints() {
+		return strPoints;
 	}
 
 	public String getActionResult() {
@@ -112,17 +124,27 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		System.out.println(similarity);
 		similarestTraj=dtw.getSimilarestTraj();
 		similarestPoint=dtw.getSimilarestPoint();
-		readyForViewTraj(objTraj,testTraj);
+		
+		strTrajs=packageTrajs(objTraj,testTraj);
+		strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
+		strPoints=packagePoints(similarestPoint);
 			
 		actionResult=SUCCESS;
 		return actionResult;
 	}
 	
-	private void readyForViewTraj(Trajectory traj1,Trajectory traj2){
+	private String packageTrajs(Trajectory traj1,Trajectory traj2){
 		Vector<Trajectory> vt=new Vector<Trajectory>();
 		vt.addElement(traj1);
 		vt.addElement(traj2);
-		strTrajs=ShowTraj.convertSomeTrajs(vt);
+		return ShowTraj.convertSomeTrajs(vt);
+	}
+	private String packagePoints(Point[] points){
+		Trajectory traj=new Trajectory();
+		for(int i=0;i<points.length;++i){
+			traj.addPoint(points[i]);
+		}
+		return ShowTraj.convertTraj(traj);
 	}
 
 	//模型驱动实现请求数据的封装

@@ -10,13 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <link href="../css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/doubleTrajResult.css">
+    <link href="./jsp/css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="./jsp/css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./jsp/css/common.css">
+    <link rel="stylesheet" type="text/css" href="./jsp/css/multiTrajResult.css">
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
-	<script type="text/javascript" src="../js/zBaiduMap.js"></script>
+	<script type="text/javascript" src="./jsp/js/zBaiduMap.js"></script>
 
 	<title>结果显示</title>
 </head>
@@ -46,14 +46,14 @@
 	 <nav class="navbar navbar-default navbar-fixed-top">
 	   <div class="container">
        <div class="navbar-header">
-         <a class="navbar-brand" href="../../">轨迹相似度计算系统</a>
+         <a class="navbar-brand" href="./">轨迹相似度计算系统</a>
        </div>
        <div id="navbar" class="collapse navbar-collapse">
          <ul class="nav navbar-nav">
-           <li><a href="../doubleTraj/doubleTraj.jsp">双轨迹模式</a></li>
-           <li class="active"><a href="moreTraj.jsp">多轨迹模式</a></li>
-           <li><a href="../viewTraj/viewTraj.jsp">可视化轨迹</a></li>
-           <li><a href="../setting/setting.jsp">设置</a></li>           
+	        <li><a href="doublePattern.action">双轨迹模式</a></li>
+	        <li class="active"><a href="">多轨迹模式</a></li>
+	        <li><a href="viewTraj.action">可视化轨迹</a></li>
+	        <li><a href="setting.action">设置</a></li>
          </ul>
        </div>
 	   </div>
@@ -82,7 +82,7 @@
 </html>
 <script type="text/javascript">
 	function drawTraj(){
-		showMap("${strTrajs}");
+		showMapWithSubtraj("${strTrajs}","${strSubtrajs}","${strPoints}")
 	}
 </script>
 

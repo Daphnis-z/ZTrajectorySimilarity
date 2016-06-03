@@ -62,7 +62,7 @@
      </div>
    </footer>
 
-   <form action="moreTrajCul.action" method="post" enctype="multipart/form-data">
+   <form action="morePattern.action" method="post" enctype="multipart/form-data" onsubmit="return checkFile()">
      <table border="0">
        <tr>
          <td><b>各要素权重：</td>
@@ -78,14 +78,14 @@
        <tr>
          <td><b>上传文件：</td>
          <td>目标轨迹文件：</td>
-         <td colspan="6"><input type="file" name="objectfile" size="40" /></td>
+         <td colspan="6"><input type="file" name="objectfile" id="ofile" size="40" /></td>
          <td><input type="checkbox" name="timeStamp"id="timeStampId"
 						value="1" size="10" onchange="changeSimilarValue()" />带时间戳</td>
        </tr>
        <tr>
        <td></td>
          <td>测试轨迹文件路径：</td>
-         <td colspan="6"><input type="text" name="testfilePath" size="51" /></td>
+         <td colspan="6"><input type="text" name="testfilePath" id="tpath" size="51" /></td>
        </tr>
        <tr>
          <td colspan="9" align="center"><input type="submit" value="开始计算"></td>
@@ -96,3 +96,14 @@
    </form>
 </body>
 </html>
+<script type="text/javascript">	
+	function checkFile(){
+		if(document.getElementById("ofile").value==""||
+				document.getElementById("tpath").value==""){
+			alert("请选择目标轨迹文件和填写测试轨迹文件路径！！")
+			return false
+		}
+		return true
+	}
+</script>
+

@@ -16,8 +16,11 @@
     		<result name="input">jsp/doubleTraj/doubleTrajResult.jsp</result>
     		<result name="error">jsp/doubleTraj/doubleTrajResult.jsp</result>
         </action> 
-        <action name="morePattern">  
-            <result>jsp/moreTraj/moreTraj.jsp</result>  
+        <action name="morePattern" class="com.adx.action.MoreTrajAction">  
+            <result name="none">jsp/moreTraj/moreTraj.jsp</result>  
+            <result name="success">jsp/moreTraj/moreTrajResult.jsp</result>
+    		<result name="input">jsp/moreTraj/moreTrajResult.jsp</result>
+    		<result name="error">jsp/moreTraj/moreTrajResult.jsp</result>            
         </action> 
         <action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
     		<result>/jsp/viewTraj/viewTraj.jsp</result>
@@ -27,18 +30,18 @@
     		<result name="none">/jsp/setting/setting.jsp</result>    		
     	</action>     
         
-    	<action name="doubleTrajCul" class="com.adx.action.DoubleTrajAction">
-    		<result name="success">doubleTrajResult.jsp</result>
-    		<result name="input">doubleTrajResult.jsp</result>
-    		<result name="error">doubleTrajResult.jsp</result>
-    		<result name="none">doubleTrajResult.jsp</result>
-    	</action>
-    	<action name="moreTrajCul" class="com.adx.action.MoreTrajAction">
-    		<result name="success">moreTrajResult.jsp</result>
-    		<result name="input">moreTrajResult.jsp</result>
-    		<result name="error">moreTrajResult.jsp</result>
-    		<result name="none">moreTrajResult.jsp</result>
-    	</action>
+<!--     	<action name="doubleTrajCul" class="com.adx.action.DoubleTrajAction"> -->
+<!--     		<result name="success">doubleTrajResult.jsp</result> -->
+<!--     		<result name="input">doubleTrajResult.jsp</result> -->
+<!--     		<result name="error">doubleTrajResult.jsp</result> -->
+<!--     		<result name="none">doubleTrajResult.jsp</result> -->
+<!--     	</action> -->
+<!--     	<action name="moreTrajCul" class="com.adx.action.MoreTrajAction"> -->
+<!--     		<result name="success">moreTrajResult.jsp</result> -->
+<!--     		<result name="input">moreTrajResult.jsp</result> -->
+<!--     		<result name="error">moreTrajResult.jsp</result> -->
+<!--     		<result name="none">moreTrajResult.jsp</result> -->
+<!--     	</action> -->
     	
     </package>
 </struts>

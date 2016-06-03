@@ -28,13 +28,28 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	private String actionResult;
 	private ArrayList<String> fileName;
 	private int[] indexes;
-	private String strTrajs;
 	private int fileLength;
 	private Trajectory[] similarestTraj;
 	private Point[] similarestPoint;
+	
+	//可视化原轨迹
+	private String strTrajs;
 	public String getStrTrajs() {
 		return strTrajs;
 	}
+	
+	//可视化最相似的子轨迹
+	private String strSubtrajs;	
+	public String getStrSubtrajs() {
+		return strSubtrajs;
+	}
+	
+	//可视化最相似的轨迹点
+	private String strPoints;	
+	public String getStrPoints() {
+		return strPoints;
+	}
+	
 	public ArrayList<String> getFileName() {
 		return fileName;
 	}
@@ -130,10 +145,27 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		indexes=Utility.orderByValue(similarity);
 		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
 		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
-		readyForViewTraj(objTraj,testGroup[indexes[0]]);
+		
+		strTrajs=packageTrajs(objTraj,testGroup[indexes[0]]);
+		strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
+		strPoints=packagePoints(similarestPoint);
 		
 		actionResult=SUCCESS;
 		return actionResult;
+	}
+	
+	private String packageTrajs(Trajectory traj1,Trajectory traj2){
+		Vector<Trajectory> vt=new Vector<Trajectory>();
+		vt.addElement(traj1);
+		vt.addElement(traj2);
+		return ShowTraj.convertSomeTrajs(vt);
+	}
+	private String packagePoints(Point[] points){
+		Trajectory traj=new Trajectory();
+		for(int i=0;i<points.length;++i){
+			traj.addPoint(points[i]);
+		}
+		return ShowTraj.convertTraj(traj);
 	}
 	
 	//模型驱动实现请求数据的封装
