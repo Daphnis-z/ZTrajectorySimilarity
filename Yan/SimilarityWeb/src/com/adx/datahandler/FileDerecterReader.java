@@ -33,6 +33,9 @@ public class FileDerecterReader {
 	private boolean getAllFilePath(){
 		File rootDir=new File(path);
 		File[] fs=rootDir.listFiles();
+		if(fs==null){
+			return false;
+		}
 		for(int i=0;i<fs.length;i++){
 			String tem=fs[i].getAbsolutePath();
 			fileName.add(fs[i].getName());

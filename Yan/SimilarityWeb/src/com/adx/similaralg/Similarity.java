@@ -41,7 +41,7 @@ public abstract class Similarity {
 }
 
 class MatchPoint{
-	int t_index,o_index;
+	int index;
 	double distance;	
 }
 

@@ -139,7 +139,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 				 dtw=new SimilarityWithTime(objTraj,testGroup[i],simularDef);
 			}
 			dtwExample.add(dtw);
-			System.out.println("timestamp:"+simularDef.getTimeStamp());
 			similarity[i]=dtw.getSimilarity();
 		}
 		indexes=Utility.orderByValue(similarity);
@@ -147,9 +146,12 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
 		
 		strTrajs=packageTrajs(objTraj,testGroup[indexes[0]]);
-		strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
-		strPoints=packagePoints(similarestPoint);
-		
+		if(similarestTraj!=null){
+			strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
+		}
+		if(similarestPoint!=null){
+			strPoints=packagePoints(similarestPoint);
+		}
 		actionResult=SUCCESS;
 		return actionResult;
 	}

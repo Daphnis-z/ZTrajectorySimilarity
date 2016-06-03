@@ -43,7 +43,6 @@ public class DataHandlerImp implements DataHandler {
 		// TODO Auto-generated method stub
 		TrajectorySegment seg=new TrajectorySegment(traj);
 		seg.trajSegment();
-		System.out.println("ÇÐ¸îµÄ¶ÎÊý"+traj.getSubTrajs().size());
 		if(segSyn!=-1){
 			seg.trajSynch(segSyn);
 		}

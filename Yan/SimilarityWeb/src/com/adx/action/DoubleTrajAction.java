@@ -113,7 +113,6 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 //			System.out.println(point.getLatitude()+"::"+point.getLongitude()+"::"+point.getTimestamp());
 //		}
 		Similarity dtw;
-		System.out.println("timestamp:"+simularDef.getTimeStamp());
 		if(simularDef.getTimeStamp()==0){
 			 dtw=new SimilarityWithoutTime(objTraj, testTraj,simularDef);
 		}else{
@@ -121,14 +120,17 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		}
 		
 		similarity=dtw.getSimilarity();
-		System.out.println(similarity);
-		similarestTraj=dtw.getSimilarestTraj();
 		similarestPoint=dtw.getSimilarestPoint();
 		
 		strTrajs=packageTrajs(objTraj,testTraj);
-		strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
-		strPoints=packagePoints(similarestPoint);
-			
+		System.out.println("similarestTraj---------------"+similarestTraj);
+		System.out.println("similarestPoint---------------"+similarestPoint);
+		if(similarestTraj!=null){
+			strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
+		}
+		if(similarestPoint!=null){
+			strPoints=packagePoints(similarestPoint);
+		}
 		actionResult=SUCCESS;
 		return actionResult;
 	}

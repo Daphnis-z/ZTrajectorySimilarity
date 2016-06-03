@@ -52,10 +52,8 @@ public class NAValueHandler {
 					}else{
 						latitude=(p2.getLatitude()+p1.getLatitude())/2.0;
 					}
-					System.out.println("latitude_NA:"+latitude);
 				}else{
 					longtitude=k*latitude+b;//¾­¶È¶ªÊ§
-					System.out.println("longtitude:"+longtitude);
 				}
 				}
 			if(traj.timeStamp==1){
@@ -71,7 +69,6 @@ public class NAValueHandler {
 						c.setTime(d3);
 						time=c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH)+
 								" "+c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE)+":"+c.get(Calendar.SECOND);
-						System.out.println("time:"+time);
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
