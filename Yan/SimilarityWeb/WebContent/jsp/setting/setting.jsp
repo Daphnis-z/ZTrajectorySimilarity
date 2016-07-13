@@ -1,5 +1,5 @@
-<%@page import="com.sun.glass.ui.Window"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%--  <%@page import="com.sun.glass.ui.Window" %>  --%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -36,7 +36,7 @@
   <div class="container"></div>
   <footer class="footer">
     <div class="container">
-      <p class="text-muted">Similarity_HHU SC2016 </p>
+      <p class="text-muted" align="center">Similarity_HHU SC2016 </p>
     </div>
   </footer>
   <script>

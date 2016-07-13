@@ -28,7 +28,7 @@
  		int length=Integer.parseInt(request.getAttribute("fileLength").toString());
  		result="";
  		for(int i=0;i<length;i++){
- 			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get("+i+")").toString()+
+ 			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get(indexes["+i+"])").toString()+
  					"的相似度为:"+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%";
  		}
  	}else if(tem.equals("input")){
@@ -61,7 +61,7 @@
 	 <div class="container"></div>
 	 <footer class="footer">
 	   <div class="container">
-	     <p class="text-muted">Similarity_HHU SC2016 </p>
+	     <p class="text-muted" algin="center">Similarity_HHU SC2016 </p>
 	   </div>
 	 </footer>
 

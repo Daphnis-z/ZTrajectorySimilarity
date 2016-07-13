@@ -10,7 +10,7 @@ public class Constant {
 	public static String TIME_FORMAT="yyyy/MM/dd HH:mm";
 	
 	public  static double  dtwDis_B_VALUE=2;	//dtw的距离度量最坏值
-	public  static double editDis_B_VALUE=1000;	//编辑距离度量最坏值
+	public  static double editDis_B_VALUE=100;	//编辑距离度量最坏值
 	public  static long tsum_B_VALUE=1440;	//时间戳度量最坏值
 	public  static double shapeSum_B_VALUE=100;	//形状度量最坏值
 	public static double dtwDis_B=dtwDis_B_VALUE;	//dtw的距离度量最坏值

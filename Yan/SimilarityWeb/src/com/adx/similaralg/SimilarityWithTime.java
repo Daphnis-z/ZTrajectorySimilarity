@@ -125,6 +125,7 @@ public class SimilarityWithTime extends Similarity{
 				e.printStackTrace();
 			}
 		}
+		edit/=matchsize;
 		time/=matchsize;
 	}
 	
@@ -137,19 +138,18 @@ public class SimilarityWithTime extends Similarity{
 		else editS=sDef.getEditDis_W()*(sDef.getEditDis_B()-edit)/sDef.getEditDis_B();
 		if(time>=sDef.getTsum_B()) timeS=0;
 		else timeS=sDef.getTsum_W()*(sDef.getTsum_B()-time)/sDef.getTsum_B();
-		System.out.println("dis:"+dis+"   "+sDef.getDtwDis_B());
-		System.out.println("disS:"+disS);
-		System.out.println("shape:"+shape+"   "+sDef.getShapeSum_B());
-		System.out.println("shapeS:"+shapeS);
-		System.out.println("edit:"+edit+"   "+sDef.getEditDis_B());
-		System.out.println("editS:"+editS);
-		System.out.println("time:"+time+"   "+sDef.getTsum_B());
-		System.out.println("timeS:"+timeS);
+//		System.out.println("dis:"+dis+"   "+sDef.getDtwDis_B());
+//		System.out.println("disS:"+disS);
+//		System.out.println("shape:"+shape+"   "+sDef.getShapeSum_B());
+//		System.out.println("shapeS:"+shapeS);
+//		System.out.println("edit:"+edit+"   "+sDef.getEditDis_B());
+//		System.out.println("editS:"+editS);
+//		System.out.println("time:"+time+"   "+sDef.getTsum_B());
+//		System.out.println("timeS:"+timeS);
 	}
 	
-	public void calculate_Similarity(){
+	public void calculate_Similarity(){//寻找最相似点与段
 		similarity=timeS+disS+editS+shapeS;
-//		similarity*=similarity;
 		int t=(int) ((similarity+0.000005)*100000);
 		similarity=(double)t/1000;
 	}
@@ -168,18 +168,13 @@ public class SimilarityWithTime extends Similarity{
 		similarestPoint[1]=objTraj.getPoints().get(match[mp[0].index][1]);
 		Vector<Integer> sest=new Vector<Integer>();
 		for(int i=0;i<matchcnt;i++){
-			System.out.println(mp[i].index+":"+match[mp[i].index][0]+"---"+match[mp[i].index][1]+":"+mp[i].distance);
-		}
-		for(int i=0;i<matchcnt;i++){
-			System.out.print(mp[i].index+":");
 			int t=match[mp[i].index][0];
 			int o=match[mp[i].index][1];
 			int flag=mp[i].index;
 			for(int j=mp[i].index;j>0;j--){
 				int jt=match[j][0];
 				int jo=match[j][1];
-				System.out.println(raw_dis[jt][jo]+"/"+raw_dis[t][o]+"="+(raw_dis[jt][jo]/raw_dis[t][o]<1.1));
-				if((raw_dis[jt][jo]/raw_dis[t][o])<1.05){
+				if((raw_dis[jt][jo]/raw_dis[t][o])<1.0001){
 					flag=j;
 				}
 				else break;
@@ -190,13 +185,11 @@ public class SimilarityWithTime extends Similarity{
 			for(int j=mp[i].index+1;j<matchsize;j++){
 				int jt=match[j][0];
 				int jo=match[j][1];
-				System.out.println(raw_dis[jt][jo]+"/"+raw_dis[t][o]+"="+(raw_dis[jt][jo]/raw_dis[t][o]<1.1));
-				if((raw_dis[jt][jo]/raw_dis[t][o])<1.05){
+				if((raw_dis[jt][jo]/raw_dis[t][o])<1.0001){
 					sest.add(j);
 				}
 				else break;
 			}
-			System.out.println(sest.size());
 			if(sest.size()>=3) break;
 			else sest.clear();
 		}
@@ -205,7 +198,7 @@ public class SimilarityWithTime extends Similarity{
     	similarestTraj[1]=new Trajectory();
 	    if(sest.size()>=3){
 	    	for(int i=0;i<sest.size();i++){
-	    		System.out.println(match[(int)sest.get(i)][0]+"----"+match[(int)sest.get(i)][1]);
+	
 	    		int t1=match[(int)sest.get(i)][0];
 	    		int t2=match[(int)sest.get(i)][1];
 	    		similarestTraj[0].addPoint(testTraj.getPoints().get(t1));

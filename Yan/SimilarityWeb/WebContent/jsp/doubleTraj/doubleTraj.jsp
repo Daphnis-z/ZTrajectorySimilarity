@@ -15,13 +15,13 @@
 	<title>双轨迹模式</title>
 </head>
 <body background="./jsp/css/images/bg.jpg">
-	<%! double dtwDis_W=0.45,editDis_W=0.1,tsum_W=0,shapeSum_W=0.45;
+	<%! double dtwDis_W=0.5,editDis_W=0.25,tsum_W=0,shapeSum_W=0.25;
 	%>
 	<script type="text/javascript">
 	function changeSimilarValue()
 	{	
 		if(document.getElementById("timeStampId").checked){
-			dtwDis_W=0.3;editDis_W=0.1;tsum_W=0.3;shapeSum_W=0.3;
+			dtwDis_W=0.4;editDis_W=0.15;tsum_W=0.3;shapeSum_W=0.15;
 			alert("当前选中为带时间的轨迹相似度计算，相似模型因素值将会改变");
 			setValue()
 		}else{
@@ -58,7 +58,7 @@
 	<div class="container"></div>
 	<footer class="footer">
 	  <div class="container">
-	    <p class="text-muted">Similarity_HHU SC2016 </p>
+	    <p class="text-muted" align="center">Similarity_HHU SC2016 </p>
 	  </div>
 	</footer>
 

@@ -54,7 +54,7 @@
 	<div class="container"></div>
 	<footer class="footer">
 	  <div class="container">
-	    <p class="text-muted">Similarity_HHU SC2016 </p>
+	    <p class="text-muted" align="center">Similarity_HHU SC2016 </p>
 	  </div>
 	</footer>
 
