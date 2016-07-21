@@ -26,6 +26,8 @@ public class KMeansDemo {
     	kmeans.calculate();
     	kmeans.removeUnusefulPoints();
     	
+    	kmeans.dataCompression();
+    	
     	showATraj(traj);
 		return "success";
 	}
@@ -36,6 +38,12 @@ public class KMeansDemo {
 			sb.append(","+p.getLongitude()+","+p.getLatitude());
 		}
 		setStrTrajs(sb.substring(1));
+	}
+	
+	public static void main(String[] args) throws IOException{
+		KMeansDemo kmd=new KMeansDemo();
+		kmd.execute();
+		
 	}
 		
 }

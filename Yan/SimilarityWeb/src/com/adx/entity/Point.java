@@ -1,6 +1,7 @@
 /**
  * point of trajectory
  * author: Daphnis
+ * 20160721
  */
 package com.adx.entity;
 
@@ -8,6 +9,9 @@ public class Point {
 	private double longitude;
 	private double latitude;
 	private String timestamp;
+	
+	public int pid;//µãµÄ±àºÅ
+	
 	
 	/**
 	 * point without timestamp

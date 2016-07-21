@@ -25,9 +25,11 @@ public class ReadData {
 		BufferedReader in=new BufferedReader(new FileReader(fileName));
 		in.readLine();
 		String s;
+		int pid=0;
 		while((s=in.readLine())!=null){
 			String[] jw=s.split(",");
 			Point p=new Point(Double.parseDouble(jw[0]),Double.parseDouble(jw[1]));
+			p.pid=pid++;
 			points.addElement(p);
 		}
 		in.close();

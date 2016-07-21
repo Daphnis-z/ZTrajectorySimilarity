@@ -35,6 +35,7 @@ public class DataHandlerImp implements DataHandler {
     	kmeans.init();
     	kmeans.calculate();
     	kmeans.removeUnusefulPoints();
+//    	kmeans.dataCompression();
 		return true;
 	}
 

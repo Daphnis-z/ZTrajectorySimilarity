@@ -50,6 +50,7 @@ public class CSVReader {
 					return -1;
 			}
 			
+			int pid=0;
 			while((line=br.readLine())!=null){
 				StringTokenizer st=new StringTokenizer(line, ",");
 				if(st.hasMoreTokens()){
@@ -62,6 +63,7 @@ public class CSVReader {
 						point=new Point(longitude, latitude);
 					}
 				}
+				point.pid=pid++;
 				traj.addPoint(point);
 				}
 			br.close();

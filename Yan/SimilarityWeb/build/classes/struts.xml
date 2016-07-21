@@ -4,7 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="false" />
     <package name="default" namespace="/" extends="struts-default">
         <default-action-ref name="index"></default-action-ref>
         <action name="index">  
@@ -30,18 +30,10 @@
     		<result name="none">/jsp/setting/setting.jsp</result>    		
     	</action>     
         
-<!--     	<action name="doubleTrajCul" class="com.adx.action.DoubleTrajAction"> -->
-<!--     		<result name="success">doubleTrajResult.jsp</result> -->
-<!--     		<result name="input">doubleTrajResult.jsp</result> -->
-<!--     		<result name="error">doubleTrajResult.jsp</result> -->
-<!--     		<result name="none">doubleTrajResult.jsp</result> -->
-<!--     	</action> -->
-<!--     	<action name="moreTrajCul" class="com.adx.action.MoreTrajAction"> -->
-<!--     		<result name="success">moreTrajResult.jsp</result> -->
-<!--     		<result name="input">moreTrajResult.jsp</result> -->
-<!--     		<result name="error">moreTrajResult.jsp</result> -->
-<!--     		<result name="none">moreTrajResult.jsp</result> -->
-<!--     	</action> -->
+        <!-- 调试聚类用 -->
+        <action name="kmeans" class="com.daphnis.kMeans.KMeansDemo">
+        	<result>/jsp/viewTraj/viewTraj.jsp</result>
+        </action>
     	
     </package>
 </struts>

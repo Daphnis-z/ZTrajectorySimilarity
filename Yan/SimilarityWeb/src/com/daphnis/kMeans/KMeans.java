@@ -1,18 +1,17 @@
 /**
  * KMeans for point
  * @author Daphnis
- * 20160522
+ * 20160721
  */
 package com.daphnis.kMeans;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import com.adx.entity.Point;
 
 public class KMeans {
 	private final int POINT_NUM_CLUSTER=3;//期待的一个群中含有的点的数量   
+	private final double SLOPE=0.2;//斜率阈值，用于判定在同一条直线上
     private List<Point> points;
     
     private List<Cluster> clusters;   
@@ -26,32 +25,25 @@ public class KMeans {
     }
         
     /**
-     * Initializes the process
+     * 初始化
      */
     public void init() {
-    	//Create Clusters and Set Random Centroids
+    	//初始化群并设定中心点
     	int clusterCnt=points.size()/POINT_NUM_CLUSTER;
     	for (int i = 0; i<clusterCnt; i++) {
-    		Cluster cluster = new Cluster(i);
-//    		Random rd=new Random();
-//    		Point centroid = points.get(rd.nextInt(points.size()));
-    		
-    		Point centroid = points.get(i*POINT_NUM_CLUSTER);
-    		
+    		Cluster cluster = new Cluster(i);    		
+    		Point centroid = points.get(i*POINT_NUM_CLUSTER);   		
     		cluster.setCentroid(centroid);
     		clusters.add(cluster);
     	}
     }
     
 	/**
-	 * The process to calculate the KMeans, with iterating method.
+	 * 执行计算
 	 */
     public void calculate() {
-        boolean finish = false;
-        int iteration = 0;
-        
+        boolean finish = false;        
         while(!finish) { 
-        	iteration++;        	
         	clearClusters();//Clear cluster state        	
         	List<Point> lastCentroids = getCentroids();
         	assignCluster();
@@ -66,9 +58,6 @@ public class KMeans {
         		finish = true;
         	}
         }
-    	showClusters();
-    	System.out.println("#######KMeans End##########");
-    	System.out.println("Iteration: " + iteration);
     }
     
     /**
@@ -80,12 +69,61 @@ public class KMeans {
     			points.remove(cluster.getPoints().get(0));
     		}
     	}
-	}
+    }
 	
+	/**
+	 * 数据压缩
+	 */
+	public void dataCompression(){		
+    	for(Cluster cluster:clusters){
+			List<Point> tpts=cluster.getPoints();
+    		if(tpts.size()>=3){
+    			for(int i=0;i<tpts.size()-2;i+=3){
+    				Point[] pts={tpts.get(i),tpts.get(i+1),tpts.get(i+2)};
+    				sortPoints(pts);
+    				double k1=calSlope(pts[0],pts[1]),k2=calSlope(pts[2],pts[1]);
+    				if(Math.abs(k1-k2)<SLOPE){
+    					if(!checkIsInflectionPoint(pts[0])){
+    						points.remove(pts[0]);
+    					}else{
+    						points.remove(pts[1]);
+    					}
+    					if(!checkIsInflectionPoint(pts[2])){    					    						
+    						points.remove(pts[2]);
+    					}
+    				}   				
+    			}   			
+    		}
+    	}
+	}
+	//计算斜率
+	private double calSlope(Point pt1,Point pt2){
+		return (pt1.getLongitude()-pt2.getLongitude())/(pt1.getLatitude()-pt2.getLatitude());		
+	}
+	//检查该店是否是拐点
+	private boolean checkIsInflectionPoint(Point pt){
+		if(pt.pid-1>=0&&pt.pid+1<points.size()){
+			double k1=calSlope(points.get(pt.pid-1),pt),k2=calSlope(points.get(pt.pid+1),pt);
+			if(Math.abs(k1-k2)<SLOPE){
+				return false;
+			}
+		}
+		return true;
+	}	
+	//对一个点的数组按经纬度排序
+	private void sortPoints(Point[] pts){
+		for(int i=0;i<pts.length-1;++i){
+			for(int j=i+1;j<pts.length-i;++j){
+				if(pts[i].getLongitude()>pts[j].getLongitude()||pts[i].getLatitude()>pts[j].getLatitude()){
+					Point p=pts[i];
+					pts[i]=pts[j];
+					pts[j]=p;
+				}
+			}
+		}
+	}
     
-    /**
-     * Rset clusters
-     */
+    //Rset clusters
     private void clearClusters() {
     	for(Cluster cluster : clusters) {
     		cluster.clear();
@@ -120,12 +158,7 @@ public class KMeans {
         }
     }
     
-    /**
-     * Calculate two points' distance
-     * @param pt1
-     * @param pt2
-     * @return
-     */
+    //Calculate two points' distance
     private double twoPointsDistance(Point pt1,Point pt2){
     	double d1=Math.pow(pt1.getLongitude()-pt2.getLongitude(), 2);
     	double d2=Math.pow(pt1.getLatitude()-pt2.getLatitude(), 2);
@@ -151,12 +184,12 @@ public class KMeans {
     /**
      * Print clusters on console
      */
-	private void showClusters() {
-    	for (int i = 0; i<clusters.size(); i++) {
-    		Cluster c = clusters.get(i);
-    		c.plotCluster();
-    	}
-    }
+//	private void showClusters() {
+//    	for (int i = 0; i<clusters.size(); i++) {
+//    		Cluster c = clusters.get(i);
+//    		c.plotCluster();
+//    	}
+//    }
 	
 }
 
