@@ -10,7 +10,25 @@ public class Trajectory implements Cloneable{
 	public ArrayList<Integer> subTrajs_index;
 	public int timeStamp;
 	public boolean isNA;
-
+	
+	//轨迹中心点
+	private Point centerTraj;
+	public Point getCenterTraj() {
+		return centerTraj;
+	}
+	public void setCenterTraj(Point centerTraj) {
+		this.centerTraj = centerTraj;
+	}
+	
+	//轨迹长度
+	private double trajLen;	
+	public double getTrajLen() {
+		return trajLen;
+	}
+	public void setTrajLen(double trajLen) {
+		this.trajLen = trajLen;
+	}
+	
 	public Trajectory(int timeStamp){
     	this.points=new Vector<Point>();
     	this.subTrajs_index=new ArrayList<Integer>();

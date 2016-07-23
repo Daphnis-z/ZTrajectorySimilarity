@@ -5,6 +5,6 @@
 .Ruserdata
 
 #--Java--
-*.log
 *.class
+*.log
 /Yan/SimilarityWeb/build/**
