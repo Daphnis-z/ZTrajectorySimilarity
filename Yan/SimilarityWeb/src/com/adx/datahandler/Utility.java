@@ -48,4 +48,17 @@ public class Utility {
 		}
 		return index;
 	}
+	public static int getMin(double[] array){
+		int index=0;
+		@SuppressWarnings("unused")
+		double min=0;
+		int length=array.length;
+		for(int i=0;i<length;i++){
+			if(array[i]<array[index]){
+				index=i;
+				min=array[i];
+			}
+		}
+		return index;
+	}
 }
