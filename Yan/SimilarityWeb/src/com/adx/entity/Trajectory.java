@@ -1,5 +1,6 @@
 /**
  * author: Daphnis
+ * 20160726
  */
 package com.adx.entity;
 
@@ -10,6 +11,11 @@ public class Trajectory implements Cloneable{
 	public ArrayList<Integer> subTrajs_index;
 	public int timeStamp;
 	public boolean isNA;
+	
+	/**
+	 * 轨迹编号，唯一标识一条轨迹
+	 */
+	public int ID;
 	
 	//轨迹中心点
 	private Point centerTraj;
@@ -97,3 +103,4 @@ public class Trajectory implements Cloneable{
 	}
 
 }
+
