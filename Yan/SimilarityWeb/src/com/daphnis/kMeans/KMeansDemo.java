@@ -22,11 +22,11 @@ public class KMeansDemo {
 	public String execute() throws IOException{
 		Trajectory traj=ReadData.readATraj("./trajData/坐标点信息1(含时间).csv");
     	KMeans kmeans = new KMeans(traj.getPoints());
-    	kmeans.init();
-    	kmeans.calculate();
-    	kmeans.removeUnusefulPoints();
-    	
-    	kmeans.dataCompression();
+    	if(kmeans.init()){
+	    	kmeans.calculate();
+	    	kmeans.removeUnusefulPoints();	    	
+	    	kmeans.dataCompression();
+    	}
     	
     	showATraj(traj);
 		return "success";

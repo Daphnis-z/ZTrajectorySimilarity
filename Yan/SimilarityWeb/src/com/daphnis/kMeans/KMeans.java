@@ -26,8 +26,14 @@ public class KMeans {
         
     /**
      * 初始化
+     * 若初始化失败（返回false）
+     * 则应该停止进行后面的操作
      */
-    public void init() {
+    public boolean init() {
+    	if(points.size()<3){
+    		return false;
+    	}
+    	
     	//初始化群并设定中心点
     	int clusterCnt=points.size()/POINT_NUM_CLUSTER;
     	for (int i = 0; i<clusterCnt; i++) {
@@ -35,7 +41,8 @@ public class KMeans {
     		Point centroid = points.get(i*POINT_NUM_CLUSTER);   		
     		cluster.setCentroid(centroid);
     		clusters.add(cluster);
-    	}
+    	} 
+    	return true;
     }
     
 	/**
@@ -153,7 +160,7 @@ public class KMeans {
                     min = distance;
                     clusterNum = i;
                 }
-            }
+            }                       
             clusters.get(clusterNum).addPoint(point);
         }
     }

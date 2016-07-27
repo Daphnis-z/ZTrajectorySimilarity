@@ -87,7 +87,7 @@ public class EigenValueTest {
 //		System.out.println(System.getProperty("user.dir"));
 		Vector<Trajectory> trajs=ReadTaxiData.readTrajs("./trajData/taxiData.txt");
 		
-		Trajectory traj=trajs.get(201);
+		Trajectory traj=trajs.get(198);
 		
 		//普通循环
 		System.out.print("普通循环>\t");

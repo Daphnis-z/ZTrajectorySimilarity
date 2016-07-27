@@ -32,10 +32,11 @@ public class DataHandlerImp implements DataHandler {
 	public boolean exPointHandle(Trajectory traj) {
 		// TODO Auto-generated method stub
     	KMeans kmeans = new KMeans(traj.getPoints());
-    	kmeans.init();
-    	kmeans.calculate();
-    	kmeans.removeUnusefulPoints();
-//    	kmeans.dataCompression();
+    	if(kmeans.init()){
+	    	kmeans.calculate();
+	    	kmeans.removeUnusefulPoints();	    	
+	    	kmeans.dataCompression();
+    	}
 		return true;
 	}
 
