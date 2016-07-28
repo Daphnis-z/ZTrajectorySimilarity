@@ -34,6 +34,11 @@
         <action name="kmeans" class="com.daphnis.kMeans.KMeansDemo">
         	<result>/jsp/viewTraj/viewTraj.jsp</result>
         </action>
+        <!-- 可视化DTW匹配结果 -->
+        <action name="viewDTWResult" class="com.daphnis.gis.ShowDTWResult">
+    		<result>/jsp/match.jsp</result>
+    	</action>     
+        
     	
     </package>
 </struts>

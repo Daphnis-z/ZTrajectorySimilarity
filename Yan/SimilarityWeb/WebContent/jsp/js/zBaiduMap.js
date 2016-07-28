@@ -88,3 +88,40 @@ function showMapWithSubtraj(trajs,subtrajs,points){
 	}
 }
 
+//可视化DTW匹配结果
+function showDTWResult(strPoints) {
+	// 接收来自后台的轨迹数据
+	strPoints = strPoints.split(',');
+	var map = createBaiduMap(strPoints[0], strPoints[1]);
+
+	var traj = new Array(strPoints.length / 2);
+	for (var i = 0,j=0; i < strPoints.length-2; i+=2,++j) {
+		traj[j] = new BMap.Point(strPoints[i], strPoints[i + 1]);
+		map.addOverlay(new BMap.Marker(traj[j]));
+	}
+
+	//绘制两条轨迹
+	var traj1=new Array(),traj2=new Array();
+	for(var i= 0,j=0;i<traj.length-2;i+=2,++j){
+		traj1[j]=traj[i];
+		traj2[j]=traj[i+1];
+	}
+	var polyline = new BMap.Polyline(
+		traj1, {strokeColor :"blue",strokeWeight : 4,strokeOpacity : 0}
+	) //创建折线
+	map.addOverlay(polyline)//增加折线
+	polyline = new BMap.Polyline(
+		traj2, {strokeColor :"green",strokeWeight : 4,strokeOpacity : 0}
+	) //创建折线
+	map.addOverlay(polyline)//增加折线
+
+	//绘制匹配点间的线段
+	for(var i=0;i<traj.length-2;i+=2){
+		var mtraj=[traj[i],traj[i+1]];
+		var pl = new BMap.Polyline(
+			mtraj, {strokeColor : "red",strokeWeight : 2,strokeOpacity : 80}
+		) //创建折线
+		map.addOverlay(pl);
+	}
+
+}

@@ -77,7 +77,6 @@ public class TrajPolyline extends ActionSupport{
 			//相似度最高的轨迹段测试		
 			subtraj="3,7";
 		}
-
 		return super.execute();
 	}
 		

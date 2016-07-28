@@ -145,6 +145,10 @@ public class EigenvalueFilter {
 		
 		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/");	
 		
+		SimilarityWithoutTime swt=new SimilarityWithoutTime(trajs.get(2),trajs.get(11),sd);
+		int[][] match=swt.getMatch();
+		int msize=swt.getMatchsize();
+		
 		testFileter(trajs,sd);
 		
 		Trajectory traj=trajs.get(70);

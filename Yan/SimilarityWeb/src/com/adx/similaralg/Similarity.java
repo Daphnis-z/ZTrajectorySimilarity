@@ -32,6 +32,14 @@ public abstract class Similarity {
 	public Point[] getSimilarestPoint() {
 		return similarestPoint;
 	}
+	
+	public int[][] getMatch() {
+		return match;
+	}
+
+	public int getMatchsize() {
+		return matchsize;
+	}
 
 	public abstract void init(Trajectory objTraj,Trajectory testTraj,SimularDef sDef);
 	public abstract void calculate_Params();
