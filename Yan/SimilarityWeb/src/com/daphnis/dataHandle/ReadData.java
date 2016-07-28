@@ -136,7 +136,11 @@ public class ReadData {
 				in.readLine();
 			}
 			String s,outStr="¾­¶È,Î³¶È\n";
+			int cnt=0;
 			while((s=in.readLine())!=null){
+				if(++cnt>100){
+					break;
+				}
 				try{
 					String[] str=s.split(",");
 					outStr+=str[1]+","+str[0]+"\n";

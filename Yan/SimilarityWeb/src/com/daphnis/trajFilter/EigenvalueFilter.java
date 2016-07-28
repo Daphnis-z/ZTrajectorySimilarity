@@ -33,6 +33,7 @@ public class EigenvalueFilter {
 				Math.pow(traj.getCenterTraj().getLatitude(), 2);
 		double disThreshold=getDisThreshold(trajs,traj);
 		
+		final int NUM_THRESHOLD=(int)(90+trajs.size()*0.2)%500;
 		do{
 			List<Trajectory> tmpTrajs=subTrajs.size()>0? subTrajs:trajs;
 			subTrajs=new ArrayList<Trajectory>();
@@ -44,7 +45,7 @@ public class EigenvalueFilter {
 				}
 			}
 			disThreshold/=1.2;
-		}while(subTrajs.size()>90);
+		}while(subTrajs.size()>NUM_THRESHOLD);
 		return subTrajs;
 	}
 	
@@ -109,22 +110,24 @@ public class EigenvalueFilter {
 	public static void testFileter(List<Trajectory> trajs,SimularDef sd){
 		for(int i=0;i<trajs.size();++i){
 			Trajectory traj=trajs.get(i);
-			
+			System.out.println("目标轨迹ID："+traj.ID);
+
 			//普通循环
-			System.out.print("目标轨迹编号："+traj.ID+"\n普通循环>\t");
+			System.out.print("普通计算>\t");
 			long time=System.currentTimeMillis();
 			int trajNum1=calSimilarityNormal(trajs,traj,sd);
 			long duration=System.currentTimeMillis()-time;
-			System.out.println("轨迹ID："+trajNum1+'\t'+duration+"ms");
+			System.out.println("与目标轨迹最相似的轨迹ID："+trajNum1+
+					"\t耗时："+duration+"ms");
 			
 			//使用特征值过滤后
-			System.out.print("特征值>\t\t");
+			System.out.print("使用轨迹过滤器>\t");
 			time=System.currentTimeMillis();
 			int trajNum2=calSimilarityEigenvalue(trajs,traj,sd);
 			duration=System.currentTimeMillis()-time;
-			System.out.println("轨迹ID："+trajNum2+'\t'+duration+"ms");
-		}
-				
+			System.out.println("与目标轨迹最相似的轨迹ID："+trajNum2+
+					"\t耗时："+duration+"ms\n");
+		}				
 	}
 	
 	//演示代码
@@ -136,9 +139,8 @@ public class EigenvalueFilter {
 		sd.setShapeSum_W(0.25);sd.setShapeSum_B(1000);
 		
 //		System.out.println(System.getProperty("user.dir"));
-//		Vector<Trajectory> trajs=ReadData.readTaxiTrajs("./trajData/taxiData.txt");	
-		
-		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/",1500);	
+//		Vector<Trajectory> trajs=ReadData.readTaxiTrajs("./trajData/taxiData.txt");			
+		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/",18670);	
 		
 		//去除离群点和冗余点
 		long te=System.currentTimeMillis();
@@ -151,26 +153,32 @@ public class EigenvalueFilter {
 		    	kmeans.dataCompression();
 	    	}
 		}
-		System.out.println(System.currentTimeMillis()-te+"ms");
+		System.out.println("去除离群点和冗余点耗时："+(System.currentTimeMillis()-te)+"ms");
 
-//		SimilarityWithoutTime swt=new SimilarityWithoutTime(trajs.get(2),trajs.get(11),sd);
+//		SimilarityWithoutTime swt=new SimilarityWithoutTime(trajs.get(1234),trajs.get(9115),sd);
+//		System.out.println(swt.getSimilarity());
+		
 //		testFileter(trajs,sd);
 		
 		Trajectory traj=trajs.get(1014);
+		System.out.println("目标轨迹ID："+traj.ID);
 				
 		//普通循环
-		System.out.print("普通循环>\t");
+		System.out.print("普通计算>\t");
 		long time=System.currentTimeMillis();
 		int trajNum1=calSimilarityNormal(trajs,traj,sd);
 		long duration=System.currentTimeMillis()-time;
-		System.out.println("轨迹ID："+trajNum1+'\t'+duration+"ms");
+		System.out.println("与目标轨迹最相似的轨迹ID："+trajNum1+
+				"\t耗时："+duration+"ms");
 		
 		//使用特征值过滤后
-		System.out.print("特征值>\t\t");
+		System.out.print("使用轨迹过滤器>\t");
 		time=System.currentTimeMillis();
 		int trajNum2=calSimilarityEigenvalue(trajs,traj,sd);
 		duration=System.currentTimeMillis()-time;
-		System.out.println("轨迹ID："+trajNum2+'\t'+duration+"ms");
+		System.out.println("与目标轨迹最相似的轨迹ID："+trajNum2+
+				"\t耗时："+duration+"ms");
 	}
 
 }
+
