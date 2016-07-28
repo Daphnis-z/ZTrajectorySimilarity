@@ -21,7 +21,7 @@ public class ReadData {
 		String[] files=dir.list();
 		return files;
 	}
-
+	
 	/**
 	 * 从一个文件里读取一条轨迹数据
 	 * 忽略时间戳
@@ -52,7 +52,7 @@ public class ReadData {
 			latMax=latMax<p.getLatitude()? p.getLatitude():latMax;
 			latMin=latMin>p.getLatitude()? p.getLatitude():latMin;
 			
-			if(points.size()==100){
+			if(points.size()>=100){
 				break;
 			}
 		}
@@ -71,7 +71,7 @@ public class ReadData {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Vector<Trajectory> readSomeTrajs(String path) throws IOException{
+	public static Vector<Trajectory> readSomeTrajs(String path,int num) throws IOException{
 		Vector<Trajectory> trajs=new Vector<Trajectory>();
 		String[] files=getFilenames(path);
 		if(files==null){
@@ -83,6 +83,9 @@ public class ReadData {
 			Trajectory traj=readATraj(path+file);
 			traj.ID=id++;
 			trajs.addElement(traj);
+			if(trajs.size()>=num){
+				break;
+			}
 		}
 		return trajs;
 	}
@@ -125,21 +128,60 @@ public class ReadData {
 		return trajs;
 	}
 
-	
-	public static void main(String[] args) throws IOException {
-		String path="./src/com/daphnis/dataHandle/trajWithoutTime";
-		String[] files=getFilenames(path);
-		for(String fn:files){
-			fn=path+'/'+fn;
-			BufferedReader in=new BufferedReader(new FileReader(fn));
-			in.readLine();
-			String s;
+	private static void geolife(Vector<String> vs) throws IOException{
+		int num=1;
+		for(String file:vs){
+			BufferedReader in=new BufferedReader(new FileReader(file));
+			for(int i=0;i<6;++i){
+				in.readLine();
+			}
+			String s,outStr="经度,纬度\n";
 			while((s=in.readLine())!=null){
-				String[] jw=s.split(",");
-				System.out.println(Double.parseDouble(jw[0])+"\t"+Double.parseDouble(jw[1]));
+				try{
+					String[] str=s.split(",");
+					outStr+=str[1]+","+str[0]+"\n";
+				}catch(Exception e){
+					continue;
+				}
 			}
 			in.close();
+			String outFile="./geolife/traj"+num+".csv";
+			++num;
+			BufferedWriter write=new BufferedWriter(new FileWriter(outFile));
+			write.write(outStr);
+			write.close();
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+//		String path="./src/com/daphnis/dataHandle/trajWithoutTime";
+//		String[] files=getFilenames(path);
+//		for(String fn:files){
+//			fn=path+'/'+fn;
+//			BufferedReader in=new BufferedReader(new FileReader(fn));
+//			in.readLine();
+//			String s;
+//			while((s=in.readLine())!=null){
+//				String[] jw=s.split(",");
+//				System.out.println(Double.parseDouble(jw[0])+"\t"+Double.parseDouble(jw[1]));
+//			}
+//			in.close();
+//		}
+		
+//		FileList fl=new FileList("Y:\\U\\Downloads\\Geolife Trajectories 1.3\\Data","geolife.txt");
+//		fl.getList();
+		
+		Vector<String> vs=new Vector<String>();
+		BufferedReader in=new BufferedReader(new FileReader("geolife.txt"));
+		String s;
+		while((s=in.readLine())!=null){
+//			String str=s.substring(s.length()-3);
+			if(s.substring(s.length()-3).equals("plt")){
+				vs.addElement(s);
+			}
+		}
+		in.close();
+		geolife(vs);
 	}
 
 }

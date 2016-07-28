@@ -3,8 +3,12 @@
 .Rhistory
 .RData
 .Ruserdata
-
+##
 #--Java--
 *.class
 *.log
 /Yan/SimilarityWeb/build/**
+##
+#--Other--
+*.csv
+

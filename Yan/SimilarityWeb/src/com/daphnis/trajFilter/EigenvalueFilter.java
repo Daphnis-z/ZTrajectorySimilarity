@@ -4,14 +4,9 @@
  * 20160726
  */
 package com.daphnis.trajFilter;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Vector;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
@@ -112,7 +107,7 @@ public class EigenvalueFilter {
 	
 	//测试函数
 	public static void testFileter(List<Trajectory> trajs,SimularDef sd){
-		for(int i=6;i<trajs.size();++i){
+		for(int i=0;i<trajs.size();++i){
 			Trajectory traj=trajs.get(i);
 			
 			//普通循环
@@ -143,15 +138,25 @@ public class EigenvalueFilter {
 //		System.out.println(System.getProperty("user.dir"));
 //		Vector<Trajectory> trajs=ReadData.readTaxiTrajs("./trajData/taxiData.txt");	
 		
-		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/");	
+		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/",1500);	
 		
-		SimilarityWithoutTime swt=new SimilarityWithoutTime(trajs.get(2),trajs.get(11),sd);
-		int[][] match=swt.getMatch();
-		int msize=swt.getMatchsize();
+		//去除离群点和冗余点
+		long te=System.currentTimeMillis();
+		for(int i=0;i<trajs.size();++i){
+			Trajectory traj=trajs.get(i);
+	    	KMeans kmeans = new KMeans(traj.getPoints());
+	    	if(kmeans.init()){
+		    	kmeans.calculate();
+		    	kmeans.removeUnusefulPoints();	    	
+		    	kmeans.dataCompression();
+	    	}
+		}
+		System.out.println(System.currentTimeMillis()-te+"ms");
+
+//		SimilarityWithoutTime swt=new SimilarityWithoutTime(trajs.get(2),trajs.get(11),sd);
+//		testFileter(trajs,sd);
 		
-		testFileter(trajs,sd);
-		
-		Trajectory traj=trajs.get(70);
+		Trajectory traj=trajs.get(1014);
 				
 		//普通循环
 		System.out.print("普通循环>\t");
