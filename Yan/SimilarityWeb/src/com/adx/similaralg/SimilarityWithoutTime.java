@@ -139,6 +139,7 @@ public class SimilarityWithoutTime extends Similarity{
 	
 	public void calculate_SimilarerMatch(){//计算最相似点与段
 		int matchcnt=5+matchsize/10;
+		matchcnt=(matchcnt<=matchsize)?matchcnt:matchsize;
 		similarestPoint=new Point[2];
 		MatchPoint []mp=new MatchPoint[matchsize];
 		for(int i=0;i<matchsize;i++){
