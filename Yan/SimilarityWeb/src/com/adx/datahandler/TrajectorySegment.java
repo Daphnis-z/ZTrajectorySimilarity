@@ -53,7 +53,6 @@ public class TrajectorySegment {
 				index.add(i);
 			}
 			}
-		System.out.println("未调整index:"+index);
 		//轨迹分割调整，五个点之内需要合并
 		int index_j=0;
 		while(index_j<index.size()-1){
@@ -71,7 +70,6 @@ public class TrajectorySegment {
 				index.remove(index.size()-1);
 			}
 		}
-		System.out.println("调整index:"+index);
 		double minLatitude,minLongitude,maxLatitude,maxLongitude;
 		minLatitude=allLatitude[Utility.getMin(allLatitude)];
 		minLongitude=allLongitude[Utility.getMin(allLongitude)];
@@ -80,11 +78,6 @@ public class TrajectorySegment {
 		traj.setTrajLen(maxLongitude-minLongitude);
 		Point center=new Point((minLongitude+maxLongitude)/2.0, (minLatitude+maxLatitude)/2.0);
 		traj.setCenterTraj(center);
-		System.out.println("---------中心点和伸缩长度----------");
-		System.out.println("trajLength:"+traj.getTrajLen());
-		System.out.println("traj.centerPoint:"+traj.getCenterTraj().getLatitude()+":::"
-					+traj.getCenterTraj().getLongitude());
-		System.out.println("--------中心点和伸缩长度-----------");
 		return true;
 	}
 	
@@ -99,11 +92,9 @@ public class TrajectorySegment {
 			for(int i=1;i<n;i++){
 				index.add(i*(sizes[0]/n));
 			}
-			System.out.println("同步index:"+index);
 			return true;
 		}
 		if(n==subTrajs.size()){
-			System.out.println("同步index:"+index);
 			return true;
 		}
 

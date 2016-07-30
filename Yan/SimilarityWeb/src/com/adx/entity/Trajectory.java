@@ -9,6 +9,7 @@ import java.util.*;
 public class Trajectory implements Cloneable{
 	protected  Vector<Point> points;
 	public ArrayList<Integer> subTrajs_index;
+	public ArrayList<Integer> naIndex;
 	public int timeStamp;
 	public boolean isNA;
 	
@@ -38,6 +39,7 @@ public class Trajectory implements Cloneable{
 	public Trajectory(int timeStamp){
     	this.points=new Vector<Point>();
     	this.subTrajs_index=new ArrayList<Integer>();
+    	this.naIndex=new ArrayList<Integer>();
     	this.timeStamp=timeStamp;
     }
 	public Trajectory(){

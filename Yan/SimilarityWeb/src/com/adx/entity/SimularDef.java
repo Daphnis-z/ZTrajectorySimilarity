@@ -1,6 +1,5 @@
 package com.adx.entity;
 
-import com.adx.resource.Constant;
 
 /**
  * SimularDef

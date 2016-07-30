@@ -2,20 +2,23 @@ package com.adx.action;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
-import com.adx.datahandler.DataHandlerImp;
+import com.adx.datahandler.DataHandler;
 import com.adx.datahandler.FileDerecterReader;
 import com.adx.datahandler.Utility;
+import com.adx.entity.Constant;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
-import com.adx.resource.Constant;
 import com.adx.similaralg.Similarity;
 import com.adx.similaralg.SimilarityWithTime;
 import com.adx.similaralg.SimilarityWithoutTime;
 import com.daphnis.gis.ShowTraj;
+import com.daphnis.trajFilter.EigenvalueFilter;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -28,7 +31,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	private String actionResult;
 	private ArrayList<String> fileName;
 	private int[] indexes;
-	private int fileLength;
 	private Trajectory[] similarestTraj;
 	private Point[] similarestPoint;
 	
@@ -61,9 +63,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		return similarestPoint;
 	}
 	
-	public int getFileLength() {
-		return fileLength;
-	}
 	public int[] getIndexes() {
 		return indexes;
 	}
@@ -96,7 +95,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
 		fileName=new ArrayList<String>();
 		Constant.pattern=1;
 		
@@ -112,7 +110,8 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		FileDerecterReader testFileReader=new FileDerecterReader(testfilePath,simularDef.getTimeStamp());
 		int status_test=testFileReader.readAllFile();
 		fileName=testFileReader.fileName;
-		Trajectory[] testGroup=testFileReader.getTrajGroup();
+		
+		List<Trajectory> testGroup=new ArrayList<Trajectory>(Arrays.asList(testFileReader.getTrajGroup()));
 		
 		if(status_obj==0||status_test==0){
 			actionResult=ERROR;
@@ -122,21 +121,28 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 			actionResult=INPUT;
 			return actionResult;//所计算轨迹文件类型与输入文件不匹配
 		}
-		DataHandlerImp obj_handler=new DataHandlerImp(objTraj);
+		DataHandler obj_handler=new DataHandler(objTraj);
 		objTraj=obj_handler.dataHandle();
+		for (int i=0;i<testGroup.size();i++){
+			Trajectory traj=testGroup.get(i);
+			DataHandler test_handler=new DataHandler(traj);
+			traj=test_handler.dataHandle();
+		}
 
-		fileLength=testGroup.length;
-		indexes=new int[fileLength];
-		similarity=new double[fileLength];
+		//使用轨迹过滤器
+		//获取比较相似的轨迹群
+		List<Trajectory> trajs=EigenvalueFilter.filtrateByCenterPoint(testGroup, objTraj);
+		trajs=EigenvalueFilter.filtrateByTrajLen(trajs, objTraj);
+		indexes=new int[trajs.size()];
+		similarity=new double[trajs.size()];
 		ArrayList<Similarity> dtwExample=new ArrayList<Similarity>();
 		Similarity dtw;
-		for (int i=0;i<fileLength;i++){
-			DataHandlerImp test_handler=new DataHandlerImp(testGroup[i]);
-			testGroup[i]=test_handler.dataHandle();
+		for (int i=0;i<trajs.size();i++){
+			Trajectory traj=trajs.get(i);
 			if(simularDef.getTimeStamp()==0){
-				 dtw=new SimilarityWithoutTime(objTraj, testGroup[i],simularDef);
+				 dtw=new SimilarityWithoutTime(objTraj, traj,simularDef);
 			}else{
-				 dtw=new SimilarityWithTime(objTraj,testGroup[i],simularDef);
+				 dtw=new SimilarityWithTime(objTraj,traj,simularDef);
 			}
 			dtwExample.add(dtw);
 			System.out.println("timestamp:"+simularDef.getTimeStamp());
@@ -146,7 +152,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
 		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
 		
-		strTrajs=packageTrajs(objTraj,testGroup[indexes[0]]);
+		strTrajs=packageTrajs(objTraj,trajs.get(indexes[0]));
 		strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
 		strPoints=packagePoints(similarestPoint);
 		

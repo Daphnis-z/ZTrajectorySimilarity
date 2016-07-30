@@ -1,4 +1,6 @@
-package com.adx.resource;
+package com.adx.entity;
+
+import java.util.ArrayList;
 
 import com.adx.entity.Trajectory;
 

@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.Vector;
 
 import com.adx.datahandler.CSVReader;
-import com.adx.datahandler.DataHandlerImp;
+import com.adx.datahandler.DataHandler;
 import com.adx.entity.Point;
+import com.adx.entity.Constant;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
-import com.adx.resource.Constant;
 import com.adx.similaralg.Similarity;
 import com.adx.similaralg.SimilarityWithTime;
 import com.adx.similaralg.SimilarityWithoutTime;
@@ -98,20 +98,14 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 			return actionResult;//所计算轨迹文件类型与输入文件不匹配
 		}
 		//数据预处理
-		DataHandlerImp obj_handler=new DataHandlerImp(objTraj);
+		DataHandler obj_handler=new DataHandler(objTraj);
 		objTraj=obj_handler.dataHandle();
-		DataHandlerImp test_handler=new DataHandlerImp(testTraj,objTraj.getSubTrajs().size());
+		DataHandler test_handler=new DataHandler(testTraj,objTraj.getSubTrajs().size());
 		testTraj=test_handler.dataHandle();
 		
 		Constant.objTraj=objTraj;
 		Constant.testTraj=testTraj;
 		
-		//已分割的轨迹调用实例
-//		Vector<Point> points=testTraj.getSubTrajs().get(0).getPoints();
-//		for(int i=0;i<points.size();i++){
-//			Point point=points.get(i);
-//			System.out.println(point.getLatitude()+"::"+point.getLongitude()+"::"+point.getTimestamp());
-//		}
 		Similarity dtw;
 		System.out.println("timestamp:"+simularDef.getTimeStamp());
 		if(simularDef.getTimeStamp()==0){

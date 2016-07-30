@@ -9,9 +9,9 @@ import com.opensymphony.xwork2.Action;
 import java.io.IOException;
 import java.util.Vector;
 
+import com.adx.entity.Constant;
 import com.adx.entity.Point;
 import com.adx.entity.Trajectory;
-import com.adx.resource.Constant;
 
 public class TrajPolyline {
 	private String strTrajs;	

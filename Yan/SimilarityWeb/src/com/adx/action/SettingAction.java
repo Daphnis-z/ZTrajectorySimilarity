@@ -1,6 +1,6 @@
 package com.adx.action;
 
-import com.adx.resource.Constant;
+import com.adx.entity.Constant;
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")

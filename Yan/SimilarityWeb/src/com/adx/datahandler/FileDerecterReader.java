@@ -53,6 +53,7 @@ public class FileDerecterReader {
 		}
 		trajGroup=new Trajectory[filePath.size()];
 		int status=1;
+		int tid=0;
 		for (int i=0;i<filePath.size();i++){
 			File file=new File(filePath.get(i));
 			CSVReader reader=new CSVReader(file, timeStamp);
@@ -60,7 +61,9 @@ public class FileDerecterReader {
 			if(status!=1){
 				return status;
 			}
-			trajGroup[i]=reader.getTraj();
+			Trajectory traj=reader.getTraj();
+			traj.ID=tid++;
+			trajGroup[i]=traj;
 		}
 		return status;
 	}

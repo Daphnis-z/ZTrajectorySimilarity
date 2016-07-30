@@ -1,5 +1,4 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.adx.resource.Constant"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,9 +24,8 @@
 	<%  
  	String tem=request.getAttribute("actionResult").toString();
  	if (tem.equals("success")){
- 		int length=Integer.parseInt(request.getAttribute("fileLength").toString());
  		result="";
- 		for(int i=0;i<length;i++){
+ 		for(int i=0;i<10;i++){
  			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get(indexes["+i+"])").toString()+
  					"的相似度为:"+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%";
  		}

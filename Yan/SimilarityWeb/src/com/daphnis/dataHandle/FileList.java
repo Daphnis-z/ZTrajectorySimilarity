@@ -19,10 +19,11 @@ public class FileList {
     }
 
     public void getList() throws Exception{
-        out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(list_name, true)));    //以追加的方式写入到指定的文件
+    	//以追加的方式写入到指定的文件
+        out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(list_name, true)));
         ver.add(dir_name);
         while(ver.size()>0){
-            File[] files = new File(ver.get(0).toString()).listFiles();    //获取该文件夹下所有的文件(夹)名
+            File[] files = new File(ver.get(0).toString()).listFiles();//获取该文件夹下所有的文件(夹)名
             ver.remove(0);
             
             int len=files.length;
@@ -37,3 +38,4 @@ public class FileList {
         out.close();
     }
 }
+

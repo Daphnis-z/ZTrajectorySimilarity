@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import com.adx.entity.Constant;
 import com.adx.entity.Point;
 import com.adx.entity.Trajectory;
 
@@ -41,45 +42,18 @@ public class CSVReader {
 			String line="";
 			Point point=null;
 			line=br.readLine();
-			boolean fileIsTimeStampe=line.contains("时间");
-			if(fileIsTimeStampe){
-				if(timeStamp==0)
-					return -1;
-			}else{
-				if(timeStamp==1)
-					return -1;
-			}
+			int status=parseFirstLine(line);
 			
 			int pid=0;
 			while((line=br.readLine())!=null){
-				StringTokenizer st=new StringTokenizer(line, ",");
-				if(st.hasMoreTokens()){
-						double longitude=Double.parseDouble(st.nextToken());
-						double latitude=Double.parseDouble(st.nextToken());
-					if(timeStamp==1){
-						String time=st.nextToken();
-						point=new Point(longitude, latitude, time);
-					}else{
-						point=new Point(longitude, latitude);
-					}
-				}
+				point=parseLine(line,status);
 				point.pid=pid++;
-				traj.addPoint(point);
-				}
-			br.close();
-			traj.isNA=false;
-		} catch (NumberFormatException e) {
-			// TODO: handle exception
-			if(readNAFile(file)){
-				return 1;
-			}else{
-				return -1;
+				if(point!=null)
+					traj.addPoint(point);
 			}
-		}catch(NoSuchElementException e){
-			if(readNAFile(file)){
-				return 1;
-			}else{
-				return -1;
+			br.close();
+			if(!traj.isNA){
+				traj.isNA=false;
 			}
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
@@ -91,50 +65,50 @@ public class CSVReader {
 		}
 		return 1;
 	}
-	private  boolean readNAFile(File file){
-		Vector<Point> points=traj.getPoints();
-		points.removeAllElements();
+	private  Point readNALine(String line,int status){
+		Point point=null;
+		double longitude=0,latitude=0;
+		String time="",buf="";
+		int attribute=1;//解析字符的顺序
 		try{
-			BufferedReader br=new BufferedReader(new FileReader(file));
-			String line="";
-			Point point=null;
-			line=br.readLine();
-			String buf="";
-			while((line=br.readLine())!=null){
-				double longitude=0,latitude=0;
-				String time="";
-				int attribute=0;
-				buf="";
-				int length=line.length();
-				for(int i=0;i<length;i++){
-					char tem=line.charAt(i);
-					if(tem==','||i==length-1){
-						if(i==length-1&&tem!=','){
-							buf=buf+tem;
+			int length=line.length();
+			for(int i=0;i<length;i++){
+				char tem=line.charAt(i);
+				if(tem==','||i==length-1){
+					if(i==length-1&&tem!=','){
+						buf=buf+tem;
+					}
+				switch (attribute) {
+					case 1:
+						if(buf==""||buf==null){
+							buf="0.0";
 						}
-						switch (attribute) {
-						case 0:
-							if(buf==""||buf==null){
-								buf="0.0";
-							}
+						if(status==1||status==1){
 							longitude=Double.parseDouble(buf);
-							attribute=1;
-							break;
-						case 1:
-							if(buf==""||buf==null){
-								buf="0.0";
-							}
+						}else{
 							latitude=Double.parseDouble(buf);
-							if(timeStamp==1){
-								attribute=2;
-							}
-							break;
-						case 2:
-							time=buf;
-							break;
-						default:
-							break;
 						}
+						attribute=2;
+						break;
+					case 2:
+						if(buf==""||buf==null){
+							buf="0.0";
+						}
+						if(status==1||status==1){
+							latitude=Double.parseDouble(buf);
+						}else{
+							longitude=Double.parseDouble(buf);
+						}
+						if(timeStamp==1){
+							attribute=3;
+						}
+						break;
+					case 3:
+						time=buf;
+						break;
+					default:
+						break;
+					}
 						buf="";
 					}else{
 					buf=buf+tem;
@@ -145,23 +119,85 @@ public class CSVReader {
 			}else{
 				point=new Point(longitude, latitude);
 				}
-			traj.addPoint(point);
-			}
-			traj.isNA=true;
-			br.close();	
 		}catch (NumberFormatException e) {
 				// TODO: handle exception
 			e.printStackTrace();
-			return false;
-		}catch(FileNotFoundException e){
-			e.printStackTrace();
-			return false;
-		}catch (IOException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return false;
+			return null;
 		}
-		return true;
+		return point;
 	}
-	
+	private int parseFirstLine(String line){//状态-格式  1：经度，纬度  11：经度，纬度，时间  2：纬度，经度  21：纬度，经度，时间 
+		int status=1;
+		boolean isTime;
+		if(line.indexOf("经度")<line.indexOf("纬度")){
+			status=1;
+		}else{
+			status=2;
+		}
+		if(line.contains("时间")){
+			isTime=true;
+			if(timeStamp==0)
+				return -1;
+		}else{
+			isTime=false;
+			if(timeStamp==1)
+				return -1;
+		}
+		if(status==1&&isTime){
+			status=11;
+		}
+		if(status==2&&isTime){
+			status=21;
+		}
+		return status;
+	}
+	private Point parseLine(String line,int status){
+		Point point=null;
+		double longitude=0,latitude=0;
+		String time="";
+		StringTokenizer st=new StringTokenizer(line, ",");
+		try {
+			if(st.hasMoreTokens()){
+				switch (status) {
+				case 1:
+					longitude=Double.parseDouble(st.nextToken());
+					latitude=Double.parseDouble(st.nextToken());
+					point=new Point(longitude, latitude);
+					break;
+				case 11:
+					longitude=Double.parseDouble(st.nextToken());
+					latitude=Double.parseDouble(st.nextToken());
+					time=st.nextToken();
+					point=new Point(longitude, latitude, time);
+					break;
+				case 2:
+					latitude=Double.parseDouble(st.nextToken());
+					longitude=Double.parseDouble(st.nextToken());
+					point=new Point(longitude, latitude);
+					break;
+				case 21:
+					latitude=Double.parseDouble(st.nextToken());
+					longitude=Double.parseDouble(st.nextToken());
+					time=st.nextToken();
+					point=new Point(longitude, latitude, time);
+					break;
+				default:
+					break;
+				}
+			}
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+			point=readNALine(line, status);
+			traj.naIndex.add(traj.getSize());
+			traj.isNA=true;
+			return point; 
+		}catch (NoSuchElementException e) {
+			// TODO: handle exception
+			point=readNALine(line, status);
+			traj.naIndex.add(traj.getSize());
+			traj.isNA=true;
+			return point; 
+		}
+		return point; 
+	}
 }
