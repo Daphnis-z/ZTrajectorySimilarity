@@ -31,6 +31,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	private String actionResult;
 	private ArrayList<String> fileName;
 	private int[] indexes;
+	private int size;
 	private Trajectory[] similarestTraj;
 	private Point[] similarestPoint;
 	
@@ -39,7 +40,10 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 	public String getStrTrajs() {
 		return strTrajs;
 	}
-	
+	public int getSize(){
+		size=fileName.size();
+		return size;
+	}
 	//可视化最相似的子轨迹
 	private String strSubtrajs;	
 	public String getStrSubtrajs() {

@@ -43,12 +43,14 @@ public class CSVReader {
 			Point point=null;
 			line=br.readLine();
 			int status=parseFirstLine(line);
-			
+			if(status!=1){
+				return status;
+			}
 			int pid=0;
 			while((line=br.readLine())!=null){
 				point=parseLine(line,status);
-				point.pid=pid++;
 				if(point!=null)
+					point.pid=pid++;
 					traj.addPoint(point);
 			}
 			br.close();

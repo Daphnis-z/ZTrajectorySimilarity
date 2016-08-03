@@ -8,7 +8,7 @@
     <package name="default" namespace="/" extends="struts-default">
         <default-action-ref name="index"></default-action-ref>
         <action name="index">  
-            <result>jsp/default.jsp</result>  
+            <result>jsp/index.jsp</result>  
         </action> 
         <action name="doublePattern" class="com.adx.action.DoubleTrajAction">  
             <result name="none">jsp/doubleTraj/doubleTraj.jsp</result> 
@@ -24,6 +24,9 @@
         </action> 
         <action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
     		<result>/jsp/viewTraj/viewTraj.jsp</result>
+    	</action>     
+        <action name="viewTrajByMap" class="com.daphnis.gis.TrajPolyline">
+    		<result>/jsp/viewTraj/viewTrajByMap.jsp</result>
     	</action>     
     	<action name="setting" class="com.adx.action.SettingAction">
     		<result name="success">/jsp/setting/setting.jsp</result>

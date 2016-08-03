@@ -8,24 +8,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <link href="./jsp/css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
-    <link href="./jsp/css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./jsp/css/common.css">
-    <link rel="stylesheet" type="text/css" href="./jsp/css/multiTrajResult.css">
-
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
 	<script type="text/javascript" src="./jsp/js/zBaiduMap.js"></script>
-
 	<title>结果显示</title>
 </head>
 <body>
  	<%! String result=""; %>
 	<%  
  	String tem=request.getAttribute("actionResult").toString();
+ 	int size=Integer.parseInt(request.getAttribute("size").toString());
  	if (tem.equals("success")){
  		result="";
- 		for(int i=0;i<10;i++){
+ 		if(size>10){
+ 			size=10;
+ 		}
+ 		for(int i=0;i<size;i++){
  			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get(indexes["+i+"])").toString()+
  					"的相似度为:"+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%";
  		}
@@ -37,32 +34,7 @@
  		result="未输入文件";
  	}
  	%>
-	<br/>	
-	
-
-	 <!-- 导航条 -->
-	 <nav class="navbar navbar-default navbar-fixed-top">
-	   <div class="container">
-       <div class="navbar-header">
-         <a class="navbar-brand" href="./">轨迹相似度计算系统</a>
-       </div>
-       <div id="navbar" class="collapse navbar-collapse">
-         <ul class="nav navbar-nav">
-	        <li><a href="doublePattern.action">双轨迹模式</a></li>
-	        <li class="active"><a href="">多轨迹模式</a></li>
-	        <li><a href="viewTraj.action">可视化轨迹</a></li>
-	        <li><a href="setting.action">设置</a></li>
-         </ul>
-       </div>
-	   </div>
-	 </nav>
-	 <div class="container"></div>
-	 <footer class="footer">
-	   <div class="container">
-	     <p class="text-muted" algin="center">Similarity_HHU SC2016 </p>
-	   </div>
-	 </footer>
-
+	<jsp:include page="//jsp/component/header.jsp"></jsp:include>
 	 <table border="0">
 	 	<tr>
 	 		<td width="30%" valign="top">
@@ -75,7 +47,7 @@
 	 		<td align="center" height="10%"><button onclick="drawTraj()">可视化轨迹</button></td>
 	 	</tr>
 	 </table>
-	
+	<jsp:include page="//jsp/component/footer.jsp"></jsp:include> 
 </body>
 </html>
 <script type="text/javascript">

@@ -6,64 +6,83 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <link href="./jsp/css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
-    <link href="./jsp/css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./jsp/css/common.css">
-    <link rel="stylesheet" type="text/css" href="./jsp/css/viewTraj.css">
-
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
-	<script type="text/javascript" src="./jsp/js/zBaiduMap.js"></script>
-
 	<title>可视化轨迹</title>
 </head>
 <body>
-  <!-- 导航条 -->
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="./">轨迹相似度计算系统</a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-	        <li><a href="doublePattern.action">双轨迹模式</a></li>
-	        <li><a href="morePattern.action">多轨迹模式</a></li>
-	        <li class="active"><a href="">可视化轨迹</a></li>
-	        <li><a href="setting.action">设置</a></li>
-        </ul>
-      </div>
+<jsp:include page="//jsp/component/header.jsp"></jsp:include>
+<!--======== our service =========-->
+<section id="service" class="our-service">
+    <div class="ccontainer">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <p class="small-tag">轨迹展示</p>
+                <h2 class="section-title">可视化方式</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="four-slide">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbyline-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>曲线展现</h3>
+                            <p>您可在简单的二维空间展示您的轨迹</p>
+                        </div>
+                     </div>
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbymap-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>地图展现</h3>
+                            <p>您可在百度地图上可视化您的轨迹。</p>
+                            <a class="btn btn-primary" href="viewTrajByMap.action" role="button">进入<i class="lnr lnr-chevron-right"></i></a>
+                        </div>
+                     </div>
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbygis-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>GIS展现</h3>
+                            <p>您可在postGIS上展现您的轨迹。</p>
+                        </div>
+                    </div>
+                     <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbyline-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>曲线展现</h3>
+                            <p>您可在简单的二维空间展示您的轨迹</p>
+                        </div>
+                     </div>
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbymap-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>地图展现</h3>
+                            <p>您可在百度地图上可视化您的轨迹。</p>
+                        </div>
+                     </div>
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbygis-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>GIS展现</h3>
+                            <p>您可在postGIS上展现您的轨迹。</p>
+                        </div>
+                    </div>
+                     <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbyline-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>曲线展现</h3>
+                            <p>您可在简单的二维空间展示您的轨迹</p>
+                        </div>
+                     </div>
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbymap-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>地图展现</h3>
+                            <p>您可在百度地图上可视化您的轨迹。</p>
+                        </div>
+                     </div>
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbygis-image.jpg" alt="">
+                        <div class="service-overflow text-center">
+                            <h3>GIS展现</h3>
+                            <p>您可在postGIS上展现您的轨迹。</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
     </div>
-  </nav>
-  <div class="container"></div>
-  <footer class="footer">
-    <div class="container">
-      <p class="text-muted" align="center">Similarity_HHU SC2016 </p>
-    </div>
-  </footer>
-
-  <table>
-    <tr height="8%">
-    	<form action="viewTraj.action" method="post" enctype="multipart/form-data">
-			<td><b>上传轨迹文件：</td>
-			<td><input type="file" name="trajFile" id="trajFile" size="50" /></td>
-			<td><input type="submit" value="显示轨迹" onclick="checkValue()" /></td>
-		</form>
-    </tr>
-  </table>
-  <table id="map">
-    <tr>
-      <td colspan="3"><div id="allmap"><h2>地图<h2></div></td>
-    </tr>
-  </table>
+</section>
+<!--======== end our service =========-->
+<jsp:include page="//jsp/component/footer.jsp"></jsp:include> 
 </body>
 </html>
-<script type="text/javascript">
-	function checkValue(){
-		if(document.getElementById("trajFile").value==""){
-			alert("未选择文件！！")
-		}
-	}
-	showMapWithSubtraj("${strTrajs}","${subtraj}")
-</script>
-
