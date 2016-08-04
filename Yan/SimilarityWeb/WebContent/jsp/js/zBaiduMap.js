@@ -41,7 +41,7 @@ function showMap(strTrajs) {
 	map=createBaiduMap(center[0],center[1])
 
 	//绘制折线轨迹
-	zIcon = new BMap.Icon("./jsp/css/images/ptGreen.png", new BMap.Size(20,25))
+	zIcon = new BMap.Icon("./jsp/images/ptGreen.png", new BMap.Size(20,25))
 	for (var ix = 0; ix <2&&ix<strTrajs.length; ix++) {
 		strTraj = strTrajs[ix].split(',')
 		if(strTraj.length<2){
@@ -80,7 +80,7 @@ function showMapWithSubtraj(trajs,subtrajs,points){
 	}
 	
 	//绘制最相似的轨迹点
-	zIcon = new BMap.Icon("./jsp/css/images/ptFlat.png", new BMap.Size(36,36))
+	zIcon = new BMap.Icon("./jsp/images/ptFlat.png", new BMap.Size(36,36))
 	points=points.split(',')
 	for(var i=0;i<points.length;i+=2){
 		pt=new BMap.Point(points[i],points[i+1])
