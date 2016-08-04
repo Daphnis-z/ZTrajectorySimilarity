@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<meta charset="utf-8">
+
   	 <!--======== All Stylesheet =========-->
 	    <link href="/SimilarityWeb7/jsp/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/css/font-awesome.min.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/css/linearicons.css" rel="stylesheet">
+	    <link href="/SimilarityWeb7/jsp/astyle/css/font-awesome.min.css" rel="stylesheet">
+	    <link href="/SimilarityWeb7/jsp/astyle/css/linearicons.css" rel="stylesheet">
 	    <!--=== plugins ===-->
-	    <link href="/SimilarityWeb7/jsp/css/owl.carousel.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/css/owl.theme.css" rel="stylesheet">
+	    <link href="/SimilarityWeb7/jsp/astyle/css/owl.carousel.css" rel="stylesheet">
+	    <link href="/SimilarityWeb7/jsp/astyle/css/owl.theme.css" rel="stylesheet">
 	    <!--=== end plugins ===-->
-	    <link href="/SimilarityWeb7/jsp/css/style.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/css/responsive.css" rel="stylesheet">
-</head>
-<body>
+	    <link href="/SimilarityWeb7/jsp/astyle/css/style.css" rel="stylesheet">
+	    <link href="/SimilarityWeb7/jsp/astyle/css/responsive.css" rel="stylesheet">
 <!--======== header =========-->
 <header id="home">
     <div class="small-menu small-menu-2">
@@ -88,5 +82,3 @@
     </div>
 </header>
 <!--======== end header =========-->
-</body>
-</html>

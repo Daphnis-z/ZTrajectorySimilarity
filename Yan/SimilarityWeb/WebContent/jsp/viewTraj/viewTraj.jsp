@@ -21,56 +21,56 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="four-slide">
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbyline-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbyline-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>曲线展现</h3>
                             <p>您可在简单的二维空间展示您的轨迹</p>
                         </div>
                      </div>
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbymap-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbymap-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>地图展现</h3>
                             <p>您可在百度地图上可视化您的轨迹。</p>
                             <a class="btn btn-primary" href="viewTrajByMap.action" role="button">进入<i class="lnr lnr-chevron-right"></i></a>
                         </div>
                      </div>
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbygis-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbygis-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>GIS展现</h3>
                             <p>您可在postGIS上展现您的轨迹。</p>
                         </div>
                     </div>
-                     <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbyline-image.jpg" alt="">
+                     <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbyline-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>曲线展现</h3>
                             <p>您可在简单的二维空间展示您的轨迹</p>
                         </div>
                      </div>
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbymap-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbymap-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>地图展现</h3>
                             <p>您可在百度地图上可视化您的轨迹。</p>
                         </div>
                      </div>
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbygis-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbygis-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>GIS展现</h3>
                             <p>您可在postGIS上展现您的轨迹。</p>
                         </div>
                     </div>
-                     <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbyline-image.jpg" alt="">
+                     <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbyline-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>曲线展现</h3>
                             <p>您可在简单的二维空间展示您的轨迹</p>
                         </div>
                      </div>
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbymap-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbymap-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>地图展现</h3>
                             <p>您可在百度地图上可视化您的轨迹。</p>
                         </div>
                      </div>
-                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/images/showbygis-image.jpg" alt="">
+                    <div class="single-slide"><img src="/SimilarityWeb7/jsp/astyle/images/showbygis-image.jpg" alt="">
                         <div class="service-overflow text-center">
                             <h3>GIS展现</h3>
                             <p>您可在postGIS上展现您的轨迹。</p>

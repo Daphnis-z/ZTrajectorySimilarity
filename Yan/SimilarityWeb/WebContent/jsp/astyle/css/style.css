@@ -707,13 +707,16 @@ section.author-intro{
 
 /*===== about us ====*/
 .about-us{
-    background-color: #121212;
+    background-color:#8FC93F;
     padding-bottom: 0;
     padding-top: 0;
 }
+.about-font{
+	color:#FFFFFF;
+}
 
 .about-content{
-    margin: 60px 0 30px 20px;
+    margin: 30px 0 30px 20px;
 }
 
 .about-content h2{
@@ -721,7 +724,7 @@ section.author-intro{
 }
 
 .about-content > p{
-    color: #707070;
+    color: #FFFFFF;
     font-weight: 100;
     line-height: 20px;
     max-width: 535px;
@@ -829,7 +832,7 @@ section.author-intro{
 
 .our-experts .section-title{
     color: #fff;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .our-experts p{

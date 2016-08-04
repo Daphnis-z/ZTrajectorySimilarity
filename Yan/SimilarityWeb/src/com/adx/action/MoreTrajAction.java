@@ -41,7 +41,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		return strTrajs;
 	}
 	public int getSize(){
-		size=fileName.size();
+		size=similarity.length;
 		return size;
 	}
 	//可视化最相似的子轨迹

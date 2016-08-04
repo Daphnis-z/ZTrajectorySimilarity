@@ -41,61 +41,7 @@
                 </div>
             </div>
         </section>
-        <!--======== end intro =========-->
-        <div><br/></div>
-        <!--======== recent event =========-->
-        <section class="author-intro">
-            <div class="row">
-                <div class="col-md-3 col-md-offset-1 col-sm-12">
-                    <div class="event-box text-center">
-                        <h3>开发人员介绍</h3>
-                        <p>此部分将对相关开发人员进行介绍,包括指导老师和开发团队.</p>
-                        <a class="btn btn-primary" href="/SimilarityWeb7/jsp/comment/authorIntro.html" role="button">了解更多<i class="lnr lnr-chevron-right "></i></a>
-                    </div>
-                </div>
-                <div class="col-md-8 col-xs-12">
-                    <div class="row">
-                        <div class="col-sm-3 p-l-r-0">
-                            <div class="event-img">
-                                <img src="/SimilarityWeb7/jsp/images/event-2.png" alt="image">
-                                <div class="event-overflow">
-                                    <p>叶枫</p>
-                                    <small>指导老师</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 p-l-r-0">
-                            <div class="event-img">
-                                <img src="/SimilarityWeb7/jsp/images/event-1.png" alt="image">
-                                <div class="event-overflow">
-                                    <p>吴胜艳</p>
-                                    <small>队长</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 p-l-r-0">
-                            <div class="event-img">
-                                <img src="/SimilarityWeb7/jsp/images/event-2.png" alt="image">
-                                <div class="event-overflow">
-                                    <p>邹由超</p>
-                                    <small>队员</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 p-l-r-0">
-                            <div class="event-img">
-                                <img src="/SimilarityWeb7/jsp/images/event-1.png" alt="image">
-                                <div class="event-overflow">
-                                    <p>徐永欢</p>
-                                    <small>队员</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--======== end author Intro =========-->
+       
         <!--======== contact =========-->
         <section id="contact" class="contact">
             <div class="container">

@@ -43,15 +43,16 @@ public class CSVReader {
 			Point point=null;
 			line=br.readLine();
 			int status=parseFirstLine(line);
-			if(status!=1){
+			if(status==-1){
 				return status;
 			}
 			int pid=0;
 			while((line=br.readLine())!=null){
 				point=parseLine(line,status);
-				if(point!=null)
+				if(point!=null){
 					point.pid=pid++;
 					traj.addPoint(point);
+				}
 			}
 			br.close();
 			if(!traj.isNA){
@@ -128,6 +129,7 @@ public class CSVReader {
 		}
 		return point;
 	}
+
 	private int parseFirstLine(String line){//状态-格式  1：经度，纬度  11：经度，纬度，时间  2：纬度，经度  21：纬度，经度，时间 
 		int status=1;
 		boolean isTime;

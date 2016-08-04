@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
-	<script type="text/javascript" src="./jsp/js/zBaiduMap.js"></script>
+	<script type="text/javascript" src="./jsp/astyle/js/zBaiduMap.js"></script>
 	<title>结果显示</title>
 </head>
 <body>
@@ -34,8 +34,43 @@
  		result="未输入文件";
  	}
  	%>
-	<jsp:include page="//jsp/component/header.jsp"></jsp:include>
-	 <table border="0">
+ 	<jsp:include page="//jsp/component/header.jsp"></jsp:include>
+ 	<section id="about-us" class="about-us">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-xs-12 p-l-r-0">
+               <div class="about-content">
+              		<table border="0"><tr>
+                    	<td><h4 class="about-font">计算结果</h4></td>
+                    	<td><button class="btn btn-primary" onclick="drawTraj()">可视化轨迹</button></td>
+                   		</tr>
+                    </table>
+					<table border="0"><tr>
+                   		 <td class="about-font"><%= result %></td>
+                   		</tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="about-content">
+                	<table border="0"><tr>
+                   <td><button class="btn btn-primary" >轨迹属性</button></td>
+                   <td><button class="btn btn-primary">轨迹属性</button></td>
+                  <td> <button class="btn btn-primary">轨迹属性</button></td>
+                   <td><button class="btn btn-primary">轨迹属性</button></td>
+                   <td></tr>
+                   <tr><td rowspan="2"><div id="allmap"></div></td></tr>
+                   </table>
+                   <div class="about-content">
+                    <img src="/SimilarityWeb7/jsp/astyle/images/map.jpg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+	 <%-- <table border="0">
 	 	<tr>
 	 		<td width="30%" valign="top">
 	 			<b>计算结果：</b>
@@ -46,7 +81,7 @@
 	 	<tr>
 	 		<td align="center" height="10%"><button onclick="drawTraj()">可视化轨迹</button></td>
 	 	</tr>
-	 </table>
+	 </table> --%>
 	<jsp:include page="//jsp/component/footer.jsp"></jsp:include> 
 </body>
 </html>

@@ -27,10 +27,12 @@ public class NAValueHandler {
 	//处理缺失值，成功返回true,失败返回false
 	public boolean NAHandle(){
 	    points=traj.getPoints();
-//		for(int i=0;i<points.size();i++){
 	    int remove=0;
 		for(int i=0;i<traj.naIndex.size();i++){
 			int index=traj.naIndex.get(i)-remove;
+			if(index<0){
+				break;
+			}
 			Point point=points.get(index);
 			double latitude=point.getLatitude();
 			double longtitude=point.getLongitude();

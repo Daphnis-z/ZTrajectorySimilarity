@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>多轨迹模式</title>
 </head>
-<body background="./jsp/css/images/bg.jpg">
+<body >
 <jsp:include page="//jsp/component/header.jsp"></jsp:include>
  	<%! double dtwDis_W=0.45,editDis_W=0.1,tsum_W=0,shapeSum_W=0.45;
 	%>
@@ -39,7 +39,7 @@
         <form action="morePattern.action" method="post" enctype="multipart/form-data" onsubmit="return checkFile()">
         <table border="0">
         <div class="row">
-           <h2 class="section-title">各要素权重：</h2>
+           <h4 class="section-title">各要素权重：</h4>
            <tr><td>
             <div class="col-md-4 col-md-6 col-xs-12">
          	轨迹距离：<input type="text" name="dtwDis_W" id="dtwDis_W_Id" value=<%= dtwDis_W%> size=10 />
@@ -52,17 +52,17 @@
             <div class="three-slide">
             <td>
                     <div class="single-slide">
-                    <img class="img-circle" src="/SimilarityWeb7/jsp/images/objtraj-image.jpg" alt="">
+                    <img class="img-circle" src="/SimilarityWeb7/jsp/astyle/images/objtraj-image.jpg" alt="">
                         <div class="text-center">
                             <h3 class="expert-name">目标轨迹</h3>
                             <p class="expert-tag">选择需要进行相似比较的目标轨迹</p>
-                       <input type="file" name="objectfile" id="ofile" size="40" />
+                       	<input type="file" name="objectfile" id="ofile" size="40"/>
                         </div>
                     </div>
             </td>
             <td>
                     <div class="single-slide">
-                    <img class="img-circle" src="/SimilarityWeb7/jsp/images/testtraj-image.jpg" alt="">
+                    <img class="img-circle" src="/SimilarityWeb7/jsp/astyle/images/testtraj-image.jpg" alt="">
                         <div class="text-center">
                             <h3 class="expert-name">测试轨迹群</h3>
                             <p class="expert-tag">选择与目标轨迹进行比较的测试轨迹群</p>
@@ -72,15 +72,17 @@
             </td>
             <td>
                     <div class="single-slide">
-                    <img class="img-circle" src="/SimilarityWeb7/jsp/images/timestamp-image.jpg" alt="">
+                    <img class="img-circle" src="/SimilarityWeb7/jsp/astyle/images/timestamp-image.jpg" alt="">
                         <div class="text-center">
                             <h3 class="expert-name">时间戳</h3>
-                            <p class="expert-tag">请选择目标轨迹和测试轨迹是否带时间戳</p>
+                            <p class="expert-tag">请选择目标/测试轨迹是否带时间戳</p>
                        		   带时间戳<input type="checkbox" name="timeStamp" id="timeStampId" 
 						value="1" size="10" onchange="changeSimilarValue()"/>
                         </div>
                     </div>
+               </td>
                 </div>
+             </tr>
             </div>
              <tr><td colspan="4"><input class="btn btn-primary" type="submit" value="开始计算"></td></tr>
         </div>
@@ -88,7 +90,6 @@
       </form>
     </div>
 </section>
-	</br></br></br></br></br></br></br>
    <jsp:include page="//jsp/component/footer.jsp"></jsp:include>
 </body>
 </html>
