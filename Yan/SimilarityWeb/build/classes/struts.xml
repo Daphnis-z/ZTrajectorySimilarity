@@ -5,42 +5,49 @@
 <struts>
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="false" />
+    <constant name="struts.action.extension" value="action" /> 
     <package name="default" namespace="/" extends="struts-default">
-        <default-action-ref name="index"></default-action-ref>
-        <action name="index">  
-            <result>jsp/index.jsp</result>  
-        </action> 
-        <action name="doublePattern" class="com.adx.action.DoubleTrajAction">  
-            <result name="none">jsp/doubleTraj/doubleTraj.jsp</result> 
-            <result name="success">jsp/doubleTraj/doubleTrajResult.jsp</result>
-    		<result name="input">jsp/doubleTraj/doubleTrajResult.jsp</result>
-    		<result name="error">jsp/doubleTraj/doubleTrajResult.jsp</result>
-        </action> 
-        <action name="morePattern" class="com.adx.action.MoreTrajAction">  
-            <result name="none">jsp/moreTraj/moreTraj.jsp</result>  
-            <result name="success">jsp/moreTraj/moreTrajResult.jsp</result>
-    		<result name="input">jsp/moreTraj/moreTrajResult.jsp</result>
-    		<result name="error">jsp/moreTraj/moreTrajResult.jsp</result>            
-        </action> 
-        <action name="viewTraj" class="com.daphnis.gis.TrajPolyline">
-    		<result>/jsp/viewTraj/viewTraj.jsp</result>
-    	</action>     
-        <action name="viewTrajByMap" class="com.daphnis.gis.TrajPolyline">
-    		<result>/jsp/viewTraj/viewTrajByMap.jsp</result>
-    	</action>     
-    	<action name="setting" class="com.adx.action.SettingAction">
-    		<result name="success">/jsp/setting/setting.jsp</result>
-    		<result name="none">/jsp/setting/setting.jsp</result>    		
-    	</action>     
-        
-        <!-- 调试聚类用 -->
-        <action name="kmeans" class="com.daphnis.kMeans.KMeansDemo">
-        	<result>/jsp/viewTraj/viewTraj.jsp</result>
-        </action>
-        <!-- 可视化DTW匹配结果 -->
-        <action name="viewDTWResult" class="com.daphnis.gis.ShowDTWResult">
-    		<result>/jsp/match.jsp</result>
-    	</action>     
+	    <default-action-ref name="index"></default-action-ref>
+	    <action name="index">  
+	        <result>jsp/index.jsp</result>  
+	    </action> 
+	    <action name="doublePattern" class="com.adx.action.DoubleTrajAction">  
+	        <result name="none">jsp/doubleTraj/doubleTraj.jsp</result> 
+	        <result name="success">jsp/doubleTraj/doubleTrajResult.jsp</result>
+			<result name="input">jsp/doubleTraj/doubleTrajResult.jsp</result>
+			<result name="error">jsp/doubleTraj/doubleTrajResult.jsp</result>
+	    </action> 
+	    <action name="morePattern" class="com.adx.action.MoreTrajAction">  
+	        <result name="none">jsp/moreTraj/moreTraj.jsp</result>  
+	        <result name="success">jsp/moreTraj/moreTrajResult.jsp</result>
+			<result name="input">jsp/moreTraj/moreTrajResult.jsp</result>
+			<result name="error">jsp/moreTraj/moreTrajResult.jsp</result>            
+	    </action> 
+	    <action name="viewTraj">
+			<result>/jsp/viewTraj/viewTraj.jsp</result>
+		</action>   	   
+		<action name="viewTrajByMap">
+			<result>/jsp/viewTraj/viewTrajByMap.jsp</result>
+		</action>       	  
+	    <action name="showATrajInMap" class="com.daphnis.gis.TrajPolyline">
+		</action>   	    
+		<action name="setting" class="com.adx.action.SettingAction">
+			<result name="success">/jsp/setting/setting.jsp</result>
+			<result name="none">/jsp/setting/setting.jsp</result>    		
+		</action>     
+	    
+	    <!-- 调试聚类用 -->
+	    <action name="kmeans" class="com.daphnis.kMeans.KMeansDemo">
+	    	<result>/jsp/viewTraj/viewTraj.jsp</result>
+	    </action>
+	    <!-- 可视化DTW匹配结果 -->
+	    <action name="viewDTWResult" class="com.daphnis.gis.ShowDTWResult">
+			<result>/jsp/match.jsp</result>
+		</action>     
+	    <!-- 图表展示功能用 -->
+	    <action name="chart" class="com.daphnis.chart.AmCharts">
+	    	<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
+	    </action>
         
     	
     </package>

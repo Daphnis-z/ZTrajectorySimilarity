@@ -1,0 +1,16 @@
+/*
+	公共样式表
+*/
+
+/* 显示地图 */
+/* body,html,#allmap { */
+/* 	width: 100%; */
+/* 	height: 100%; */
+/* 	overflow: hidden; */
+/* } */
+
+#allmap { 
+ 	width: 100%;  	
+ 	height: 100%;  	
+ 	overflow: hidden; 
+ } 

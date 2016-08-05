@@ -32,13 +32,13 @@ function createBaiduMap(logitude,latitude){
 
 function showMap(strTrajs) {
 	// 接收来自后台的轨迹数据
-	strTrajs = strTrajs.split('@')
-	center = strTrajs[0].split(',')// 为了设置地图中心点
+	strTrajs = strTrajs.split('@');
+	center = strTrajs[0].split(',');// 为了设置地图中心点
 	if(center.length<2){
-		center[0]=118.82761
-		center[1]=31.97705
+		center[0]=118.82761;
+		center[1]=31.97705;
 	}
-	map=createBaiduMap(center[0],center[1])
+	map=createBaiduMap(center[0],center[1]);
 
 	//绘制折线轨迹
 	zIcon = new BMap.Icon("./jsp/astyle/images/ptGreen.png", new BMap.Size(20,25))
@@ -47,7 +47,7 @@ function showMap(strTrajs) {
 		if(strTraj.length<2){
 			break
 		}
-		var traj = new Array(strTraj.length / 2)
+		var traj = new Array();
 		for (var i = 0, j = 0; i < strTraj.length; i += 2, j++) {
 			traj[j] = new BMap.Point(strTraj[i], strTraj[i + 1])
 			marker=ix==0? new BMap.Marker(traj[j]):new BMap.Marker(traj[j],{icon:zIcon})
@@ -68,7 +68,7 @@ function showMapWithSubtraj(trajs,subtrajs,points){
 	subtrajs=subtrajs.split('@')
 	for(var ix=0;ix<subtrajs.length;++ix){
 		subtraj=subtrajs[ix].split(',')
-		var straj=new Array(subtraj.length/2)
+		var straj=new Array();
 		for (var i = 0, j = 0; i < subtraj.length; i += 2, j++) {
 			straj[j] = new BMap.Point(subtraj[i], subtraj[i + 1])
 //			map.addOverlay(new BMap.Marker(straj[j],{title:"我是相似度最高的子轨迹"}))

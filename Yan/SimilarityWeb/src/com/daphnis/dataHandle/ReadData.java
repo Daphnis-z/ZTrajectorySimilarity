@@ -66,8 +66,9 @@ public class ReadData {
 	}
 
 	/**
-	 * 读取指定路径下的所有轨迹文件
+	 * 读取指定路径下给定数目的轨迹文件
 	 * @param path
+	 * @param num
 	 * @return
 	 * @throws IOException
 	 */

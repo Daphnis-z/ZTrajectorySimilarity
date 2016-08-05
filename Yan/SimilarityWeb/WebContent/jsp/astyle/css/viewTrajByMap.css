@@ -1,0 +1,17 @@
+html,body{
+	width:100%;
+	height:90%;
+}
+table{
+	margin: auto;
+	width: 98%;
+}
+table#map{
+	margin-top: 0.5%;
+	height: 77%;
+}
+
+td{
+	padding: 2px 2px;
+	background: #F2F4F3;
+}

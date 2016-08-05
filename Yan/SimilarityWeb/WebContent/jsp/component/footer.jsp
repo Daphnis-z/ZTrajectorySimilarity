@@ -1,6 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!--======== footer =========-->
+<style>
+	html {
+	  position: relative;
+	  min-height: 100%;
+	}
+	body {
+	  /* Margin bottom by footer height */
+	  margin-bottom: 60px;
+	}
+	footer{
+	  position: absolute;
+	  bottom: 0;
+	  width: 100%;		
+	}
+</style>
 <footer class="footer">
     <div class="container">
         <div class="row">
