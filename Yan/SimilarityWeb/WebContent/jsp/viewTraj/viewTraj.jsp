@@ -15,6 +15,7 @@
         			<div class="service-overflow text-center">
             		<h3>曲线展现</h3>
             		<p>您可在简单的二维空间展示您的轨迹</p>
+            		<a class="btn btn-primary" href="viewTrajInChart.action" role="button">进入<i class="lnr lnr-chevron-right"></i></a>          		
         			</div>
      			</div>				
 			</td>

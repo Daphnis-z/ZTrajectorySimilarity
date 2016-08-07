@@ -1,17 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
-  	 <!--======== All Stylesheet =========-->
-	    <link href="/SimilarityWeb7/jsp/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/astyle/css/font-awesome.min.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/astyle/css/linearicons.css" rel="stylesheet">
-	    <!--=== plugins ===-->
-	    <link href="/SimilarityWeb7/jsp/astyle/css/owl.carousel.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/astyle/css/owl.theme.css" rel="stylesheet">
-	    <!--=== end plugins ===-->
-	    <link href="/SimilarityWeb7/jsp/astyle/css/style.css" rel="stylesheet">
-	    <link href="/SimilarityWeb7/jsp/astyle/css/responsive.css" rel="stylesheet">
+<!--======== All Stylesheet =========-->
+ <link href="/SimilarityWeb7/jsp/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="/SimilarityWeb7/jsp/astyle/css/font-awesome.min.css" rel="stylesheet">
+ <link href="/SimilarityWeb7/jsp/astyle/css/linearicons.css" rel="stylesheet">
+ <!--=== plugins ===-->
+ <link href="/SimilarityWeb7/jsp/astyle/css/owl.carousel.css" rel="stylesheet">
+ <link href="/SimilarityWeb7/jsp/astyle/css/owl.theme.css" rel="stylesheet">
+ <!--=== end plugins ===-->
+ <link href="/SimilarityWeb7/jsp/astyle/css/style.css" rel="stylesheet">
+ <link href="/SimilarityWeb7/jsp/astyle/css/responsive.css" rel="stylesheet">
 <!--======== header =========-->
+
+<script type="text/javascript" src="./jsp/astyle/js/jquery-2.1.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // $("#pages li").removeClass("active");
+        var tle=$("title").text();
+        switch (tle) {
+        case "Similarity":
+            $("#pages li").eq(0).addClass("active");
+            break;
+        case "双轨迹模式":
+        case "双轨迹结果显示":
+            $("#pages li").eq(1).addClass("active");
+            break;
+        case "多轨迹模式":
+        case "多轨迹结果显示":
+            $("#pages li").eq(2).addClass("active");
+            break;
+        case "可视化轨迹":
+        case "在地图中可视化轨迹":
+            $("#pages li").eq(3).addClass("active");
+            break;
+        case "系统设置":
+            $("#pages li").eq(4).addClass("active");
+            break;
+        default:
+            // statements_def
+            break;
+    	}
+	});
+</script>
+
 <header id="home">
     <div class="small-menu small-menu-2">
         <div class="container">
@@ -48,8 +79,8 @@
                     </div>
 
                     <div class="collapse navbar-collapse" id="menu-4">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a class="scroll" href="index.action">首页</a></li>
+                        <ul class="nav navbar-nav navbar-right" id="pages">
+                            <li><a class="scroll" href="index.action">首页</a></li>
                             <li><a class="scroll" href="doublePattern.action">双轨迹模式</a></li>
                             <li><a class="scroll" href="morePattern.action">多轨迹模式</a></li>
                             <li><a class="scroll" href="viewTraj.action">轨迹可视化</a></li>

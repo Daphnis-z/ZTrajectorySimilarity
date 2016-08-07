@@ -23,12 +23,18 @@
 			<result name="input">jsp/moreTraj/moreTrajResult.jsp</result>
 			<result name="error">jsp/moreTraj/moreTrajResult.jsp</result>            
 	    </action> 
+	    
+	    <!-- 轨迹可视化 -->
 	    <action name="viewTraj">
 			<result>/jsp/viewTraj/viewTraj.jsp</result>
-		</action>   	   
+		</action>   
 		<action name="viewTrajByMap">
 			<result>/jsp/viewTraj/viewTrajByMap.jsp</result>
-		</action>       	  
+		</action>       	  	   
+		<action name="viewTrajInChart">
+			<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
+		</action> 
+		      	  
 	    <action name="showATrajInMap" class="com.daphnis.gis.TrajPolyline">
 		</action>   	    
 		<action name="setting" class="com.adx.action.SettingAction">
