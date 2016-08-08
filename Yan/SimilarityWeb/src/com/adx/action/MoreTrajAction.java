@@ -135,8 +135,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 
 		//使用轨迹过滤器
 		//获取比较相似的轨迹群
-		List<Trajectory> trajs=EigenvalueFilter.filtrateByCenterPoint(testGroup, objTraj);
-		trajs=EigenvalueFilter.filtrateByTrajLen(trajs, objTraj);
+		List<Trajectory> trajs=EigenvalueFilter.filtrateTraj(testGroup, objTraj);
 		indexes=new int[trajs.size()];
 		similarity=new double[trajs.size()];
 		ArrayList<Similarity> dtwExample=new ArrayList<Similarity>();

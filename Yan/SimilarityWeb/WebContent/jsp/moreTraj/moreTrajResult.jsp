@@ -8,7 +8,6 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KPEp2mgApObFYkwzVxYjsDnDtaIoRjxI"></script>
-    <script type="text/javascript" src="./jsp/astyle/js/zBaiduMap.js"></script>
     <link rel="stylesheet" type="text/css" href="./jsp/astyle/css/common.css">  
     <link rel="stylesheet" type="text/css" href="./jsp/astyle/css/moreTrajResult.css">  
 	<title>多轨迹结果显示</title>
@@ -24,8 +23,8 @@
 	 			size=10;
 	 		}
 	 		for(int i=0;i<size;i++){
-	 			result=result+" <br/>"+"目标轨迹与测试轨迹"+request.getAttribute("fileName.get(indexes["+i+"])").toString()+
-	 					"的相似度为:"+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%";
+	 			result+=(i+1)+".目标轨迹与测试轨迹（"+request.getAttribute("fileName.get(indexes["+i+"])").toString()+
+	 					"）的相似度为："+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%\r\n";
 	 		}
 	 	}else if(tem.equals("input")){
 	 		result="所选择计算轨迹文件类型与输入文件不匹配";
@@ -43,11 +42,24 @@
                     <table>
                         <tr>
                            <td><button class="btn btn-primary">开始计算</button></td>
-                           <td><button class="btn btn-primary" onclick="drawTraj()">显示轨迹</button></td>
+                           <td><select>
+                           		<option value="map">地图</option>
+               	                <option value="chart">图表</option>                        		
+                           </select></td>
+                           <td><select>
+	                            <option value="volvo">Volvo</option>
+							    <option value="saab">Saab</option>
+							    <option value="opel">Opel</option>
+							    <option value="audi">Audi</option>                         
+                           </select></td>                        
                         </tr>
-                        <tr><td colspan="2"><h4 class="about-font">计算结果</h4></td></tr>
+                        <tr><td colspan="3"><h4 class="about-font">计算结果</h4></td></tr>
                         <tr>
-                            <td colspan="2" class="about-font"><%= result %></td>
+                            <td colspan="3" class="about-font">
+                            	<textarea readonly="readonly" rows="19" class="normalTA">
+                            		<%= result %>
+                            	</textarea>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -59,11 +71,20 @@
         </div>
     </div>
 	<jsp:include page="//jsp/component/footer.jsp"></jsp:include> 
+
+	<!-- js文件 -->
+    <script type="text/javascript" src="./jsp/astyle/js/zBaiduMap.js"></script>
+    <script type="text/javascript" src="./jsp/astyle/js/moreTrajResult.js"></script>
+    
+    <!-- 绘制图表相关 -->
+    <script src="./jsp/amcharts/amcharts.js" type="text/javascript"></script>
+	<script src="./jsp/amcharts/serial.js" type="text/javascript"></script>    
+    <script type="text/javascript" src="./jsp/astyle/js/viewTrajInChart.js"></script>
 </body>
 </html>
 <script type="text/javascript">
-	function drawTraj(){
-		showMapWithSubtraj("${strTrajs}","${strSubtrajs}","${strPoints}")
-	}
+	var strTrajs="${strTrajs}";
+	var strSubtrajs="${strSubtrajs}";
+	var strPoints="${strPoints}";
 </script>
 

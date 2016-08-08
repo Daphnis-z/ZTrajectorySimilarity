@@ -18,3 +18,16 @@ div#map{
 	margin:0.7% 0%;
 }
 
+textarea.normalTA{
+	width:100%;
+	height:100%;
+	background:transparent;
+	border-color:white;
+}
+
+select{
+	width:100%;
+	height:105%;
+	background:transparent;
+	border-color:white;
+}

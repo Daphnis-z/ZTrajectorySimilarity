@@ -24,10 +24,7 @@ public class EigenvalueFilter {
 	 * @param sd
 	 * @return
 	 */
-	public static List<Trajectory> filtrateByCenterPoint(List<Trajectory> trajs,Trajectory traj){		
-		if(trajs.size()<100){//为提高精度，少于100条轨迹不进行过滤
-			return trajs;
-		}
+	private static List<Trajectory> filtrateByCenterPoint(List<Trajectory> trajs,Trajectory traj){		
 		List<Trajectory> subTrajs=new ArrayList<Trajectory>();//存放与目标轨迹较相似的轨迹群	
 		double trajDis=Math.pow(traj.getCenterTraj().getLongitude(), 2)+
 				Math.pow(traj.getCenterTraj().getLatitude(), 2);
@@ -69,7 +66,7 @@ public class EigenvalueFilter {
 	 * @param trajs
 	 * @param traj
 	 */
-	public static List<Trajectory> filtrateByTrajLen(List<Trajectory> trajs,Trajectory traj){
+	private static List<Trajectory> filtrateByTrajLen(List<Trajectory> trajs,Trajectory traj){
 		List<Trajectory> subTrajs=new ArrayList<Trajectory>();	
 		double lenThreshold=0;	
 		for(int i=1;i<=5;++i){
@@ -82,6 +79,21 @@ public class EigenvalueFilter {
 				subTrajs.add(trajs.get(i));
 			}
 		}
+		return subTrajs;
+	}
+	
+	/**
+	 * 过滤非常不相似轨迹
+	 * @param trajs
+	 * @param traj
+	 * @return
+	 */
+	public static List<Trajectory> filtrateTraj(List<Trajectory> trajs,Trajectory traj){
+		if(trajs.size()<100){//为提高精度，少于100条轨迹不进行过滤
+			return trajs;
+		}
+		List<Trajectory> subTrajs=filtrateByCenterPoint(trajs,traj);
+		subTrajs=filtrateByTrajLen(subTrajs,traj);
 		return subTrajs;
 	}
 	
