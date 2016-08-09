@@ -46,7 +46,7 @@
                            		<option value="map">地图</option>
                	                <option value="chart">图表</option>                        		
                            </select></td>
-                           <td><select>
+                           <td><select id="trajs">
 	                            <option value="volvo">Volvo</option>
 							    <option value="saab">Saab</option>
 							    <option value="opel">Opel</option>
@@ -83,8 +83,24 @@
 </body>
 </html>
 <script type="text/javascript">
-	var strTrajs="${strTrajs}";
+	var allTrajs="${strTrajs}";
+	var strTrajs=init(allTrajs);
+	
 	var strSubtrajs="${strSubtrajs}";
 	var strPoints="${strPoints}";
+	$(document).ready(function () {
+		drawTraj(strTrajs,allTrajs);			
+		var sel1=$("select").eq(1);
+		$("select").eq(0).change(function(){
+			sel1.toggle("slow");
+			drawTraj(strTrajs,allTrajs);			
+		});
+		sel1.change(function(){
+			strTrajs=viewOtherTraj(allTrajs,sel1.val());
+			drawTraj(strTrajs,allTrajs);
+		});
+
+	});
+
 </script>
 

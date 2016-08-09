@@ -1,10 +1,10 @@
 /**
- * 
+ * 在图表中显示轨迹
  */
+
  //处理来自服务器的数据
 function dataHandle(strTrajs) {
     var trajs=new Array();
-    strTrajs=strTrajs.split("@");
     for(var i=0;i<strTrajs.length;++i){
         var traj=new Array();
         var points=strTrajs[i].split(",");
@@ -36,29 +36,22 @@ function fillChartData (trajs) {
     return chartData;
 }
 
-
-function showInChartWithSubtraj (strTrajs,strSubtrajs,strPoints) {
-    var trajs=dataHandle(strTrajs);
-    var chart;
-    var chartData=fillChartData(trajs);
-
+function initChart () {
     // SERIAL CHART
-    chart = new AmCharts.AmSerialChart();
-    chart.dataProvider = chartData;
+    // chart.dataProvider =chartData;
+    var chart = new AmCharts.AmSerialChart();
     chart.categoryField = "longitude";
     chart.startDuration = 0.5;
     chart.balloon.color = "#000000";
     chart.addTitle("经度");
-
-    chart.accessibleTitle="";
 
     // AXES
     // category
     var categoryAxis = chart.categoryAxis;
     categoryAxis.fillAlpha = 1;
     categoryAxis.fillColor = "#FAFAFA";
-    categoryAxis.gridAlpha = 0;
-    categoryAxis.axisAlpha = 0;
+    categoryAxis.gridAlpha = 30;
+    categoryAxis.axisAlpha = 100;
     categoryAxis.gridPosition = "start";
     categoryAxis.position = "top";
 
@@ -71,15 +64,6 @@ function showInChartWithSubtraj (strTrajs,strSubtrajs,strPoints) {
     valueAxis.gridCount = 100;
     valueAxis.reversed = true; // this line makes the value axis reversed
     chart.addValueAxis(valueAxis);
-
-    for(var i=0;i<trajs.length;++i){
-        var graph = new AmCharts.AmGraph();
-        graph.title = "traj"+i;
-        graph.valueField =graph.title;
-        graph.balloonText = "（[[category]]，[[value]]）";
-        graph.bullet = "round";
-        chart.addGraph(graph);
-    }
 
     // CURSOR
     var chartCursor = new AmCharts.ChartCursor();
@@ -97,6 +81,63 @@ function showInChartWithSubtraj (strTrajs,strSubtrajs,strPoints) {
     legend.useGraphSettings = true;
     chart.addLegend(legend);
 
-    // WRITE
+    return chart;
+}
+
+function addPolyline (chart,chartData,traj,tname) {
+    for(var i=0;i<traj.length;++i){
+        var isFinish=true;
+        for(var j=0;j<chartData.length;++j){
+            if(Math.abs(traj[i].longitude-chartData[j].longitude)<0.0000001){
+                chartData[j][tname]=traj[i].latitude;
+                isFinish=false;
+                break;
+            }else if(j+1<chartData.length){
+                if((traj[i].longitude-chartData[j].longitude)*(traj[i].longitude-chartData[j+1].longitude)<0){
+                    var point={
+                        "longitude":traj[i].longitude
+                    };
+                    point[tname]=traj[i].latitude;
+                    chartData.splice(j,0,point);
+                    isFinish=false;
+                    break;
+                }
+            }
+        }
+        if(isFinish){
+            break;
+        }
+    }
+    var ix=chartData.length;
+    for(;i<traj.length;++i){
+        var point={
+            "longitude":traj[i].longitude
+        };
+        point[tname]=traj[i].latitude;
+        chartData[ix++]=point;
+    }
+}
+
+//仅仅绘制轨迹
+function showInChart (strTrajs) {
+    var chart=initChart();
+    var trajs=dataHandle(strTrajs.split("@"));
+    var chartData=new Array();
+    for(var i=0;i<trajs.length;++i){
+        var name="traj"+i;
+        addPolyline(chart,chartData,trajs[i],name);
+
+        var graph = new AmCharts.AmGraph();
+        graph.title = name;
+        graph.valueField =name;
+        graph.balloonText = "（[[category]]，[[value]]）";
+        graph.bullet = "round";
+        chart.addGraph(graph);
+    }
+    chart.dataProvider =chartData;
     chart.write("allmap");
+}
+
+function showInChartWithSubtraj (strTrajs,strSubtrajs,strPoints) {
+    showInChart(strTrajs+"@"+strSubtrajs+"@"+strPoints);
 }

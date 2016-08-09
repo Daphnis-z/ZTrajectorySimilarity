@@ -31,6 +31,7 @@
             break;
         case "可视化轨迹":
         case "在地图中可视化轨迹":
+        case "在图表中可视化轨迹":
             $("#pages li").eq(3).addClass("active");
             break;
         case "系统设置":

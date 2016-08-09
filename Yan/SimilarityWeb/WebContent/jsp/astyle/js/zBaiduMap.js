@@ -31,7 +31,7 @@ function createBaiduMap(logitude,latitude){
 }
 
 function showMap(strTrajs) {
-	// 接收来自后台的轨迹数据
+	// 处理来自后台的轨迹数据
 	strTrajs = strTrajs.split('@');
 	center = strTrajs[0].split(',');// 为了设置地图中心点
 	if(center.length<2){
@@ -61,6 +61,7 @@ function showMap(strTrajs) {
 	}
 }
 
+//可视化带子轨迹段的轨迹
 function showMapWithSubtraj(trajs,subtrajs,points){
 	showMap(trajs)
 
@@ -71,7 +72,7 @@ function showMapWithSubtraj(trajs,subtrajs,points){
 		var straj=new Array();
 		for (var i = 0, j = 0; i < subtraj.length; i += 2, j++) {
 			straj[j] = new BMap.Point(subtraj[i], subtraj[i + 1])
-//			map.addOverlay(new BMap.Marker(straj[j],{title:"我是相似度最高的子轨迹"}))
+			// map.addOverlay(new BMap.Marker(straj[j],{title:"我是相似度最高的子轨迹"}))
 		}
 		polyline = new BMap.Polyline(
 				straj, {strokeColor : "blue",strokeWeight : 5,strokeOpacity : 0}
@@ -123,5 +124,4 @@ function showDTWResult(strPoints) {
 		) //创建折线
 		map.addOverlay(pl);
 	}
-
 }

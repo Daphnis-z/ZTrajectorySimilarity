@@ -36,7 +36,10 @@
                     <table>
                         <tr>
                            <td><button class="btn btn-primary">开始计算</button></td>
-                           <td><button class="btn btn-primary" onclick="drawTraj()">显示轨迹</button></td>
+                           <td><select>
+                           		<option value="map">地图</option>
+               	                <option value="chart">图表</option>                        		
+                           </select></td>
                         </tr>
                         <tr><td colspan="2"><h4 class="about-font">计算结果</h4></td></tr>
                         <tr>
@@ -53,11 +56,31 @@
     </div>
 	
     <jsp:include page="//jsp/component/footer.jsp"></jsp:include> 
+    
+    <!-- 绘制图表相关 -->
+    <script src="./jsp/amcharts/amcharts.js" type="text/javascript"></script>
+	<script src="./jsp/amcharts/serial.js" type="text/javascript"></script>    
+    <script type="text/javascript" src="./jsp/astyle/js/viewTrajInChart.js"></script>
 </body>
 </html>
 <script type="text/javascript">
-    function drawTraj(){
-        showMapWithSubtraj("${strTrajs}","${strSubtrajs}","${strPoints}");
-    }
+	var strTrajs="${strTrajs}";	
+	var strSubtrajs="${strSubtrajs}";
+	var strPoints="${strPoints}";
+	$(document).ready(function () {
+		drawTraj(strTrajs);			
+		$("select").eq(0).change(function(){
+			drawTraj(strTrajs);			
+		});
+	});
+	
+	//绘制轨迹
+	function drawTraj(strTrajs){
+		if($("select").eq(0).val()=="map"){
+			showMapWithSubtraj(strTrajs,strSubtrajs,strPoints);
+		}else{
+			showInChart(strTrajs);
+		}
+	}
 </script>
 

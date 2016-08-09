@@ -31,3 +31,8 @@ select{
 	background:transparent;
 	border-color:white;
 }
+
+table{
+	width:100%;
+}
+

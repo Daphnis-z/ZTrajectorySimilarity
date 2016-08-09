@@ -90,13 +90,6 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		return similarity;
 	}
 	
-	private void readyForViewTraj(Trajectory traj1,Trajectory traj2){
-		Vector<Trajectory> vt=new Vector<Trajectory>();
-		vt.addElement(traj1);
-		vt.addElement(traj2);
-		strTrajs=ShowTraj.convertSomeTrajs(vt);
-	}
-
 	@Override
 	public String execute() throws Exception {
 		fileName=new ArrayList<String>();
@@ -153,22 +146,54 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		}
 		indexes=Utility.orderByValue(similarity);
 		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
-		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
-		
-		strTrajs=packageTrajs(objTraj,trajs.get(indexes[0]));
-		strSubtrajs=packageTrajs(similarestTraj[0],similarestTraj[1]);
-		strPoints=packagePoints(similarestPoint);
+		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();		
+		readyForViewTrajs(objTraj, trajs);
 		
 		actionResult=SUCCESS;
 		return actionResult;
 	}
 	
-	private String packageTrajs(Trajectory traj1,Trajectory traj2){
+	/**
+	 * 为可视化轨迹做好准备
+	 * @param objTraj
+	 * @param trajs
+	 */
+	private void readyForViewTrajs(Trajectory objTraj, List<Trajectory> trajs) {
+		strTrajs=packageTrajs(objTraj,trajs);
+		strSubtrajs=packageSubTrajs(similarestTraj[0],similarestTraj[1]);
+		strPoints=packagePoints(similarestPoint);
+	}	
+	/**
+	 * 打包待可视化的轨迹
+	 * @param objTraj
+	 * @param trajs
+	 * @return
+	 */
+	private String packageTrajs(Trajectory objTraj, List<Trajectory> trajs){
+		Vector<Trajectory> vt=new Vector<Trajectory>();
+		vt.addElement(objTraj);
+		for(int i=0;i<indexes.length&i<10;++i){
+			vt.addElement(trajs.get(indexes[i]));
+		}
+		return ShowTraj.convertSomeTrajs(vt);
+	}
+	/**
+	 * 打包待可视化的子轨迹
+	 * @param traj1
+	 * @param traj2
+	 * @return
+	 */
+	private String packageSubTrajs(Trajectory traj1,Trajectory traj2){
 		Vector<Trajectory> vt=new Vector<Trajectory>();
 		vt.addElement(traj1);
 		vt.addElement(traj2);
 		return ShowTraj.convertSomeTrajs(vt);
 	}
+	/**
+	 * 打包最相似的轨迹点
+	 * @param points
+	 * @return
+	 */
 	private String packagePoints(Point[] points){
 		Trajectory traj=new Trajectory();
 		for(int i=0;i<points.length;++i){

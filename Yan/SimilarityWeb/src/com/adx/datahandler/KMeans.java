@@ -10,8 +10,8 @@ import java.util.List;
 import com.adx.entity.Point;
 
 public class KMeans {
-	private final int POINT_NUM_CLUSTER=3;//期待的一个群中含有的点的数量   
-	private final double SLOPE=0.2;//斜率阈值，用于判定在同一条直线上
+	private final int POINT_NUM_CLUSTER=5;//期待的一个群中含有的点的数量   
+	private final double SLOPE=0.5;//斜率阈值，用于判定在同一条直线上
     private List<Point> points;
     
     private List<Cluster> clusters;   
@@ -30,7 +30,7 @@ public class KMeans {
      * 则应该停止进行后面的操作
      */
     public boolean init() {
-    	if(points.size()<3){
+    	if(points.size()<POINT_NUM_CLUSTER){
     		return false;
     	}
     	
@@ -81,7 +81,8 @@ public class KMeans {
 	/**
 	 * 数据压缩
 	 */
-	public void dataCompression(){		
+	public void dataCompression(){	
+//		int n1=points.size();		
     	for(Cluster cluster:clusters){
 			List<Point> tpts=cluster.getPoints();
     		if(tpts.size()>=3){
@@ -102,6 +103,7 @@ public class KMeans {
     			}   			
     		}
     	}
+//    	System.out.println(points.size()-n1);
 	}
 	//计算斜率
 	private double calSlope(Point pt1,Point pt2){

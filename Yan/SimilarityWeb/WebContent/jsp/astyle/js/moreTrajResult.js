@@ -1,18 +1,32 @@
-/**
- * 
- */
-$(document).ready(function () {
-	drawTraj();
-	$("select").eq(0).change(function(){
-		drawTraj()
-	});
-});
 
-function drawTraj(){
+//绘制轨迹
+function drawTraj(strTrajs,allTrajs){
 	if($("select").eq(0).val()=="map"){
-		showMapWithSubtraj(strTrajs,strSubtrajs,strPoints);
+		if($('option:selected', '#trajs').index()==0){
+			showMapWithSubtraj(strTrajs,strSubtrajs,strPoints);
+		}else{
+			showMap(strTrajs,strSubtrajs,strPoints);
+		}
 	}else{
-		showInChartWithSubtraj (strTrajs,strSubtrajs,strPoints);
+		showInChart(allTrajs);
 	}
+}
 
+
+//初始化
+function init (strTrajs) {
+	strTrajs=strTrajs.split("@");
+	var sel=$('#trajs');
+	sel.empty();
+	for(var i=1;i<strTrajs.length;++i){
+		var tname="traj"+i;
+		sel.append("<option value='"+strTrajs[i]+"'>"+tname+"</option>"); 
+	}
+	return strTrajs[0]+'@'+strTrajs[1];
+}
+
+//可视化不同的轨迹
+function viewOtherTraj (strTrajs,traj) {
+	strTrajs=strTrajs.split("@");
+	return strTrajs[0]+"@"+traj;
 }
