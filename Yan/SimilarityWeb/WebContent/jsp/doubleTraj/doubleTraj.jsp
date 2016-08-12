@@ -44,10 +44,10 @@
              <tr>
              <td>
             <div class="col-md-4 col-md-6 col-xs-12">
-                                    轨迹距离：<input type="text" name="dtwDis_W" id="dtwDis_W_Id" value=<%= dtwDis_W%> size=10 />
-         	轨迹顺序：<input type="text" name="editDis_W" id="editDis_W_Id" value=<%= editDis_W%> size=10 /></br>
-        	时间差异：<input type="text" name="tsum_W" value=<%= tsum_W%> id="tsum_W_Id" size=10 /></br>
-        	形状差异：<input type="text" name="shapeSum_W" id="shapeSum_W_Id" value=<%= shapeSum_W%> size=10 />
+	                                轨迹距离：<input type="text" name="dtwDis_W" id="dtwDis_W_Id" value=<%= dtwDis_W%> size=10 />
+	         	轨迹顺序：<input type="text" name="editDis_W" id="editDis_W_Id" value=<%= editDis_W%> size=10 /><br/>
+	        	时间差异：<input type="text" name="tsum_W" value=<%= tsum_W%> id="tsum_W_Id" size=10 /><br/>
+	        	形状差异：<input type="text" name="shapeSum_W" id="shapeSum_W_Id" value=<%= shapeSum_W%> size=10 />
             </div>
             </td>
             <div class="col-md-8">

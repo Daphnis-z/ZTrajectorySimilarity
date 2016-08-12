@@ -6,6 +6,12 @@ package com.adx.entity;
 
 import java.util.*;
 
+/**
+ * file: Trajectory.java
+ * note: java
+ * author: Daphnis
+ * date: 2016年8月11日 下午2:15:27
+ */
 public class Trajectory implements Cloneable{
 	protected  Vector<Point> points;
 	public ArrayList<Integer> subTrajs_index;
@@ -13,10 +19,10 @@ public class Trajectory implements Cloneable{
 	public int timeStamp;
 	public boolean isNA;
 	
-	/**
-	 * 轨迹编号，唯一标识一条轨迹
-	 */
-	public int ID;
+	/** 轨迹编号，唯一标识一条轨迹 */
+	public int ID;	
+	/** 轨迹名称 */
+	public String name;
 	
 	//轨迹中心点
 	private Point centerTraj;

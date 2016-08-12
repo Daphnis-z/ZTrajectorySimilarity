@@ -20,7 +20,7 @@ public class KMeansDemo {
 	}
 
 	public String execute() throws IOException{
-		Trajectory traj=ReadData.readATraj("./trajData/坐标点信息1(含时间).csv");
+		Trajectory traj=ReadData.readATraj("./trajData/坐标点信息1(含时间).csv","String");
     	KMeans kmeans = new KMeans(traj.getPoints());
     	if(kmeans.init()){
 	    	kmeans.calculate();

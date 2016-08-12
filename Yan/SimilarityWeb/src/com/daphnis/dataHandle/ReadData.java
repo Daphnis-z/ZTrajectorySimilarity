@@ -6,10 +6,17 @@
 package com.daphnis.dataHandle;
 
 import java.io.*;
+import java.util.List;
 import java.util.Vector;
 
 import com.adx.entity.*;
 
+/**
+ * file: ReadData.java
+ * note: 读取各种格式的轨迹文件
+ * author: Daphnis
+ * date: 2016年8月10日 下午3:18:00
+ */
 public class ReadData {
 	/**
 	 * 读取指定路径下所有的文件名
@@ -25,13 +32,19 @@ public class ReadData {
 	/**
 	 * 从一个文件里读取一条轨迹数据
 	 * 忽略时间戳
-	 * @param fileName
-	 * @return Trajectory
+	 * @param obj
+	 * @param type obj的类型（"String"或者"File"）
+	 * @return
 	 * @throws IOException
 	 */
-	public static Trajectory readATraj(String fileName) throws IOException{
+	public static Trajectory readATraj(Object obj,String type) throws IOException{
 		Vector<Point> points=new Vector<Point>();		
-		BufferedReader in=new BufferedReader(new FileReader(fileName));
+		BufferedReader in;
+		if(type.equals("File")){
+			in=new BufferedReader(new FileReader((File)obj));
+		}else{
+			in=new BufferedReader(new FileReader((String)obj));
+		}
 		in.readLine();
 		String s;
 		int pid=0;
@@ -41,7 +54,11 @@ public class ReadData {
 			String[] jw=s.split(",");
 			Point p;
 			try{
-				p=new Point(Double.parseDouble(jw[0]),Double.parseDouble(jw[1]));
+				if(jw.length<3){
+					p=new Point(Double.parseDouble(jw[0]),Double.parseDouble(jw[1]));
+				}else{
+					p=new Point(Double.parseDouble(jw[0]),Double.parseDouble(jw[1]),jw[2]);
+				}
 			}catch(Exception e){
 				continue;
 			}
@@ -58,6 +75,9 @@ public class ReadData {
 		}
 		in.close();
 		Trajectory traj=new Trajectory(points,-1);
+		traj.setTimeStamp(traj.getPoints().get(0).getTimestamp()==null? 0:1);
+		String name=obj.toString();
+		traj.name=name.substring(name.lastIndexOf('/')+1);
 		traj.setCenterTraj(new Point((lonMax+lonMin)/2,(latMax+latMin)/2));
 		double a=lonMax-lonMin,b=latMax-latMin;
 		traj.setTrajLen(a>b? a:b);
@@ -81,10 +101,10 @@ public class ReadData {
 		
 		int id=0;
 		for(String file:files){
-			Trajectory traj=readATraj(path+file);
+			Trajectory traj=readATraj(path+file,"String");
 			traj.ID=id++;
 			trajs.addElement(traj);
-			if(trajs.size()>=num){
+			if(num>0&&trajs.size()>=num){
 				break;
 			}
 		}
@@ -129,7 +149,50 @@ public class ReadData {
 		return trajs;
 	}
 
-	private static void geolife(Vector<String> vs) throws IOException{
+	/**
+	 * 读取缓存文件
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	public static List<Trajectory> readCacheData(String path,SimularDef sd) throws IOException{
+		List<Trajectory> trajs=new Vector<Trajectory>();
+		BufferedReader read=new BufferedReader(new FileReader(path));
+		String str=read.readLine();
+		String[] line=str.split(","); 
+		int ts=Integer.parseInt(line[line.length-1]);
+		setSimularDef(line,ts,sd);
+		while((str=read.readLine())!=null){
+			String tname=str;
+			str=read.readLine();
+			Vector<Point> points=new Vector<Point>();
+			String[] strs=str.split(",");
+			if(ts!=1){
+				for(int i=0;i<strs.length-1;i+=2){
+					points.addElement(new Point(Double.parseDouble(strs[i]),Double.parseDouble(strs[i+1])));
+				}
+			}else{
+				for(int i=0;i<strs.length-2;i+=3){
+					points.addElement(new Point(Double.parseDouble(strs[i]),
+							Double.parseDouble(strs[i+1]),strs[i+2]));
+				}
+			}
+			Trajectory traj=new Trajectory(points,ts);
+			traj.name=tname;
+			trajs.add(traj);
+		}
+		read.close();
+		return trajs;
+	}
+	private static void setSimularDef(String[] strs,int ts,SimularDef sd){
+		sd.setDtwDis_W(Double.parseDouble(strs[0]));
+		sd.setEditDis_W(Double.parseDouble(strs[1]));
+		sd.setShapeSum_W(Double.parseDouble(strs[2]));
+		sd.setTsum_W(Double.parseDouble(strs[3]));
+		sd.setTimeStamp(ts);
+	}
+	
+ 	private static void geolife(Vector<String> vs) throws IOException{
 		int num=1;
 		for(String file:vs){
 			BufferedReader in=new BufferedReader(new FileReader(file));
@@ -159,6 +222,8 @@ public class ReadData {
 	}
 	
 	public static void main(String[] args) throws Exception {
+//		List<Trajectory> trajs=readCacheData("./data/trajData/cache.csv");
+		
 //		String path="./src/com/daphnis/dataHandle/trajWithoutTime";
 //		String[] files=getFilenames(path);
 //		for(String fn:files){

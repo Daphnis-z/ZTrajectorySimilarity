@@ -9,16 +9,16 @@ package com.adx.entity;
  */
 public class SimularDef {
 
-	private double dtwDis_B;	//dtw的距离度量最坏值
-	private double editDis_B;	//编辑距离度量最坏值
-	private long tsum_B;	//时间戳度量最坏值
-	private double shapeSum_B;	//形状度量最坏值
+	private double dtwDis_B=2;	//dtw的距离度量最坏值
+	private double editDis_B=100;	//编辑距离度量最坏值
+	private long tsum_B=1440;	//时间戳度量最坏值
+	private double shapeSum_B=100;	//形状度量最坏值
 	private double dtwDis_W;	//dtw的距离度量权重
 	private double editDis_W;	//编辑距离度量权重
 	private double tsum_W;	//时间戳度量权重
 	private double shapeSum_W;	//形状度量权重
 	private int timeStamp;	//是否带时间戳，1为带，0为不带
-	
+		
 	public int getTimeStamp() {
 		return timeStamp;
 	}

@@ -1,7 +1,5 @@
 package com.adx.entity;
 
-import java.util.ArrayList;
-
 import com.adx.entity.Trajectory;
 
 public class Constant {

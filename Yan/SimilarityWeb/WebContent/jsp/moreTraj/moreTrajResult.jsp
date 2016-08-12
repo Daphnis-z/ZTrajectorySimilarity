@@ -16,23 +16,14 @@
  	<%! String result=""; %>
 	<%  
 	 	String tem=request.getAttribute("actionResult").toString();
-	 	int size=Integer.parseInt(request.getAttribute("size").toString());
-	 	if (tem.equals("success")){
-	 		result="";
-	 		if(size>10){
-	 			size=10;
-	 		}
-	 		for(int i=0;i<size;i++){
-	 			result+=(i+1)+".目标轨迹与测试轨迹（"+request.getAttribute("fileName.get(indexes["+i+"])").toString()+
-	 					"）的相似度为："+request.getAttribute("similarity[indexes["+i+"]]").toString()+"%\r\n";
-	 		}
-	 	}else if(tem.equals("input")){
-	 		result="所选择计算轨迹文件类型与输入文件不匹配";
-	 	}else if(tem.equals("error")){
-	 		result="输入文件名找不到，文件传输有误";
-	 	}else{
-	 		result="未输入文件";
-	 	}
+		if(!tem.equals("doNothing")){
+			result=request.getAttribute("result").toString();
+		 	if (tem.equals("error")){
+		 		result="服务器端读取数据错误！！";
+		 	}
+		}else{
+	 		result="文件上传成功！！";
+		}
  	%>
  	<jsp:include page="//jsp/component/header.jsp"></jsp:include>
     <div class="container-fluid" id="all">
@@ -41,7 +32,9 @@
                <div class="about-content">
                     <table>
                         <tr>
-                           <td><button class="btn btn-primary">开始计算</button></td>
+                           <td><a id="cal" onclick="calMultiTrajs()" href="calMultiTrajs.action"  class="white">
+                           	<button class="btn btn-primary">开始计算</button>
+                           </a></td>
                            <td><select>
                            		<option value="map">地图</option>
                	                <option value="chart">图表</option>                        		
@@ -83,6 +76,7 @@
 </body>
 </html>
 <script type="text/javascript">
+	var trajsName="${trajsName}";
 	var allTrajs="${strTrajs}";
 	var strTrajs=init(allTrajs);
 	

@@ -1,3 +1,14 @@
+//计算相似度
+function calMultiTrajs(){
+	var a=$("#cal");
+	var url=a.attr("href");
+	if(trajsName==""){
+		url+="?&reqType=cal";//使用上传的数据进行计算
+	}else{
+		url+="?&reqType=data&dataName="+trajsName;//使用服务器上的数据计算
+	}
+	a.attr("href",url);
+}
 
 //绘制轨迹
 function drawTraj(strTrajs,allTrajs){

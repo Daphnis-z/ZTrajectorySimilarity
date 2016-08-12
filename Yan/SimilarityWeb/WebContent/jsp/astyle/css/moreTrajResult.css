@@ -27,7 +27,7 @@ textarea.normalTA{
 
 select{
 	width:100%;
-	height:105%;
+	height:90%;
 	background:transparent;
 	border-color:white;
 }
@@ -36,3 +36,16 @@ table{
 	width:100%;
 }
 
+a.white:link{
+	display:block;
+	font-size:14px;
+	color:black;
+	background-color:transparent;
+	width:120px;
+	text-align:left;
+	padding:4px;
+	text-decoration:none;
+}
+/* a.white:hover{ */
+/* 	background-color:red; */
+/* } */

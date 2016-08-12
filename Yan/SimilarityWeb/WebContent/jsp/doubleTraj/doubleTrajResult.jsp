@@ -35,15 +35,15 @@
                <div class="about-content">
                     <table>
                         <tr>
-                           <td><button class="btn btn-primary">开始计算</button></td>
+                           <td>可视化方式：</td>
                            <td><select>
                            		<option value="map">地图</option>
                	                <option value="chart">图表</option>                        		
                            </select></td>
                         </tr>
-                        <tr><td colspan="2"><h4 class="about-font">计算结果</h4></td></tr>
+                        <tr><td colspan="2"><h4 class="about-font"><br/>计算结果：</h4></td></tr>
                         <tr>
-                            <td colspan="2" class="about-font"><%= result %></td>
+                            <td colspan="2" class="about-font">&nbsp<%= result %></td>
                         </tr>
                     </table>
                 </div>
