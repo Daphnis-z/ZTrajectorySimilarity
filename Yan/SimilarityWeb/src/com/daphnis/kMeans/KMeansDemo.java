@@ -11,39 +11,16 @@ import com.adx.entity.Trajectory;
 import com.daphnis.dataHandle.ReadData;
 
 public class KMeansDemo {	
-	private String strTrajs;	
-	public String getStrTrajs() {
-		return strTrajs;
-	}
-	public void setStrTrajs(String strTrajs) {
-		this.strTrajs = strTrajs;
-	}
-
-	public String execute() throws IOException{
-		Trajectory traj=ReadData.readATraj("./trajData/坐标点信息1(含时间).csv","String");
+	
+	public static void main(String[] args) throws IOException{
+		Trajectory traj=ReadData.readATraj("./trajData/traj12747.csv","String");
+		
     	KMeans kmeans = new KMeans(traj.getPoints());
     	if(kmeans.init()){
 	    	kmeans.calculate();
 	    	kmeans.removeUnusefulPoints();	    	
 	    	kmeans.dataCompression();
-    	}
-    	
-    	showATraj(traj);
-		return "success";
-	}
-		
-	public void showATraj(Trajectory traj){
-		StringBuilder sb=new StringBuilder();
-		for(Point p:traj.getPoints()){
-			sb.append(","+p.getLongitude()+","+p.getLatitude());
-		}
-		setStrTrajs(sb.substring(1));
-	}
-	
-	public static void main(String[] args) throws IOException{
-		KMeansDemo kmd=new KMeansDemo();
-		kmd.execute();
-		
+    	}		
 	}
 		
 }

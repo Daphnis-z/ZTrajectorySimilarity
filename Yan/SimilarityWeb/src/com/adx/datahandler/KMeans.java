@@ -8,11 +8,12 @@ package com.adx.datahandler;
 import java.util.ArrayList;
 import java.util.List;
 import com.adx.entity.Point;
+import com.daphnis.kMeans.Cluster;
 
 public class KMeans {
 	private final int POINT_NUM_CLUSTER=5;//期待的一个群中含有的点的数量   
-	private final double SLOPE=0.5;//斜率阈值，用于判定在同一条直线上
-    private List<Point> points;
+	private final double SLOPE_DIFF;//斜率阈值，用于判定在同一条直线上
+    private List<Point> points;//保存轨迹所有的点
     
     private List<Cluster> clusters;   
     public List<Cluster> getClusters() {
@@ -21,6 +22,10 @@ public class KMeans {
 
 	public KMeans(List<Point> points) {
     	this.points = points;
+    	
+    	//计算斜率差的阈值
+    	SLOPE_DIFF=calSDThreshold(this.points);
+    	
     	this.clusters = new ArrayList<Cluster>();    
     }
         
@@ -33,7 +38,7 @@ public class KMeans {
     	if(points.size()<POINT_NUM_CLUSTER){
     		return false;
     	}
-    	
+    	    	
     	//初始化群并设定中心点
     	int clusterCnt=points.size()/POINT_NUM_CLUSTER;
     	for (int i = 0; i<clusterCnt; i++) {
@@ -82,15 +87,13 @@ public class KMeans {
 	 * 数据压缩
 	 */
 	public void dataCompression(){	
-//		int n1=points.size();		
     	for(Cluster cluster:clusters){
 			List<Point> tpts=cluster.getPoints();
     		if(tpts.size()>=3){
     			for(int i=0;i<tpts.size()-2;i+=3){
     				Point[] pts={tpts.get(i),tpts.get(i+1),tpts.get(i+2)};
     				sortPoints(pts);
-    				double k1=calSlope(pts[0],pts[1]),k2=calSlope(pts[2],pts[1]);
-    				if(Math.abs(k1-k2)<SLOPE){
+    				if(calSlopeDiff(pts[0],pts[1],pts[2])<SLOPE_DIFF){
     					if(!checkIsInflectionPoint(pts[0])){
     						points.remove(pts[0]);
     					}else{
@@ -103,17 +106,47 @@ public class KMeans {
     			}   			
     		}
     	}
-//    	System.out.println(points.size()-n1);
 	}
-	//计算斜率
-	private double calSlope(Point pt1,Point pt2){
-		return (pt1.getLongitude()-pt2.getLongitude())/(pt1.getLatitude()-pt2.getLatitude());		
+		
+	/**
+	 * 计算斜率差的阈值
+	 * @param points
+	 * @return
+	 */
+	private double calSDThreshold(List<Point> points){
+		final int NUM=5;
+		int len=points.size();
+		int dif=len/NUM;
+		if(dif<3){
+			return Double.MAX_VALUE;
+		}
+		
+		double maxsd=-100000,sum=0;;
+		for(int i=0;i<len;i+=dif){
+			double tmp=calSlopeDiff(points.get(i),points.get(i+1),points.get(+2));
+			maxsd=maxsd<tmp? tmp:maxsd;
+			sum+=tmp;
+		}
+		return (sum-maxsd)/(NUM-1);
 	}
-	//检查该店是否是拐点
+	
+	/**
+	 * 计算斜率差
+	 * @param pt1
+	 * @param pt2
+	 * @param pt3
+	 * @return
+	 */
+	private double calSlopeDiff(Point pt1,Point pt2,Point pt3){
+		double m1=(pt2.getLatitude()-pt1.getLatitude())*(pt3.getLongitude()-pt2.getLongitude());
+		double m2=(pt3.getLatitude()-pt2.getLatitude())*(pt2.getLongitude()-pt1.getLongitude());
+		return Math.abs(m1-m2);
+	}
+	
+	//检查该点是否是拐点
 	private boolean checkIsInflectionPoint(Point pt){
 		if(pt.pid-1>=0&&pt.pid+1<points.size()){
-			double k1=calSlope(points.get(pt.pid-1),pt),k2=calSlope(points.get(pt.pid+1),pt);
-			if(Math.abs(k1-k2)<SLOPE){
+			if(calSlopeDiff(points.get(pt.pid-1),pt,points.get(pt.pid+1))<SLOPE_DIFF){
 				return false;
 			}
 		}
@@ -132,6 +165,7 @@ public class KMeans {
 		}
 	}
     
+	
     //Rset clusters
     private void clearClusters() {
     	for(Cluster cluster : clusters) {

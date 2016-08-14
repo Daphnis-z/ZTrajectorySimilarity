@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import com.adx.datahandler.CSVReader;
 import com.adx.entity.Trajectory;
+import com.daphnis.kMeans.KMeans;
 
 /**
  * file: TrajPolyline.java
@@ -47,6 +48,16 @@ public class TrajPolyline extends ActionSupport implements ServletResponseAware{
 			CSVReader objReader=new CSVReader(trajFile,-1);
 			objReader.readFile();
 			Trajectory objTraj=objReader.getTraj();
+			
+			//Êý¾ÝÑ¹Ëõ²âÊÔ
+//	    	KMeans kmeans = new KMeans(objTraj.getPoints());
+//	    	if(kmeans.init()){
+//		    	kmeans.calculate();
+//		    	kmeans.removeUnusefulPoints();	    	
+//		    	kmeans.dataCompression();
+//	    	}		
+
+			
 			strTrajs=ShowTraj.convertTraj(objTraj);								
 		}
 	   response.setContentType("text/html");

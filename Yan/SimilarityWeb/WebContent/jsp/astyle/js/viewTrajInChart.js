@@ -44,6 +44,8 @@ function initChart () {
     chart.startDuration = 0.5;
     chart.balloon.color = "#000000";
     chart.addTitle("经度");
+    chart.categoryAxis.labelsEnabled=false;//隐藏横坐标标签
+    chart.mouseWheelScrollEnabled=true;
 
     // AXES
     // category
@@ -133,6 +135,9 @@ function showInChart (strTrajs) {
         graph.balloonText = "（[[category]]，[[value]]）";
         graph.bullet = "round";
         chart.addGraph(graph);
+        if(i>1){
+            graph.hidden=true;
+        }
     }
     chart.dataProvider =chartData;
     chart.write("allmap");
