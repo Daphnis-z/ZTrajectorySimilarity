@@ -1,4 +1,4 @@
-package com.daphnis.gis;
+package com.adx.gis;
 
 import java.util.Vector;
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.adx.datahandler.EigenvalueFilter;
 import com.adx.datahandler.Utility;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
@@ -19,7 +20,6 @@ import com.daphnis.dataHandle.DataUpload;
 import com.daphnis.dataHandle.ReadData;
 import com.daphnis.gis.ShowTraj;
 import com.daphnis.kMeans.KMeans;
-import com.daphnis.trajFilter.EigenvalueFilter;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**

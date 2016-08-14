@@ -1,39 +1,26 @@
-package com.adx.datahandler;
+package com.adx.dataread;
 
 import java.io.BufferedReader;
-//import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
-import com.adx.entity.Constant;
+import com.adx.datahandler.NAValueHandler;
 import com.adx.entity.Point;
-import com.adx.entity.Trajectory;
 
 /**
  * CSVReader
  * @author Agnes
  *用于读取轨迹csv文件的点的数据
  */
-public class CSVReader {
-	private File file;
-	private Trajectory traj;
-	private int timeStamp;
-	
-	public CSVReader(File file,int timeStamp){
-		this.file=file;
-		traj=new Trajectory(timeStamp);
-		this.timeStamp=timeStamp;
+public class CSVReader extends MyFileReader {
+
+	public CSVReader(File file, int timeStamp) {
+		// TODO Auto-generated constructor stub
+		super(file, timeStamp);
 	}
-	
-	public Trajectory getTraj() {
-		return traj;
-	}
-	
 	//读取csv文件，1返回读取成功，0返回读取失败文件查找不到，-1所计算轨迹文件类型与输入不匹配
 	@SuppressWarnings("resource")
 	public int readFile(){
@@ -52,17 +39,20 @@ public class CSVReader {
 				if(point!=null){
 					point.pid=pid++;
 					traj.addPoint(point);
+					lonMax=lonMax<point.getLongitude()? point.getLongitude():lonMax;
+					lonMin=lonMin>point.getLongitude()? point.getLongitude():lonMin;
+					latMax=latMax<point.getLatitude()? point.getLatitude():latMax;
+					latMin=latMin>point.getLatitude()? point.getLatitude():latMin;
+				}
+				if(traj.getSize()>=100){
+					break;
 				}
 			}
 			br.close();
-			if(!traj.isNA){
-				traj.isNA=false;
-			}
-		}catch(FileNotFoundException e){
-			e.printStackTrace();
-			return 0;
-		}catch (IOException e) {
-			// TODO: handle exception
+			traj.setCenterTraj(new Point((lonMax+lonMin)/2,(latMax+latMin)/2));
+			traj.setTrajLen(lonMax-lonMin);
+			traj.name=file.getName();
+		}catch(Exception e){
 			e.printStackTrace();
 			return 0;
 		}
@@ -189,17 +179,13 @@ public class CSVReader {
 					break;
 				}
 			}
-		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 			point=readNALine(line, status);
-			traj.naIndex.add(traj.getSize());
-			traj.isNA=true;
-			return point; 
-		}catch (NoSuchElementException e) {
-			// TODO: handle exception
-			point=readNALine(line, status);
-			traj.naIndex.add(traj.getSize());
-			traj.isNA=true;
+			int size=traj.getSize();
+			NAValueHandler na=new NAValueHandler(point,traj.getPoints().get(size-1),
+									traj.getPoints().get(size-2));
+			point=na.NAHandle(timeStamp);
 			return point; 
 		}
 		return point; 

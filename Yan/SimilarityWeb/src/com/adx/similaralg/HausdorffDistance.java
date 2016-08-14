@@ -3,8 +3,8 @@ package com.adx.similaralg;
 import java.io.File;
 import java.util.Vector;
 
-import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.Utility;
+import com.adx.dataread.CSVReader;
 import com.adx.entity.Point;
 import com.adx.entity.Trajectory;
 import com.adx.similaralg.SimilarityUtility;

@@ -1,4 +1,4 @@
-package com.daphnis.gis;
+package com.adx.gis;
 
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;

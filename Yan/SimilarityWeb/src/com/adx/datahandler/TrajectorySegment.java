@@ -25,22 +25,10 @@ public class TrajectorySegment {
 	public boolean trajSegment(){
 		Vector<Point> points=traj.getPoints();
 		int length=points.size();
-		double[] allLatitude=new double[length];
-		double[] allLongitude=new double[length];
 		for(int i=1;i<length-1;i++){
 			Point p1=points.get(i);
 			Point p0=points.get(i-1);
 			Point p2=points.get(i+1);
-			if(i==1){
-				allLatitude[0]=p0.getLatitude();
-				allLongitude[0]=p0.getLongitude();
-			}
-			allLatitude[i]=p1.getLatitude();
-			allLongitude[i]=p1.getLongitude();
-			if(i==length-2){
-				allLatitude[length-1]=p2.getLatitude();
-				allLongitude[length-1]=p2.getLongitude();
-			}
 			
 			double p1p0=Math.sqrt((p1.getLatitude()-p0.getLatitude())*(p1.getLatitude()-p0.getLatitude())
 					+(p1.getLongitude()-p0.getLongitude())*(p1.getLongitude()-p0.getLongitude()));
@@ -70,14 +58,6 @@ public class TrajectorySegment {
 				index.remove(index.size()-1);
 			}
 		}
-		double minLatitude,minLongitude,maxLatitude,maxLongitude;
-		minLatitude=allLatitude[Utility.getMin(allLatitude)];
-		minLongitude=allLongitude[Utility.getMin(allLongitude)];
-		maxLatitude=allLatitude[Utility.getMax(allLatitude)];
-		maxLongitude=allLongitude[Utility.getMax(allLongitude)];
-		traj.setTrajLen(maxLongitude-minLongitude);
-		Point center=new Point((minLongitude+maxLongitude)/2.0, (minLatitude+maxLatitude)/2.0);
-		traj.setCenterTraj(center);
 		return true;
 	}
 	

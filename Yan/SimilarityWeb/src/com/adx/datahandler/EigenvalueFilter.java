@@ -3,7 +3,7 @@
  * @author Daphnis
  * 20160726
  */
-package com.daphnis.trajFilter;
+package com.adx.datahandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

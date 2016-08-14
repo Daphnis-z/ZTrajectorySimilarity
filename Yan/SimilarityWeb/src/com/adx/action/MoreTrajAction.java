@@ -2,11 +2,12 @@ package com.adx.action;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import com.adx.dataread.DataUpload;
 import com.adx.entity.Constant;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
-import com.daphnis.dataHandle.DataUpload;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -107,67 +108,31 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 			actionResult=NONE;
 			return actionResult;//未输入文件						
 		}
-		
-		if(testfile!=null&&DataUpload.saveData(testfile,
-				testfileFileName,objectfile,objectfileFileName,simularDef)){
-			actionResult="doNothing";
-		}else if(DataUpload.saveObjectTraj(objectfile, objectfileFileName, simularDef)){
-			actionResult="doNothing";
+		int status=0;
+		if(testfile!=null){
+			status=DataUpload.saveData(testfile,testfileFileName,objectfile,objectfileFileName,simularDef);
+			switch (status) {
+			case 1:
+				actionResult="doNothing";
+				break;
+			case 0:
+				actionResult=ERROR;
+				return actionResult;//输入文件名找不到，文件传输有误
+			case -1:
+				actionResult=INPUT;
+				return actionResult;//所计算轨迹文件类型与输入文件不匹配
+			default:
+				break;
+			}
 		}else{
-			actionResult=ERROR;
+			status=DataUpload.saveObjectTraj(objectfile, objectfileFileName, simularDef);
+			if(status==1){
+				actionResult="doNothing";
+			}else{
+				actionResult=ERROR;
+				return ERROR;
+			}
 		}
-		
-//		CSVReader objReader=new CSVReader(objectfile, simularDef.getTimeStamp());
-//		int status_obj=objReader.readFile();
-//		Trajectory objTraj=objReader.getTraj();
-//		Constant.objTraj=objTraj;
-//		
-//		FileDerecterReader testFileReader=new FileDerecterReader(testfilePath,simularDef.getTimeStamp());
-//		int status_test=testFileReader.readAllFile();
-//		fileName=testFileReader.fileName;
-//		
-//		List<Trajectory> testGroup=new ArrayList<Trajectory>(Arrays.asList(testFileReader.getTrajGroup()));
-//		
-//		if(status_obj==0||status_test==0){
-//			actionResult=ERROR;
-//			return actionResult;//输入文件名找不到，文件传输有误
-//		}
-//		if(status_obj==-1||status_test==-1){
-//			actionResult=INPUT;
-//			return actionResult;//所计算轨迹文件类型与输入文件不匹配
-//		}
-//		DataHandler obj_handler=new DataHandler(objTraj);
-//		objTraj=obj_handler.dataHandle();
-//		for (int i=0;i<testGroup.size();i++){
-//			Trajectory traj=testGroup.get(i);
-//			DataHandler test_handler=new DataHandler(traj);
-//			traj=test_handler.dataHandle();
-//		}
-//
-//		//使用轨迹过滤器
-//		//获取比较相似的轨迹群
-//		List<Trajectory> trajs=EigenvalueFilter.filtrateTraj(testGroup, objTraj);
-//		indexes=new int[trajs.size()];
-//		similarity=new double[trajs.size()];
-//		ArrayList<Similarity> dtwExample=new ArrayList<Similarity>();
-//		Similarity dtw;
-//		for (int i=0;i<trajs.size();i++){
-//			Trajectory traj=trajs.get(i);
-//			if(simularDef.getTimeStamp()==0){
-//				 dtw=new SimilarityWithoutTime(objTraj, traj,simularDef);
-//			}else{
-//				 dtw=new SimilarityWithTime(objTraj,traj,simularDef);
-//			}
-//			dtwExample.add(dtw);
-//			System.out.println("timestamp:"+simularDef.getTimeStamp());
-//			similarity[i]=dtw.getSimilarity();
-//		}
-//		indexes=Utility.orderByValue(similarity);
-//		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
-//		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();		
-//		readyForViewTrajs(objTraj, trajs);
-//		
-//		actionResult=SUCCESS;
 		return actionResult;
 	}
 		
