@@ -8,7 +8,6 @@ package com.adx.datahandler;
 import java.util.ArrayList;
 import java.util.List;
 import com.adx.entity.Point;
-import com.daphnis.kMeans.Cluster;
 
 public class KMeans {
 	private final int POINT_NUM_CLUSTER=5;//期待的一个群中含有的点的数量   

@@ -5,7 +5,7 @@ function calMultiTrajs(){
 	if(trajsName==""){
 		url+="?&reqType=cal";//使用上传的数据进行计算
 	}else{
-		url+="?&reqType=data&dataName="+trajsName;//使用服务器上的数据计算
+		url+="?&reqType=data&trajsName="+trajsName;//使用服务器上的数据计算
 	}
 	a.attr("href",url);
 }

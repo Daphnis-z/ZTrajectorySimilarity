@@ -9,17 +9,17 @@ import java.util.List;
 import java.util.Vector;
 
 import com.adx.datahandler.EigenvalueFilter;
+import com.adx.datahandler.KMeans;
 import com.adx.datahandler.Utility;
+import com.adx.dataread.DataUpload;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
+import com.adx.gis.ShowTraj;
 import com.adx.similaralg.Similarity;
 import com.adx.similaralg.SimilarityWithTime;
 import com.adx.similaralg.SimilarityWithoutTime;
-import com.daphnis.dataHandle.DataUpload;
 import com.daphnis.dataHandle.ReadData;
-import com.daphnis.gis.ShowTraj;
-import com.daphnis.kMeans.KMeans;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -45,9 +45,12 @@ public class CalMultiTrajsAction extends ActionSupport{
 		this.reqType = reqType;
 	}
 	/** 服务器端数据集名称 */
-	private String dataName;	
-	public void setDataName(String dataName) {
-		this.dataName = dataName;
+	private String trajsName;	
+	public void setTrajsName(String trajsName) {
+		this.trajsName = trajsName;
+	}	
+	public String getTrajsName() {
+		return trajsName;
 	}
 	
 	//显示结果
@@ -99,6 +102,12 @@ public class CalMultiTrajsAction extends ActionSupport{
 		return similarity;
 	}
 	
+	/**
+	 * 对轨迹群进行数据预处理
+	 * @param trajs
+	 * @param objtraj
+	 * @return
+	 */
 	private List<Trajectory> dataPreprocessing(List<Trajectory> trajs,Trajectory objtraj){
 		for(Trajectory traj:trajs){
 	    	KMeans kmeans = new KMeans(traj.getPoints());
@@ -110,6 +119,25 @@ public class CalMultiTrajsAction extends ActionSupport{
 		}
 		List<Trajectory> subtrajs=EigenvalueFilter.filtrateTraj(trajs, objtraj);
 		return subtrajs;
+	}
+	
+	/**
+	 * 计算轨迹的特征值
+	 * @param traj
+	 */
+	private void calEigenvalue(Trajectory traj){
+		double lonMax=-1000,lonMin=1000;
+		double latMax=-1000,latMin=1000;
+		for(Point pt:traj.getPoints()){
+			double lon=pt.getLongitude(),lat=pt.getLatitude();
+			lonMax=lonMax<lon? lon:lonMax;
+			lonMin=lonMin>lon? lon:lonMin;
+			latMax=latMax<lat? lat:latMax;
+			latMin=latMin>lat? lat:latMin;
+		}
+		double lonDiff=lonMax-lonMin,latDiff=latMax-latMin;
+		traj.setCenterTraj(new Point(lonDiff/2,latDiff/2));
+		traj.setTrajLen(lonDiff);		
 	}
 							
 	@Override
@@ -124,13 +152,14 @@ public class CalMultiTrajsAction extends ActionSupport{
 			objTraj=trajs.get(trajs.size()-1);//获取目标轨迹
 			trajs.remove(trajs.size()-1);//移除目标轨迹
 		}else{//读取服务器端的数据
-			String path=DATA_PATH+dataName+"/";
+			String path=DATA_PATH+trajsName+"/";
 			File dir=new File(path);
 			if(!dir.exists()){
 				actionResult=ERROR;
 				return actionResult;
 			}
 			objTraj=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef).get(0);
+			calEigenvalue(objTraj);
 			trajs=dataPreprocessing(ReadData.readSomeTrajs(path, -1),objTraj);
 		}
 		

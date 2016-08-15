@@ -14,7 +14,6 @@ import com.adx.entity.Trajectory;
 
 import com.adx.similaralg.SimilarityWithoutTime;
 import com.daphnis.dataHandle.ReadData;
-import com.daphnis.kMeans.KMeans;
 
 public class EigenvalueFilter {		
 	/**

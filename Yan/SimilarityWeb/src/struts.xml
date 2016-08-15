@@ -28,36 +28,38 @@
 			<result>jsp/moreTraj/moreTrajResult.jsp</result>
 	    </action>
 	    
-	    <!-- 轨迹可视化 -->
+<!-- 		轨迹可视化 -->
 	    <action name="viewTraj">
 			<result>/jsp/viewTraj/viewTraj.jsp</result>
-		</action>   
+		</action> 
+<!-- 		地图展示功能   -->
 		<action name="viewTrajByMap">
 			<result>/jsp/viewTraj/viewTrajByMap.jsp</result>
-		</action>       	  	   
+		</action>
+		<action name="showATrajInMap" class="com.adx.gis.TrajPolyline">
+		</action> 		
+<!-- 		图表展示功能		       	  	    -->
 		<action name="viewTrajInChart">
 			<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
-		</action> 
-		      	  
-	    <action name="showATrajInMap" class="com.adx.gis.TrajPolyline">
-		</action>   	    
-		<action name="setting" class="com.adx.action.SettingAction">
-			<result name="success">/jsp/setting/setting.jsp</result>
-			<result name="none">/jsp/setting/setting.jsp</result>    		
-		</action>     
-	    
-	    <!-- 调试聚类用 -->
-	    <action name="kmeans" class="com.daphnis.kMeans.KMeansDemo">
-	    	<result>/jsp/viewTraj/viewTraj.jsp</result>
-	    </action>
-	    <!-- 可视化DTW匹配结果 -->
-	    <action name="viewDTWResult" class="com.adx.gis.ShowDTWResult">
-			<result>/jsp/match.jsp</result>
-		</action>     
-	    <!-- 图表展示功能 -->
+		</action>
 	    <action name="chart" class="com.adx.chart.AmCharts">
 	    	<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
 	    </action>
+		 		      	  		  	    
+		<action name="setting" class="com.adx.action.SettingAction">
+			<result name="success">/jsp/setting/setting.jsp</result>
+			<result name="none">/jsp/setting/setting.jsp</result>    		
+		</action>  
+		   
+	    
+<!-- 	    调试聚类用 -->
+<!-- 	    <action name="kmeans" class="com.daphnis.kMeans.KMeansDemo"> -->
+<!-- 	    	<result>/jsp/viewTraj/viewTraj.jsp</result> -->
+<!-- 	    </action> -->
+<!-- 	    可视化DTW匹配结果 -->
+<!-- 	    <action name="viewDTWResult" class="com.adx.gis.ShowDTWResult"> -->
+<!-- 			<result>/jsp/match.jsp</result> -->
+<!-- 		</action>      -->
         
     	
     </package>

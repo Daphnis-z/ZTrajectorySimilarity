@@ -9,13 +9,12 @@ import com.adx.entity.Point;
 import com.adx.entity.Constant;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
+import com.adx.gis.ShowTraj;
 import com.adx.similaralg.Similarity;
 import com.adx.similaralg.SimilarityWithTime;
 import com.adx.similaralg.SimilarityWithoutTime;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-
-import com.daphnis.gis.ShowTraj;
 
 @SuppressWarnings("serial")
 public class DoubleTrajAction extends ActionSupport implements ModelDriven<SimularDef>{

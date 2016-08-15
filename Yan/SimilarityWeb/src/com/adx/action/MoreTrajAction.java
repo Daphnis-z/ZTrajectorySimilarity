@@ -130,7 +130,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 				actionResult="doNothing";
 			}else{
 				actionResult=ERROR;
-				return ERROR;
+				return actionResult;
 			}
 		}
 		return actionResult;
