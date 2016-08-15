@@ -37,14 +37,9 @@
 		</action>       	  	   
 		<action name="viewTrajInChart">
 			<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
-<<<<<<< HEAD
-		</action> 	      	  
-	    <action name="showATrajInMap" class="com.daphnis.gis.TrajPolyline">
-=======
 		</action> 
 		      	  
 	    <action name="showATrajInMap" class="com.adx.gis.TrajPolyline">
->>>>>>> 4e0980005962d7c1294a5d5a987633446f05a0b9
 		</action>   	    
 		<action name="setting" class="com.adx.action.SettingAction">
 			<result name="success">/jsp/setting/setting.jsp</result>

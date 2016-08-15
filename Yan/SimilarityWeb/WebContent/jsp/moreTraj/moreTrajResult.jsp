@@ -16,10 +16,11 @@
  	<%! String result=""; %>
 	<%  
 	 	String tem=request.getAttribute("actionResult").toString();
-		if(!tem.equals("doNothing")){
-			result=request.getAttribute("result").toString();
+		if(!tem.equals("doNothing")){			
 		 	if (tem.equals("error")){
 		 		result="服务器端读取数据错误！！";
+		 	}else{
+		 		result=request.getAttribute("result").toString();
 		 	}
 		}else{
 	 		result="文件上传成功！！";

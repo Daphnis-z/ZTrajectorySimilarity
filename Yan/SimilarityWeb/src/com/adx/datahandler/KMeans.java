@@ -122,7 +122,7 @@ public class KMeans {
 		}
 		
 		double maxsd=-100000,sum=0;;
-		for(int i=0;i<len;i+=dif){
+		for(int i=0;i<len-2;i+=dif){
 			double tmp=calSlopeDiff(points.get(i),points.get(i+1),points.get(+2));
 			maxsd=maxsd<tmp? tmp:maxsd;
 			sum+=tmp;
