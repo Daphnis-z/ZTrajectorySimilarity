@@ -37,8 +37,14 @@
 		</action>       	  	   
 		<action name="viewTrajInChart">
 			<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
+<<<<<<< HEAD
 		</action> 	      	  
 	    <action name="showATrajInMap" class="com.daphnis.gis.TrajPolyline">
+=======
+		</action> 
+		      	  
+	    <action name="showATrajInMap" class="com.adx.gis.TrajPolyline">
+>>>>>>> 4e0980005962d7c1294a5d5a987633446f05a0b9
 		</action>   	    
 		<action name="setting" class="com.adx.action.SettingAction">
 			<result name="success">/jsp/setting/setting.jsp</result>
@@ -50,11 +56,11 @@
 	    	<result>/jsp/viewTraj/viewTraj.jsp</result>
 	    </action>
 	    <!-- 可视化DTW匹配结果 -->
-	    <action name="viewDTWResult" class="com.daphnis.gis.ShowDTWResult">
+	    <action name="viewDTWResult" class="com.adx.gis.ShowDTWResult">
 			<result>/jsp/match.jsp</result>
 		</action>     
-	    <!-- 图表展示功能用 -->
-	    <action name="chart" class="com.daphnis.chart.AmCharts">
+	    <!-- 图表展示功能 -->
+	    <action name="chart" class="com.adx.chart.AmCharts">
 	    	<result>/jsp/viewTraj/viewTrajInChart.jsp</result>
 	    </action>
         

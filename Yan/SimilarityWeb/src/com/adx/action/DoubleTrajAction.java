@@ -3,8 +3,8 @@ package com.adx.action;
 import java.io.File;
 import java.util.Vector;
 
-import com.adx.datahandler.CSVReader;
 import com.adx.datahandler.DataHandler;
+import com.adx.dataread.CSVReader;
 import com.adx.entity.Point;
 import com.adx.entity.Constant;
 import com.adx.entity.SimularDef;

@@ -1,4 +1,4 @@
-package com.daphnis.dataHandle;
+package com.adx.dataread;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.adx.datahandler.DataHandler;
 import com.adx.datahandler.EigenvalueFilter;
+import com.adx.datahandler.KMeans;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
-import com.daphnis.kMeans.KMeans;
 
 /**
  * file: DataUpload.java
@@ -31,32 +32,48 @@ public class DataUpload {
 	 * @param sd
 	 * @return
 	 */
-	public static boolean saveData(File[] files,String[] filesName,File objfile,String objName,SimularDef sd){
-		Trajectory objtraj;
+	public static int saveData(File[] files,String[] testName,File objfile,String objName,SimularDef sd){
+		Trajectory objTraj = null;
 		try{
-			objtraj=dataPreprocessing(ReadData.readATraj(objfile, "File"));
-			objtraj.name=objName;
+			CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
+			int status_obj=objReader.readFile();
+			if(status_obj==1){
+				objTraj=dataPreprocessing(objReader.getTraj());
+				DataHandler obj_handler=new DataHandler(objTraj);
+				objTraj=obj_handler.dataHandle();
+				objTraj.name=objName;
+			}else{
+				return status_obj;
+			}
 		}catch(Exception e){
 			e.printStackTrace();
-			return false;
+			return 0;
 		}
 		List<Trajectory> trajs=new ArrayList<Trajectory>();
 		for(int i=0;i<files.length;++i){
 			try{
-				Trajectory traj=dataPreprocessing(ReadData.readATraj(files[i], "File"));
-				traj.name=filesName[i];
-				trajs.add(traj);
+				CSVReader testReader=new CSVReader(files[i],sd.getTimeStamp());
+				int status_test=testReader.readFile();
+				if(status_test==1){
+					Trajectory testTraj=dataPreprocessing(testReader.getTraj());
+					DataHandler obj_handler=new DataHandler(testTraj);
+					testTraj=obj_handler.dataHandle();
+					testTraj.name=testName[i];
+					trajs.add(testTraj);
+				}else{
+					return status_test;
+				}
 			}catch(Exception e){
 				e.printStackTrace();
-				return false;
+				return 0;
 			}
 		}
-		trajs=EigenvalueFilter.filtrateTraj(trajs, objtraj);
+		trajs=EigenvalueFilter.filtrateTraj(trajs, objTraj);
 		
 		//将数据保存到临时文件里
-		trajs.add(objtraj);
+		trajs.add(objTraj);
 		writeData(trajs,sd);
-		return true;
+		return 1;
 	}
 	
 	/**
@@ -66,18 +83,24 @@ public class DataUpload {
 	 * @param sd
 	 * @return
 	 */
-	public static boolean saveObjectTraj(File objfile,String objName,SimularDef sd){
+	public static int saveObjectTraj(File objfile,String objName,SimularDef sd){
 		try{
-			Trajectory traj=dataPreprocessing(ReadData.readATraj(objfile, "File"));
-			traj.name=objName;
-			List<Trajectory> trajs=new ArrayList<Trajectory>();
-			trajs.add(traj);
-			writeData(trajs,sd);
+			CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
+			int status_obj=objReader.readFile();
+			if(status_obj==1){
+				Trajectory traj=dataPreprocessing(objReader.getTraj());
+				traj.name=objName;
+				List<Trajectory> trajs=new ArrayList<Trajectory>();
+				trajs.add(traj);
+				writeData(trajs,sd);
+			}else{
+				return status_obj;
+			}
 		}catch(Exception e){
 			e.printStackTrace();
-			return false;
+			return 0;
 		}		
-		return true;
+		return 1;
 	}
 	
 	/**
