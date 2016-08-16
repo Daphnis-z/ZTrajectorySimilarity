@@ -167,14 +167,18 @@ public class ReadData {
 			str=read.readLine();
 			Vector<Point> points=new Vector<Point>();
 			String[] strs=str.split(",");
+			int pid=0;
 			if(ts!=1){
 				for(int i=0;i<strs.length-1;i+=2){
-					points.addElement(new Point(Double.parseDouble(strs[i]),Double.parseDouble(strs[i+1])));
+					Point pt=new Point(Double.parseDouble(strs[i]),Double.parseDouble(strs[i+1]));
+					pt.pid=pid++;
+					points.addElement(pt);
 				}
 			}else{
 				for(int i=0;i<strs.length-2;i+=3){
-					points.addElement(new Point(Double.parseDouble(strs[i]),
-							Double.parseDouble(strs[i+1]),strs[i+2]));
+					Point pt=new Point(Double.parseDouble(strs[i]),Double.parseDouble(strs[i+1]),strs[i+2]);
+					pt.pid=pid++;
+					points.addElement(pt);
 				}
 			}
 			Trajectory traj=new Trajectory(points,ts);

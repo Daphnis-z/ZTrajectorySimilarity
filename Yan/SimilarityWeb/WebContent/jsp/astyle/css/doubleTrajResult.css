@@ -12,6 +12,8 @@ div#map{
 	width:80%;
 	height:112%;
 	margin:0.7% -5%;
+	background:white;
+	padding:0 0;
 }
 
 select{

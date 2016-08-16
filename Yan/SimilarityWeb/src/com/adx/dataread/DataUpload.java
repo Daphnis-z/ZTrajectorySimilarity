@@ -3,6 +3,7 @@ package com.adx.dataread;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +14,7 @@ import com.adx.datahandler.KMeans;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
+import com.daphnis.dataHandle.ReadData;
 
 /**
  * file: DataUpload.java
@@ -88,7 +90,7 @@ public class DataUpload {
 			CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
 			int status_obj=objReader.readFile();
 			if(status_obj==1){
-				Trajectory traj=dataPreprocessing(objReader.getTraj());
+				Trajectory traj=objReader.getTraj();
 				traj.name=objName;
 				List<Trajectory> trajs=new ArrayList<Trajectory>();
 				trajs.add(traj);
@@ -100,6 +102,7 @@ public class DataUpload {
 			e.printStackTrace();
 			return 0;
 		}		
+		
 		return 1;
 	}
 	
@@ -123,6 +126,7 @@ public class DataUpload {
 	 */
 	private static void writeData(List<Trajectory> trajs,SimularDef sd){
 		try{
+			confirmCacheFile();
 			BufferedWriter write=new BufferedWriter(new FileWriter(SAVE_PATH));
 			int ts=trajs.get(0).getTimeStamp();
 			write.write(String.format("%f,%f,%f,%f,%d", sd.getDtwDis_W(),
@@ -157,6 +161,23 @@ public class DataUpload {
 			write.close();
 		}catch(Exception e){
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 检查缓存文件是否存在，不存在则创建
+	 * @throws IOException
+	 */
+	private static void confirmCacheFile() throws IOException{
+		int ix=SAVE_PATH.lastIndexOf("/");
+		String dir=SAVE_PATH.substring(0,ix+1);
+		File f=new File(dir);
+		if(!f.exists()){
+			f.mkdirs();
+		}
+		f=new File(SAVE_PATH.substring(ix+1));
+		if(!f.exists()){
+			f.createNewFile();
 		}
 	}
 }

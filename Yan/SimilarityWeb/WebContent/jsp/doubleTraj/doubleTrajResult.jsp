@@ -37,8 +37,8 @@
                         <tr>
                            <td>可视化方式：</td>
                            <td><select>
-                           		<option value="map">地图</option>
-               	                <option value="chart">图表</option>                        		
+               	                <option value="chart">图表</option>                        	
+                                <option value="map">地图</option>	
                            </select></td>
                         </tr>
                         <tr><td colspan="2"><h4 class="about-font"><br/>计算结果：</h4></td></tr>

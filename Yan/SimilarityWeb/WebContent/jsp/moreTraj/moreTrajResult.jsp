@@ -37,14 +37,12 @@
                            	<button class="btn btn-primary">开始计算</button>
                            </a></td>
                            <td><select>
-                           		<option value="map">地图</option>
-               	                <option value="chart">图表</option>                        		
+               	                <option value="chart">图表</option> 
+               	                <option value="map">地图</option>
                            </select></td>
                            <td><select id="trajs">
 	                            <option value="volvo">Volvo</option>
-							    <option value="saab">Saab</option>
-							    <option value="opel">Opel</option>
-							    <option value="audi">Audi</option>                         
+            							    <option value="saab">Saab</option>
                            </select></td>                        
                         </tr>
                         <tr><td colspan="3"><h4 class="about-font">计算结果</h4></td></tr>
@@ -60,7 +58,7 @@
             </div> 
                     
             <div class="col-md-6 col-xs-12" id="map">
-                <div id="allmap"><h2>地图</h2></div>
+                <div id="allmap"><h2>可视化轨迹</h2></div>
             </div>
         </div>
     </div>
@@ -79,13 +77,14 @@
 <script type="text/javascript">
 	var trajsName="${trajsName}";
 	var allTrajs="${strTrajs}";
-	var strTrajs=init(allTrajs);
-	
+	var strTrajs=init(allTrajs);	
 	var strSubtrajs="${strSubtrajs}";
 	var strPoints="${strPoints}";
+
 	$(document).ready(function () {
 		drawTraj(strTrajs,allTrajs);			
 		var sel1=$("select").eq(1);
+		sel1.toggle();
 		$("select").eq(0).change(function(){
 			sel1.toggle("slow");
 			drawTraj(strTrajs,allTrajs);			

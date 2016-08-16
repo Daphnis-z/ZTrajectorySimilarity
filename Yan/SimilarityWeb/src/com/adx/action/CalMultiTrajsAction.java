@@ -103,6 +103,19 @@ public class CalMultiTrajsAction extends ActionSupport{
 	}
 	
 	/**
+	 * 使用KMeans去除轨迹的离群点、进行数据压缩
+	 * @param traj
+	 */
+	private void kmeans(Trajectory traj){
+    	KMeans kmeans = new KMeans(traj.getPoints());
+    	if(kmeans.init()){
+	    	kmeans.calculate();
+	    	kmeans.removeUnusefulPoints();	    	
+	    	kmeans.dataCompression();
+    	}
+	}
+	
+	/**
 	 * 对轨迹群进行数据预处理
 	 * @param trajs
 	 * @param objtraj
@@ -110,12 +123,7 @@ public class CalMultiTrajsAction extends ActionSupport{
 	 */
 	private List<Trajectory> dataPreprocessing(List<Trajectory> trajs,Trajectory objtraj){
 		for(Trajectory traj:trajs){
-	    	KMeans kmeans = new KMeans(traj.getPoints());
-	    	if(kmeans.init()){
-		    	kmeans.calculate();
-		    	kmeans.removeUnusefulPoints();	    	
-		    	kmeans.dataCompression();
-	    	}
+			kmeans(traj);
 		}
 		List<Trajectory> subtrajs=EigenvalueFilter.filtrateTraj(trajs, objtraj);
 		return subtrajs;
@@ -135,9 +143,8 @@ public class CalMultiTrajsAction extends ActionSupport{
 			latMax=latMax<lat? lat:latMax;
 			latMin=latMin>lat? lat:latMin;
 		}
-		double lonDiff=lonMax-lonMin,latDiff=latMax-latMin;
-		traj.setCenterTraj(new Point(lonDiff/2,latDiff/2));
-		traj.setTrajLen(lonDiff);		
+		traj.setCenterTraj(new Point((lonMax+lonMin)/2,(latMax+latMin)/2));
+		traj.setTrajLen(lonMax-lonMin);		
 	}
 							
 	@Override
@@ -158,9 +165,12 @@ public class CalMultiTrajsAction extends ActionSupport{
 				actionResult=ERROR;
 				return actionResult;
 			}
+			//读取并处理目标轨迹
 			objTraj=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef).get(0);
 			calEigenvalue(objTraj);
-			trajs=dataPreprocessing(ReadData.readSomeTrajs(path, -1),objTraj);
+			kmeans(objTraj);
+			
+			trajs=dataPreprocessing(ReadData.readSomeTrajs(path, -1),objTraj);			
 		}
 		
 		indexes=new int[trajs.size()];
