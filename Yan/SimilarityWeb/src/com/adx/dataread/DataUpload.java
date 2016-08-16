@@ -175,10 +175,6 @@ public class DataUpload {
 		if(!f.exists()){
 			f.mkdirs();
 		}
-		f=new File(SAVE_PATH.substring(ix+1));
-		if(!f.exists()){
-			f.createNewFile();
-		}
 	}
 }
 
