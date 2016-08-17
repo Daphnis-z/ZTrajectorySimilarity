@@ -17,11 +17,7 @@ public class DataHandler   {
 
 	public boolean exPointHandle(Trajectory traj) {
     	KMeans kmeans = new KMeans(traj.getPoints());
-    	if(kmeans.init()){
-	    	kmeans.calculate();
-	    	kmeans.removeUnusefulPoints();	    	
-	    	kmeans.dataCompression();
-    	}
+    	kmeans.run();
 		return true;
 	}
 

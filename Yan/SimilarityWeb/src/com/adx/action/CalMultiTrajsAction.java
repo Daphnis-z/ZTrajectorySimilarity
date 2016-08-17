@@ -108,11 +108,7 @@ public class CalMultiTrajsAction extends ActionSupport{
 	 */
 	private void kmeans(Trajectory traj){
     	KMeans kmeans = new KMeans(traj.getPoints());
-    	if(kmeans.init()){
-	    	kmeans.calculate();
-	    	kmeans.removeUnusefulPoints();	    	
-	    	kmeans.dataCompression();
-    	}
+    	kmeans.run();
 	}
 	
 	/**

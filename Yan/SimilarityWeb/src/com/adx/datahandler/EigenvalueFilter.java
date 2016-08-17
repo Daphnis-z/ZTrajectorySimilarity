@@ -49,12 +49,13 @@ public class EigenvalueFilter {
 	 * @return
 	 */
 	private static double getDisThreshold(List<Trajectory> trajs,Trajectory traj){
+		int num=5,len=trajs.size();
+		int diff=len/num;
 		double disSum=0;
-		for(int i=1;i<=4;++i){
-			int ix=(int)(trajs.size()/(i+0.1));
-			disSum+=calCenterDis(traj, trajs.get(ix));
+		for(int i=0;i<len;i+=diff){
+			disSum+=calCenterDis(traj, trajs.get(i));
 		}
-		return disSum/5;
+		return disSum/num;
 	}
 	/**
 	 * 计算两条轨迹中心点的距离
@@ -101,7 +102,9 @@ public class EigenvalueFilter {
 			return trajs;
 		}
 		List<Trajectory> subTrajs=filtrateByCenterPoint(trajs,traj);
-		subTrajs=filtrateByTrajLen(subTrajs,traj);
+		if(subTrajs.size()>40){
+			subTrajs=filtrateByTrajLen(subTrajs,traj);
+		}
 		return subTrajs;
 	}
 	

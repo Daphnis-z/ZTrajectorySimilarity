@@ -33,7 +33,7 @@ public class KMeans {
      * 若初始化失败（返回false）
      * 则应该停止进行后面的操作
      */
-    public boolean init() {
+    private boolean init() {
     	if(points.size()<POINT_NUM_CLUSTER){
     		return false;
     	}
@@ -52,7 +52,7 @@ public class KMeans {
 	/**
 	 * 执行计算
 	 */
-    public void calculate() {
+    private void calculate() {
         boolean finish = false;        
         while(!finish) { 
         	clearClusters();//Clear cluster state        	
@@ -74,7 +74,7 @@ public class KMeans {
     /**
      * 移除离群的点
      */
-	public void removeUnusefulPoints(){
+    private void removeUnusefulPoints(){
     	for(Cluster cluster:clusters){
     		if(cluster.getPoints().size()==1){
     			points.remove(cluster.getPoints().get(0));
@@ -85,7 +85,7 @@ public class KMeans {
 	/**
 	 * 数据压缩
 	 */
-	public void dataCompression(){	
+	private void dataCompression(){
     	for(Cluster cluster:clusters){
 			List<Point> tpts=cluster.getPoints();
     		if(tpts.size()>=3){
@@ -224,14 +224,17 @@ public class KMeans {
     }
     
     /**
-     * Print clusters on console
+     * 执行去除离群点和数据压缩功能
      */
-//	private void showClusters() {
-//    	for (int i = 0; i<clusters.size(); i++) {
-//    		Cluster c = clusters.get(i);
-//    		c.plotCluster();
-//    	}
-//    }
-	
+    public void run(){
+    	if(init()){
+	    	calculate();
+	    	removeUnusefulPoints();//去除离群点
+	    	if(points.size()>11){
+		    	dataCompression();//数据压缩
+	    	}
+    	}
+    }
+    
 }
 

@@ -85,7 +85,7 @@ public class DataUpload {
 	 * @param sd
 	 * @return
 	 */
-	public static int saveObjectTraj(File objfile,String objName,SimularDef sd){
+	public static int saveObjectTraj(File objfile,String objName,SimularDef sd){		
 		try{
 			CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
 			int status_obj=objReader.readFile();
@@ -113,11 +113,7 @@ public class DataUpload {
 	 */
 	private static Trajectory dataPreprocessing(Trajectory traj){
     	KMeans kmeans = new KMeans(traj.getPoints());
-    	if(kmeans.init()){
-	    	kmeans.calculate();
-	    	kmeans.removeUnusefulPoints();	    	
-	    	kmeans.dataCompression();
-    	}
+    	kmeans.run();
     	return traj;
 	}
 	/**

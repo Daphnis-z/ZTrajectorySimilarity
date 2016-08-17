@@ -31,12 +31,7 @@ public class AmCharts extends ActionSupport {
 		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/",6);	
 		for(int i=0;i<trajs.size();++i){
 	    	KMeans kmeans = new KMeans(trajs.get(i).getPoints());
-	    	if(kmeans.init()){
-		    	kmeans.calculate();
-		    	kmeans.removeUnusefulPoints();	    	
-		    	kmeans.dataCompression();
-	    	}
-
+	    	kmeans.run();
 		}
 		strTrajs=ShowTraj.convertSomeTrajs(trajs);
 		return SUCCESS;

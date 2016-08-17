@@ -90,35 +90,53 @@ function initChart () {
 function addPolyline (chart,chartData,traj,tname) {
     var lix=0;//上一次插入的下标
     for(var i=0;i<traj.length;++i){
-        for(var j=lix;j<chartData.length;++j){
-            if(Math.abs(traj[i].longitude-chartData[j].longitude)<0.0000001){
-                chartData[j][tname]=traj[i].latitude;
-                lix=j;
-                break;
-            }else if(j+1<chartData.length){
-                if((traj[i].longitude-chartData[j].longitude)*(traj[i].longitude-chartData[j+1].longitude)<0){
-                    var point={
-                        "longitude":traj[i].longitude
-                    };
-                    point[tname]=traj[i].latitude;
-                    chartData.splice(j,0,point);
-                    lix=j;
-                    break;
-                }
-            }
-        }
-        if(lix==chartData.length){
-            break;
-        }
-    }
-    var ix=chartData.length;
-    for(;i<traj.length;++i){
+        //定义待插入的点
         var point={
             "longitude":traj[i].longitude
         };
         point[tname]=traj[i].latitude;
-        chartData[ix++]=point;
+        if(lix>=chartData.length-1){
+            chartData.push(point);
+            ++lix;
+            continue;
+        }
+
+        var isInserted=false;
+        for(var j=lix;j<chartData.length;++j){
+            if(Math.abs(traj[i].longitude-chartData[j].longitude)<0.0000001){
+                chartData[j][tname]=traj[i].latitude;
+                lix=j;
+                isInserted=true;
+                break;
+            }else if(j+1<chartData.length){
+                if((traj[i].longitude-chartData[j].longitude)*(traj[i].longitude-chartData[j+1].longitude)<0){
+                    chartData.splice(j,0,point);
+                    lix=j+1;
+                    isInserted=true;
+                    break;
+                }
+            }
+        }
+
+        if (!isInserted) {//没有找到可插入的地方
+            if(i==0&&traj[i].longitude<chartData[0].longitude){
+               chartData.unshift(point); 
+               lix=0;
+            }else{
+                lix=chartData.length;
+                chartData[chartData.length]=point;
+
+            }
+        }
     }
+    // var ix=chartData.length;
+    // for(;i<traj.length;++i){
+    //     var point={
+    //         "longitude":traj[i].longitude
+    //     };
+    //     point[tname]=traj[i].latitude;
+    //     chartData[ix++]=point;
+    // }
 }
 
 //仅仅绘制轨迹

@@ -43,7 +43,11 @@
                         </tr>
                         <tr><td colspan="2"><h4 class="about-font"><br/>计算结果：</h4></td></tr>
                         <tr>
-                            <td colspan="2" class="about-font">&nbsp<%= result %></td>
+                            <td colspan="2" class="about-font">
+                                <textarea readonly="readonly" rows="19" class="normalTA">
+                            		<%= result %>
+                            	</textarea>                            
+							</td>
                         </tr>
                     </table>
                 </div>
