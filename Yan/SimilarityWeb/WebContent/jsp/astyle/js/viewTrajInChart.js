@@ -36,6 +36,7 @@ function fillChartData (trajs) {
     return chartData;
 }
 
+//初始化图表
 function initChart () {
     // SERIAL CHART
     // chart.dataProvider =chartData;
@@ -87,12 +88,12 @@ function initChart () {
 }
 
 function addPolyline (chart,chartData,traj,tname) {
+    var lix=0;//上一次插入的下标
     for(var i=0;i<traj.length;++i){
-        var isFinish=true;
-        for(var j=0;j<chartData.length;++j){
+        for(var j=lix;j<chartData.length;++j){
             if(Math.abs(traj[i].longitude-chartData[j].longitude)<0.0000001){
                 chartData[j][tname]=traj[i].latitude;
-                isFinish=false;
+                lix=j;
                 break;
             }else if(j+1<chartData.length){
                 if((traj[i].longitude-chartData[j].longitude)*(traj[i].longitude-chartData[j+1].longitude)<0){
@@ -101,12 +102,12 @@ function addPolyline (chart,chartData,traj,tname) {
                     };
                     point[tname]=traj[i].latitude;
                     chartData.splice(j,0,point);
-                    isFinish=false;
+                    lix=j;
                     break;
                 }
             }
         }
-        if(isFinish){
+        if(lix==chartData.length){
             break;
         }
     }
