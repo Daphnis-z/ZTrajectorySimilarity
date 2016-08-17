@@ -19,7 +19,7 @@ import com.adx.gis.ShowTraj;
 import com.adx.similaralg.Similarity;
 import com.adx.similaralg.SimilarityWithTime;
 import com.adx.similaralg.SimilarityWithoutTime;
-import com.daphnis.dataHandle.ReadData;
+import com.adx.dataread.ReadData;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**

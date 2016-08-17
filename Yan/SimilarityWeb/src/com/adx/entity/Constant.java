@@ -18,4 +18,5 @@ public class Constant {
 	public static long tsum_B=tsum_B_VALUE;	//时间戳度量最坏值
 	public static double shapeSum_B=shapeSum_B_VALUE;	//形状度量最坏值
 	
+	
 }

@@ -119,7 +119,6 @@ public class SimilarityWithTime extends Similarity{
 				d1=sdf.parse(testTraj.getPoints().get(match[i][0]).getTimestamp());
 				d2=sdf.parse(objTraj.getPoints().get(match[i][1]).getTimestamp());
 				time+=(Math.abs(d1.getTime()-d2.getTime())/60000);
-				System.out.println(d1.getTime()-d2.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,14 +137,6 @@ public class SimilarityWithTime extends Similarity{
 		else editS=sDef.getEditDis_W()*(sDef.getEditDis_B()-edit)/sDef.getEditDis_B();
 		if(time>=sDef.getTsum_B()) timeS=0;
 		else timeS=sDef.getTsum_W()*(sDef.getTsum_B()-time)/sDef.getTsum_B();
-//		System.out.println("dis:"+dis+"   "+sDef.getDtwDis_B());
-//		System.out.println("disS:"+disS);
-//		System.out.println("shape:"+shape+"   "+sDef.getShapeSum_B());
-//		System.out.println("shapeS:"+shapeS);
-//		System.out.println("edit:"+edit+"   "+sDef.getEditDis_B());
-//		System.out.println("editS:"+editS);
-//		System.out.println("time:"+time+"   "+sDef.getTsum_B());
-//		System.out.println("timeS:"+timeS);
 	}
 	
 	public void calculate_Similarity(){//寻找最相似点与段

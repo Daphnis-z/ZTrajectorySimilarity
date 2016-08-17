@@ -106,7 +106,6 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 		Constant.testTraj=testTraj;
 		
 		Similarity dtw;
-		System.out.println("timestamp:"+simularDef.getTimeStamp());
 		if(simularDef.getTimeStamp()==0){
 			 dtw=new SimilarityWithoutTime(objTraj, testTraj,simularDef);
 		}else{

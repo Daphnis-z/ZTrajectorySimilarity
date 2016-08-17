@@ -121,17 +121,10 @@ public class SimilarityWithoutTime extends Similarity{
 		else shapeS=sDef.getShapeSum_W()*(sDef.getShapeSum_B()-shape)/sDef.getShapeSum_B();
 		if(edit>=sDef.getEditDis_B()) editS=0;
 		else editS=sDef.getEditDis_W()*(sDef.getEditDis_B()-edit)/sDef.getEditDis_B();
-//		System.out.println("dis:"+dis+"   "+sDef.getDtwDis_B());
-//		System.out.println("disS:"+disS);
-//		System.out.println("shape:"+shape+"   "+sDef.getShapeSum_B());
-//		System.out.println("shapeS:"+shapeS);
-//		System.out.println("edit:"+edit+"   "+sDef.getEditDis_B());
-//		System.out.println("editS:"+editS);
 	}
 	
 	public void calculate_Similarity(){//º∆À„œ‡À∆∂»
 		similarity=disS+shapeS+editS;
-//		similarity*=similarity;
 		int t=(int) ((similarity+0.000005)*100000);
 		similarity=(double)t/1000;
 	}
