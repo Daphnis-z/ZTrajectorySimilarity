@@ -76,9 +76,9 @@ public class HausdorffDistance {
 		CSVReader reader1=new CSVReader(file1, 0);
 		CSVReader reader2=new CSVReader(file2, 0);
 		CSVReader reader3=new CSVReader(file3, 0);
-		int i=reader1.readFile();
-		int j=reader2.readFile();
-		int k=reader3.readFile();
+//		int i=reader1.readFile();
+//		int j=reader2.readFile();
+//		int k=reader3.readFile();
 		Trajectory t1=reader1.getTraj();
 		Trajectory t2=reader2.getTraj();
 		Trajectory t3=reader3.getTraj();

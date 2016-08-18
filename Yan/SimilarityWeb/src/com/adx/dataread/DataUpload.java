@@ -10,11 +10,9 @@ import java.util.Vector;
 
 import com.adx.datahandler.DataHandler;
 import com.adx.datahandler.EigenvalueFilter;
-import com.adx.datahandler.KMeans;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
-import com.daphnis.dataHandle.ReadData;
 
 /**
  * file: DataUpload.java
@@ -40,7 +38,8 @@ public class DataUpload {
 			CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
 			int status_obj=objReader.readFile();
 			if(status_obj==1){
-				objTraj=dataPreprocessing(objReader.getTraj());
+				objTraj=objReader.getTraj();
+//				objTraj=dataPreprocessing(objReader.getTraj());
 				DataHandler obj_handler=new DataHandler(objTraj);
 				objTraj=obj_handler.dataHandle();
 				objTraj.name=objName;
@@ -56,10 +55,11 @@ public class DataUpload {
 			try{
 				CSVReader testReader=new CSVReader(files[i],sd.getTimeStamp());
 				int status_test=testReader.readFile();
+				Trajectory testTraj=testReader.getTraj();
 				if(status_test==1){
-					Trajectory testTraj=dataPreprocessing(testReader.getTraj());
-					DataHandler obj_handler=new DataHandler(testTraj);
-					testTraj=obj_handler.dataHandle();
+//					Trajectory testTraj=dataPreprocessing(testReader.getTraj());
+					DataHandler test_handler=new DataHandler(testTraj);
+					testTraj=test_handler.dataHandle();
 					testTraj.name=testName[i];
 					trajs.add(testTraj);
 				}else{
@@ -91,6 +91,8 @@ public class DataUpload {
 			int status_obj=objReader.readFile();
 			if(status_obj==1){
 				Trajectory traj=objReader.getTraj();
+				DataHandler obj_handler=new DataHandler(traj);
+				traj=obj_handler.dataHandle();
 				traj.name=objName;
 				List<Trajectory> trajs=new ArrayList<Trajectory>();
 				trajs.add(traj);
@@ -106,16 +108,16 @@ public class DataUpload {
 		return 1;
 	}
 	
-	/**
-	 * 使用KMeans进行数据预处理
-	 * @param traj
-	 * @return
-	 */
-	private static Trajectory dataPreprocessing(Trajectory traj){
-    	KMeans kmeans = new KMeans(traj.getPoints());
-    	kmeans.run();
-    	return traj;
-	}
+//	/**
+//	 * 使用KMeans进行数据预处理
+//	 * @param traj
+//	 * @return
+//	 */
+//	private static Trajectory dataPreprocessing(Trajectory traj){
+//    	KMeans kmeans = new KMeans(traj.getPoints());
+//    	kmeans.run();
+//    	return traj;
+//	}
 	/**
 	 * 将数据写入文件
 	 * @param trajs

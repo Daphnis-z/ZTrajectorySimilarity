@@ -25,7 +25,8 @@
 			<result name="doNothing">jsp/moreTraj/moreTrajResult.jsp</result>	           
 	    </action> 
 	    <action name="calMultiTrajs" class="com.adx.action.CalMultiTrajsAction">  
-			<result>jsp/moreTraj/moreTrajResult.jsp</result>
+			<result name="success">jsp/moreTraj/moreTrajResult.jsp</result>
+			<result name="error">jsp/moreTraj/moreTrajResult.jsp</result>
 	    </action>
 	    
 <!-- 		轨迹可视化 -->

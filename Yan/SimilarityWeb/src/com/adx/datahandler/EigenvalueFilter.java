@@ -4,17 +4,12 @@
  * 20160726
  */
 package com.adx.datahandler;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
-
 import com.adx.similaralg.SimilarityWithoutTime;
-import com.adx.dataread.ReadData;
 
 public class EigenvalueFilter {		
 	/**
@@ -127,62 +122,5 @@ public class EigenvalueFilter {
 		List<Trajectory> st=filtrateTraj(trajs, traj);
 		return calSimilarityNormal(st,traj,sd);
 	}
-	
-	//测试函数
-	public static void testFileter(List<Trajectory> trajs,SimularDef sd){
-		for(int i=0;i<trajs.size();++i){
-			Trajectory traj=trajs.get(i);
-			System.out.println("目标轨迹ID："+traj.ID);
-
-			//普通循环
-			System.out.print("普通计算>\t");
-			long time=System.currentTimeMillis();
-			int trajNum1=calSimilarityNormal(trajs,traj,sd);
-			long duration=System.currentTimeMillis()-time;
-			System.out.println("与目标轨迹最相似的轨迹ID："+trajNum1+
-					"\t耗时："+duration+"ms");
-			
-			//使用特征值过滤后
-			System.out.print("使用轨迹过滤器>\t");
-			time=System.currentTimeMillis();
-			int trajNum2=calSimilarityEigenvalue(trajs,traj,sd);
-			duration=System.currentTimeMillis()-time;
-			System.out.println("与目标轨迹最相似的轨迹ID："+trajNum2+
-					"\t耗时："+duration+"ms\n");
-		}				
-	}
-	
-	//演示代码
-	public static void main(String[] args) throws IOException{	
-		SimularDef sd=new SimularDef();
-		sd.setDtwDis_W(0.5);
-		sd.setEditDis_W(0.25);
-		sd.setTsum_W(0);
-		sd.setShapeSum_W(0.25);
-		
-//		System.out.println(System.getProperty("user.dir"));
-//		Vector<Trajectory> trajs=ReadData.readTaxiTrajs("./trajData/taxiData.txt");	
-		
-		long time0=System.currentTimeMillis();
-		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./data/otherData/geolife/",10000);
-		long duration0=System.currentTimeMillis()-time0;
-		System.out.println("读取文件耗时："+duration0+"ms");
-		
-//		SimilarityWithoutTime swt=new SimilarityWithoutTime(trajs.get(1234),trajs.get(9115),sd);
-//		System.out.println(swt.getSimilarity());
-		
-//		testFileter(trajs,sd);
-		
-		Trajectory traj=trajs.get(5000);
-		System.out.println("目标轨迹ID："+traj.ID);
-						
-		//使用特征值过滤后
-		long time=System.currentTimeMillis();
-		int trajNum2=calSimilarityEigenvalue(trajs,traj,sd);
-		long duration=System.currentTimeMillis()-time;
-		System.out.println("与目标轨迹最相似的轨迹ID："+trajNum2+
-				"\t耗时："+duration+"ms");
-	}
-
 }
 

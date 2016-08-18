@@ -28,7 +28,7 @@ public class AmCharts extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/",6);	
+		Vector<Trajectory> trajs=ReadData.readSomeTrajs("./trajData/geolife/",6,0);	
 		for(int i=0;i<trajs.size();++i){
 	    	KMeans kmeans = new KMeans(trajs.get(i).getPoints());
 	    	kmeans.run();

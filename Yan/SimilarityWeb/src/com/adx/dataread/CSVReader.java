@@ -2,9 +2,7 @@ package com.adx.dataread;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.StringTokenizer;
 
 import com.adx.datahandler.NAValueHandler;
@@ -21,7 +19,11 @@ public class CSVReader extends MyFileReader {
 		// TODO Auto-generated constructor stub
 		super(file, timeStamp);
 	}
-	//读取csv文件，1返回读取成功，0返回读取失败文件查找不到，-1所计算轨迹文件类型与输入不匹配
+	/**
+	 * 读取轨迹文件，在读取同时进行缺失值处理，和特征值计算
+	 * 读取csv文件，1返回读取成功，0返回读取失败文件查找不到，-1所计算轨迹文件类型与输入不匹配
+	 * @return int
+	 */
 	@SuppressWarnings("resource")
 	public int readFile(){
 		try {

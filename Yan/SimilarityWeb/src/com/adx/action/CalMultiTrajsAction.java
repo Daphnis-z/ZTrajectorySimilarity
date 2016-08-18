@@ -165,8 +165,7 @@ public class CalMultiTrajsAction extends ActionSupport{
 			objTraj=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef).get(0);
 			calEigenvalue(objTraj);
 			kmeans(objTraj);
-			
-			trajs=dataPreprocessing(ReadData.readSomeTrajs(path, -1),objTraj);			
+			trajs=dataPreprocessing(ReadData.readSomeTrajs(path, -1,simularDef.getTimeStamp()),objTraj);			
 		}
 		
 		indexes=new int[trajs.size()];

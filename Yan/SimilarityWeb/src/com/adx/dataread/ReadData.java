@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Vector;
 
+import com.adx.datahandler.DataHandler;
 import com.adx.entity.*;
 
 /**
@@ -28,62 +29,6 @@ public class ReadData {
 		String[] files=dir.list();
 		return files;
 	}
-	
-	/**
-	 * 从一个文件里读取一条轨迹数据
-	 * 忽略时间戳
-	 * @param obj
-	 * @param type obj的类型（"String"或者"File"）
-	 * @return
-	 * @throws IOException
-	 */
-	public static Trajectory readATraj(Object obj,String type) throws IOException{
-		Vector<Point> points=new Vector<Point>();		
-		BufferedReader in;
-		if(type.equals("File")){
-			in=new BufferedReader(new FileReader((File)obj));
-		}else{
-			in=new BufferedReader(new FileReader((String)obj));
-		}
-		in.readLine();
-		String s;
-		int pid=0;
-		double lonMax=-2000,lonMin=2000;
-		double latMax=-2000,latMin=2000;
-		while((s=in.readLine())!=null){
-			String[] jw=s.split(",");
-			Point p;
-			try{
-				if(jw.length<3){
-					p=new Point(Double.parseDouble(jw[0]),Double.parseDouble(jw[1]));
-				}else{
-					p=new Point(Double.parseDouble(jw[0]),Double.parseDouble(jw[1]),jw[2]);
-				}
-			}catch(Exception e){
-				continue;
-			}
-			p.pid=pid++;
-			points.addElement(p);
-			lonMax=lonMax<p.getLongitude()? p.getLongitude():lonMax;
-			lonMin=lonMin>p.getLongitude()? p.getLongitude():lonMin;
-			latMax=latMax<p.getLatitude()? p.getLatitude():latMax;
-			latMin=latMin>p.getLatitude()? p.getLatitude():latMin;
-			
-			if(points.size()>=100){
-				break;
-			}
-		}
-		in.close();
-		Trajectory traj=new Trajectory(points,-1);
-		traj.setTimeStamp(traj.getPoints().get(0).getTimestamp()==null? 0:1);
-		String name=obj.toString();
-		traj.name=name.substring(name.lastIndexOf('/')+1);
-		traj.setCenterTraj(new Point((lonMax+lonMin)/2,(latMax+latMin)/2));
-		double a=lonMax-lonMin,b=latMax-latMin;
-		traj.setTrajLen(a>b? a:b);
-
-		return traj;
-	}
 
 	/**
 	 * 读取指定路径下给定数目的轨迹文件
@@ -92,7 +37,7 @@ public class ReadData {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Vector<Trajectory> readSomeTrajs(String path,int num) throws IOException{
+	public static Vector<Trajectory> readSomeTrajs(String path,int num,int timestamp) throws IOException{
 		Vector<Trajectory> trajs=new Vector<Trajectory>();
 		String[] files=getFilenames(path);
 		if(files==null){
@@ -101,7 +46,17 @@ public class ReadData {
 		
 		int id=0;
 		for(String file:files){
-			Trajectory traj=readATraj(path+file,"String");
+			
+			File readFile=new File(path+file);
+			CSVReader reader=new CSVReader(readFile,timestamp);
+			int status_reader=reader.readFile();
+			if (status_reader!=1){
+				return null;
+			}
+			Trajectory traj=reader.getTraj();
+			DataHandler handler=new DataHandler(traj);
+			traj=handler.dataHandle();
+			
 			traj.ID=id++;
 			trajs.addElement(traj);
 			if(num>0&&trajs.size()>=num){
@@ -194,35 +149,6 @@ public class ReadData {
 		sd.setShapeSum_W(Double.parseDouble(strs[2]));
 		sd.setTsum_W(Double.parseDouble(strs[3]));
 		sd.setTimeStamp(ts);
-	}
-	
- 	private static void geolife(Vector<String> vs) throws IOException{
-		int num=1;
-		for(String file:vs){
-			BufferedReader in=new BufferedReader(new FileReader(file));
-			for(int i=0;i<6;++i){
-				in.readLine();
-			}
-			String s,outStr="经度,纬度\n";
-			int cnt=0;
-			while((s=in.readLine())!=null){
-				if(++cnt>100){
-					break;
-				}
-				try{
-					String[] str=s.split(",");
-					outStr+=str[1]+","+str[0]+"\n";
-				}catch(Exception e){
-					continue;
-				}
-			}
-			in.close();
-			String outFile="./geolife/traj"+num+".csv";
-			++num;
-			BufferedWriter write=new BufferedWriter(new FileWriter(outFile));
-			write.write(outStr);
-			write.close();
-		}
 	}
 
 }
