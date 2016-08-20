@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./jsp/astyle/css/setting.css">  
     <title>系统设置</title>
 </head>
 <body>
@@ -21,34 +22,48 @@
         </div>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <div class="row">
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="do-box text-center">
-                            <i class="lnr lnr-inbox"></i>
-                            <h3>最坏值设置</h3>
-                            <p>###########################</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="do-box bg-color text-center">
-                            <i class="lnr lnr-cog"></i>
-                            <h3>最坏值设置</h3>
-                            <p>###########################</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="do-box text-center">
-                            <i class="lnr lnr-leaf"></i>
-                            <h3>最坏值设置</h3>
-                            <p>###########################</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="row" id="yg">
+				    <form action="setting.action" method="post" enctype="multipart/form-data">
+				      <table align="center">
+				      	<tr>
+				      		<td colspan="3">初始化的相似度轨迹模型的最坏值为：</td>
+				      	</tr>      
+				      	<tr>
+				      		<td></td>
+				      		<td colspan="2">轨迹距离：2</td>
+				      		<td colspan="2">轨迹顺序：1000</td>
+				      		<td colspan="2">时间差：1440</td>
+				      		<td colspan="2">形状差异：100</td>     		
+				      	</tr>
+				        <tr>
+				          <td><b>各要素最坏值：</td>
+				          <td>轨迹距离</td>
+				          <td><input type="text"  name="dtwDis_B"  size=10 /></td>
+				          <td>轨迹顺序</td>
+				          <td align="center"><input type="text" name="editDis_B" size=10 /></td>
+				          <td>时间差</td>
+				          <td><input type="text"  name="tsum_B" size=10 /></td>
+				          <td>形状差异</td>
+				          <td align="center"><input type="text" name="shapeSum_B"  size=10 /></td>
+				        </tr>            
+				        <tr>
+				          <td colspan="9" align="center"><input type="submit" value="应用设置"></td>
+				        </tr>
+				      </table>
+				    </form>
+				</div>
             </div>
         </div>
     </div>
 </section>
 <jsp:include page="//jsp/component/footer.jsp"></jsp:include> 
+<script>
+	msg="${msg}"
+	if(msg!=""){
+	  	alert(msg);
+	}
+</script>
+
 </body>
 </html>
 

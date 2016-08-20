@@ -22,7 +22,7 @@
         }else if(tem.equals("input")){
             result="所选择计算轨迹文件类型与输入文件不匹配";
         }else if(tem.equals("error")){
-            result="输入文件名找不到，文件传输有误";
+            result="文件读取错误！！";
         }else{
             result="未输入文件！！";
         }

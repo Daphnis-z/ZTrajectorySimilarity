@@ -76,18 +76,27 @@ public class DoubleTrajAction extends ActionSupport implements ModelDriven<Simul
 	}
 
 	@Override
-	public String execute() throws Exception {
+	public String execute(){
 		Constant.pattern=0;
 		if(objectfile==null||testfile==null){
 			actionResult=NONE;
 			return actionResult;//未输入文件
 		}
-		CSVReader objReader=new CSVReader(objectfile, simularDef.getTimeStamp());
-		int status_obj=objReader.readFile();
-		Trajectory objTraj=objReader.getTraj();
-		CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
-		int status_test=testReader.readFile();
-		Trajectory testTraj=testReader.getTraj();
+		int status_obj,status_test;
+		Trajectory objTraj,testTraj;
+		
+		try{
+			CSVReader objReader=new CSVReader(objectfile, simularDef.getTimeStamp());
+			status_obj=objReader.readFile();		
+			objTraj=objReader.getTraj();
+			CSVReader testReader=new CSVReader(testfile, simularDef.getTimeStamp());
+			status_test=testReader.readFile();
+			testTraj=testReader.getTraj();
+		}catch(Exception e){
+			actionResult=ERROR;
+			return actionResult;
+		}
+		
 		if(status_obj==0||status_test==0){
 			actionResult=ERROR;
 			return actionResult;//输入文件名找不到，文件传输有误

@@ -151,7 +151,7 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		}else{
 			if(FileAbout.exists(Constant.DATA_PATH+trajsName+".cache")){
 				status=DataUpload.saveObjectTraj(objectfile, objectfileFileName, simularDef);
-			}else{
+			}else if(FileAbout.exists(Constant.DATA_PATH+trajsName)){
 				File file=new File(Constant.CACHE_FILE);
 				file.delete();
 				Trajectory objTraj=readObjtraj(objectfile, objectfileFileName, simularDef);
@@ -164,6 +164,8 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 				}else{
 					status=-1;
 				}
+			}else{
+				status=-1;
 			}
 			if(status==1){
 				actionResult="doNothing";

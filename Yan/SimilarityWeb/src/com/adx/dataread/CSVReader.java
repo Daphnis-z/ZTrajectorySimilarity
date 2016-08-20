@@ -46,6 +46,8 @@ public class CSVReader extends MyFileReader {
 					lonMin=lonMin>point.getLongitude()? point.getLongitude():lonMin;
 					latMax=latMax<point.getLatitude()? point.getLatitude():latMax;
 					latMin=latMin>point.getLatitude()? point.getLatitude():latMin;
+				}else{
+					return 0;
 				}
 				if(traj.getSize()>=100){
 					break;
@@ -186,13 +188,17 @@ public class CSVReader extends MyFileReader {
 			// TODO: handle exception
 			point=readNALine(line, status);
 			int size=traj.getSize();
+			if(point==null){
+				return null;
+			}
 			if(size<2){
 				return null;
 			}
 			NAValueHandler na=new NAValueHandler(point,traj.getPoints().get(size-1),
-									traj.getPoints().get(size-2));
+			traj.getPoints().get(size-2));
 			point=na.NAHandle(timeStamp);
 			return point; 
+			
 		}
 		return point; 
 	}
