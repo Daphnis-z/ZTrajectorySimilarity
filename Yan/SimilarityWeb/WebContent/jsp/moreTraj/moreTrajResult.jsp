@@ -19,8 +19,12 @@
 		if(!tem.equals("doNothing")){			
 		 	if (tem.equals("error")){
 		 		result="服务器端读取数据错误！！";
-		 	}else{
+		 	}else if(tem.equals("input")){
+		 		result="文件类型错误！！";
+		 	}else if(tem.equals("success")){
 		 		result=request.getAttribute("result").toString();
+		 	}else{
+		 		result=tem;
 		 	}
 		}else{
 	 		result="文件上传成功！！";

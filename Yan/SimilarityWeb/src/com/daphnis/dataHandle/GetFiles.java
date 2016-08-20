@@ -1,9 +1,3 @@
-/**
- * 获取给定目录下所有文件（给定类型文件）的绝对路径
- * 含子目录
- * @author Daphnis
- * 20160729
- */
 package com.daphnis.dataHandle;
 
 import java.io.File;
@@ -12,6 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * file: GetFiles.java
+ * note: 获取给定目录下所有文件（给定类型文件）的绝对路径
+ * author: Daphnis
+ * date: 2016年8月19日 上午9:45:22
+ */
 public class GetFiles {
 	/**
 	 * 获取指定目录下指定类型的所有文件

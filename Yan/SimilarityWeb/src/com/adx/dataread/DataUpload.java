@@ -1,9 +1,10 @@
 package com.adx.dataread;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +14,7 @@ import com.adx.datahandler.EigenvalueFilter;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
+import com.adx.util.FileAbout;
 
 /**
  * file: DataUpload.java
@@ -31,15 +33,15 @@ public class DataUpload {
 	 * @param objName
 	 * @param sd
 	 * @return
+	 * @throws IOException 
 	 */
-	public static int saveData(File[] files,String[] testName,File objfile,String objName,SimularDef sd){
+	public static int saveData(File[] files,String[] testName,File objfile,String objName,SimularDef sd) throws IOException{
 		Trajectory objTraj = null;
 		try{
 			CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
 			int status_obj=objReader.readFile();
 			if(status_obj==1){
 				objTraj=objReader.getTraj();
-//				objTraj=dataPreprocessing(objReader.getTraj());
 				DataHandler obj_handler=new DataHandler(objTraj);
 				objTraj=obj_handler.dataHandle();
 				objTraj.name=objName;
@@ -57,7 +59,6 @@ public class DataUpload {
 				int status_test=testReader.readFile();
 				Trajectory testTraj=testReader.getTraj();
 				if(status_test==1){
-//					Trajectory testTraj=dataPreprocessing(testReader.getTraj());
 					DataHandler test_handler=new DataHandler(testTraj);
 					testTraj=test_handler.dataHandle();
 					testTraj.name=testName[i];
@@ -74,7 +75,7 @@ public class DataUpload {
 		
 		//将数据保存到临时文件里
 		trajs.add(objTraj);
-		writeData(trajs,sd);
+		writeData(trajs,sd,SAVE_PATH);
 		return 1;
 	}
 	
@@ -96,7 +97,7 @@ public class DataUpload {
 				traj.name=objName;
 				List<Trajectory> trajs=new ArrayList<Trajectory>();
 				trajs.add(traj);
-				writeData(trajs,sd);
+				writeData(trajs,sd,SAVE_PATH);
 			}else{
 				return status_obj;
 			}
@@ -108,72 +109,58 @@ public class DataUpload {
 		return 1;
 	}
 	
-//	/**
-//	 * 使用KMeans进行数据预处理
-//	 * @param traj
-//	 * @return
-//	 */
-//	private static Trajectory dataPreprocessing(Trajectory traj){
-//    	KMeans kmeans = new KMeans(traj.getPoints());
-//    	kmeans.run();
-//    	return traj;
-//	}
 	/**
 	 * 将数据写入文件
 	 * @param trajs
+	 * @throws IOException 
 	 */
-	private static void writeData(List<Trajectory> trajs,SimularDef sd){
-		try{
-			confirmCacheFile();
-			BufferedWriter write=new BufferedWriter(new FileWriter(SAVE_PATH));
-			int ts=trajs.get(0).getTimeStamp();
-			write.write(String.format("%f,%f,%f,%f,%d", sd.getDtwDis_W(),
-					sd.getEditDis_W(),sd.getShapeSum_W(),sd.getTsum_W(),ts));
-			if(ts==1){
-				for(Trajectory traj:trajs){
-					write.newLine();
-					write.write(traj.name);
-					write.newLine();
-					StringBuilder sb=new StringBuilder("");
-					Vector<Point> points=traj.getPoints();
-					for(Point p:points){
-						sb.append(String.format(",%f,%f,%s", p.getLongitude(),p.getLatitude(),p.getTimestamp()));
-					}
-					String s=sb.toString();
-					write.write(s.substring(1));
+	public static void writeData(List<Trajectory> trajs,SimularDef sd,String path) throws IOException{
+		FileAbout.confirmDir(path.substring(0,path.lastIndexOf('/')+1));
+		int ts=trajs.get(0).getTimeStamp();
+		StringBuilder strdata=new StringBuilder("");
+		if(ts==1){
+			for(Trajectory traj:trajs){
+				StringBuilder sb=new StringBuilder("");
+				Vector<Point> points=traj.getPoints();
+				for(Point p:points){
+					sb.append(String.format(",%f,%f,%s", p.getLongitude(),p.getLatitude(),p.getTimestamp()));
 				}
-			}else{
-				for(Trajectory traj:trajs){
-					write.newLine();
-					write.write(traj.name);
-					write.newLine();
-					StringBuilder sb=new StringBuilder("");
-					Vector<Point> points=traj.getPoints();
-					for(Point p:points){
-						sb.append(String.format(",%f,%f", p.getLongitude(),p.getLatitude()));
-					}
-					String s=sb.toString();
-					write.write(s.substring(1));
-				}
+				String str=String.format("%s,%f,%f,%f", traj.name,traj.getCenterTraj().getLongitude(),
+						traj.getCenterTraj().getLatitude(),traj.getTrajLen());
+				strdata.append("\n"+str+"\n"+sb.substring(1));
 			}
-			write.close();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}else{
+			for(Trajectory traj:trajs){
+				StringBuilder sb=new StringBuilder("");
+				Vector<Point> points=traj.getPoints();
+				for(Point p:points){
+					sb.append(String.format(",%f,%f", p.getLongitude(),p.getLatitude()));
+				}
+				String str=String.format("%s,%f,%f,%f", traj.name,traj.getCenterTraj().getLongitude(),
+						traj.getCenterTraj().getLatitude(),traj.getTrajLen());
+				strdata.append("\n"+str+"\n"+sb.substring(1));
+			}
+		}		
+		String outData=strdata.toString();
+		if(sd!=null){
+			String s=String.format("%f,%f,%f,%f,%d", sd.getDtwDis_W(),
+					sd.getEditDis_W(),sd.getShapeSum_W(),sd.getTsum_W(),ts);
+			outData=s+outData;
+		}else{
+			outData=ts+outData;
+		}		
+		
+		File file=new File(path);
+		if(file.exists()){
+			file.delete();
+		}		
+		RandomAccessFile raf = new RandomAccessFile(path, "rw");
+		FileChannel fc = raf.getChannel();
+		fc.tryLock();
+		fc.write(ByteBuffer.wrap(outData.getBytes()));
+		raf.close();
 	}
-	
-	/**
-	 * 检查缓存文件是否存在，不存在则创建
-	 * @throws IOException
-	 */
-	private static void confirmCacheFile() throws IOException{
-		int ix=SAVE_PATH.lastIndexOf("/");
-		String dir=SAVE_PATH.substring(0,ix+1);
-		File f=new File(dir);
-		if(!f.exists()){
-			f.mkdirs();
-		}
-	}
+		
 }
 
 

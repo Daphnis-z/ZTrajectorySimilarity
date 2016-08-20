@@ -3,11 +3,15 @@ package com.adx.action;
 import java.io.File;
 import java.util.ArrayList;
 
+import com.adx.datahandler.DataHandler;
+import com.adx.dataread.CSVReader;
 import com.adx.dataread.DataUpload;
+import com.adx.dataread.MultiThreadWriter;
 import com.adx.entity.Constant;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
+import com.adx.util.FileAbout;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -100,6 +104,26 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 		return similarity;
 	}
 	
+	/**
+	 * ¶ÁÈ¡Ä¿±ê¹ì¼£
+	 * @param objfile
+	 * @param objName
+	 * @param sd
+	 * @return
+	 */
+	private Trajectory readObjtraj(File objfile,String objName,SimularDef sd) {
+		CSVReader objReader=new CSVReader(objfile, sd.getTimeStamp());
+		int status_obj=objReader.readFile();
+		if(status_obj==1){
+			Trajectory traj=objReader.getTraj();
+			DataHandler obj_handler=new DataHandler(traj);
+			traj=obj_handler.dataHandle();
+			traj.name=objName;
+			return traj;
+		}
+		return null;
+	}
+	
 	@Override
 	public String execute() throws Exception {		
 		fileName=new ArrayList<String>();
@@ -125,14 +149,29 @@ public class MoreTrajAction extends ActionSupport implements ModelDriven<Simular
 				break;
 			}
 		}else{
-			status=DataUpload.saveObjectTraj(objectfile, objectfileFileName, simularDef);
+			if(FileAbout.exists(Constant.DATA_PATH+trajsName+".cache")){
+				status=DataUpload.saveObjectTraj(objectfile, objectfileFileName, simularDef);
+			}else{
+				File file=new File(Constant.CACHE_FILE);
+				file.delete();
+				Trajectory objTraj=readObjtraj(objectfile, objectfileFileName, simularDef);
+				if(objTraj!=null){
+					status=1;
+					MultiThreadWriter mtw=new MultiThreadWriter(objTraj, simularDef, trajsName);
+					mtw.start();
+					Thread.yield();
+					Thread.sleep(2000);
+				}else{
+					status=-1;
+				}
+			}
 			if(status==1){
 				actionResult="doNothing";
 			}else{
 				actionResult=ERROR;
 				return actionResult;
 			}
-		}
+		}				
 		return actionResult;
 	}
 		

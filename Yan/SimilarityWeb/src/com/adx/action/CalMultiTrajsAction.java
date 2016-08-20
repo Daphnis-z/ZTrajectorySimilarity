@@ -1,17 +1,14 @@
-/**
- * 
- */
 package com.adx.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
 import com.adx.datahandler.EigenvalueFilter;
-import com.adx.datahandler.KMeans;
 import com.adx.datahandler.Utility;
 import com.adx.dataread.DataUpload;
+import com.adx.entity.Constant;
 import com.adx.entity.Point;
 import com.adx.entity.SimularDef;
 import com.adx.entity.Trajectory;
@@ -19,6 +16,7 @@ import com.adx.gis.ShowTraj;
 import com.adx.similaralg.Similarity;
 import com.adx.similaralg.SimilarityWithTime;
 import com.adx.similaralg.SimilarityWithoutTime;
+import com.adx.util.FileAbout;
 import com.adx.dataread.ReadData;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -30,7 +28,6 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @SuppressWarnings("serial")
 public class CalMultiTrajsAction extends ActionSupport{
-	private final String DATA_PATH="./data/trajData/";
 	private SimularDef simularDef=new SimularDef();
 	private File objectfile;
 	private double[] similarity;
@@ -38,6 +35,7 @@ public class CalMultiTrajsAction extends ActionSupport{
 	private int[] indexes;
 	private Trajectory[] similarestTraj;
 	private Point[] similarestPoint;
+	private Trajectory objTraj=null;
 	
 	/** 请求的计算类型 */
 	private String reqType;
@@ -101,16 +99,7 @@ public class CalMultiTrajsAction extends ActionSupport{
 	public double[] getSimilarity() {
 		return similarity;
 	}
-	
-	/**
-	 * 使用KMeans去除轨迹的离群点、进行数据压缩
-	 * @param traj
-	 */
-	private void kmeans(Trajectory traj){
-    	KMeans kmeans = new KMeans(traj.getPoints());
-    	kmeans.run();
-	}
-	
+		
 	/**
 	 * 对轨迹群进行数据预处理
 	 * @param trajs
@@ -118,11 +107,12 @@ public class CalMultiTrajsAction extends ActionSupport{
 	 * @return
 	 */
 	private List<Trajectory> dataPreprocessing(List<Trajectory> trajs,Trajectory objtraj){
-		for(Trajectory traj:trajs){
-			kmeans(traj);
+		if(trajs.get(0).getCenterTraj()==null){
+			for(Trajectory traj:trajs){
+				calEigenvalue(traj);
+			}
 		}
-		List<Trajectory> subtrajs=EigenvalueFilter.filtrateTraj(trajs, objtraj);
-		return subtrajs;
+		return EigenvalueFilter.filtrateTraj(trajs, objtraj);
 	}
 	
 	/**
@@ -142,56 +132,7 @@ public class CalMultiTrajsAction extends ActionSupport{
 		traj.setCenterTraj(new Point((lonMax+lonMin)/2,(latMax+latMin)/2));
 		traj.setTrajLen(lonMax-lonMin);		
 	}
-							
-	@Override
-	public String execute() throws Exception {	
-		List<Trajectory> trajs=null;
-		Trajectory objTraj=null;
-		if(reqType==null){
-			actionResult=SUCCESS;
-			return actionResult;
-		}else if(reqType.equals("cal")){//读取缓存里的数据
-			trajs=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef);
-			objTraj=trajs.get(trajs.size()-1);//获取目标轨迹
-			trajs.remove(trajs.size()-1);//移除目标轨迹
-		}else{//读取服务器端的数据
-			String path=DATA_PATH+trajsName+"/";
-			File dir=new File(path);
-			if(!dir.exists()){
-				actionResult=ERROR;
-				return actionResult;
-			}
-			//读取并处理目标轨迹
-			objTraj=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef).get(0);
-			calEigenvalue(objTraj);
-			kmeans(objTraj);
-			trajs=dataPreprocessing(ReadData.readSomeTrajs(path, -1,simularDef.getTimeStamp()),objTraj);			
-		}
-		
-		indexes=new int[trajs.size()];
-		similarity=new double[trajs.size()];
-		ArrayList<Similarity> dtwExample=new ArrayList<Similarity>();
-		Similarity dtw;
-		for (int i=0;i<trajs.size();i++){
-			Trajectory traj=trajs.get(i);
-			if(simularDef.getTimeStamp()!=1){
-				 dtw=new SimilarityWithoutTime(objTraj, traj,simularDef);
-			}else{
-				 dtw=new SimilarityWithTime(objTraj,traj,simularDef);
-			}
-			dtwExample.add(dtw);
-			similarity[i]=dtw.getSimilarity();
-		}
-		indexes=Utility.orderByValue(similarity);
-		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
-		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
-		createResult(trajs,objTraj.name);
-		readyForViewTrajs(objTraj, trajs);
-		
-		actionResult=SUCCESS;
-	    return actionResult;
-	}
-	
+										
 	/**
 	 * 创建在前台显示的计算结果
 	 * @param trajs
@@ -205,7 +146,6 @@ public class CalMultiTrajsAction extends ActionSupport{
  					similarity[indexes[i]]+"%\r\n";
  		}
 	}
-
 	/**
 	 * 为可视化轨迹做好准备
 	 * @param objTraj
@@ -254,6 +194,96 @@ public class CalMultiTrajsAction extends ActionSupport{
 		}
 		return ShowTraj.convertTraj(traj);
 	}
+		
+	/**
+	 * 保存目标轨迹
+	 * @param traj
+	 * @param sd
+	 * @throws IOException
+	 */
+	private void saveObjtraj(Trajectory traj,SimularDef sd) throws IOException{
+		File file=new File(Constant.CACHE_FILE);
+		file.delete();
+		List<Trajectory> trajs=new ArrayList<Trajectory>();
+		trajs.add(traj);
+		DataUpload.writeData(trajs, sd, Constant.CACHE_FILE);
+	}
 	
+	@Override
+	public String execute() throws Exception {
+		long t1=System.currentTimeMillis();
+		
+		List<Trajectory> trajs=null;		
+		if(reqType==null){
+			actionResult=SUCCESS;
+			return actionResult;
+		}else if(reqType.equals("cal")){//读取缓存里的数据
+			trajs=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef);
+			objTraj=trajs.get(trajs.size()-1);//获取目标轨迹
+			trajs.remove(trajs.size()-1);//移除目标轨迹
+		}else{//读取服务器端的数据
+			try{
+				//检查数据集是否已缓存
+				boolean isDataExists=false;
+				String cachefile=Constant.DATA_PATH+trajsName+".cache";
+				File file=new File(cachefile);
+				if(file.exists()){//读取已缓存的数据					
+					trajs=ReadData.readCacheData(cachefile);
+					isDataExists=true;
+				}
+
+				if(isDataExists){					
+					//读取并处理目标轨迹
+					List<Trajectory> ttrajs=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef);
+					objTraj=ttrajs.get(ttrajs.size()-1);
+					trajs=dataPreprocessing(trajs, objTraj);
+				}else{
+					while (true) {
+						if(FileAbout.canRead(Constant.CACHE_FILE)){
+							break;
+						}
+						Thread.yield();
+						Thread.sleep(200);
+					}
+					trajs=ReadData.readCacheData(DataUpload.SAVE_PATH,simularDef);
+					objTraj=trajs.get(trajs.size()-1);//获取目标轨迹
+					saveObjtraj(objTraj, simularDef);
+					trajs.remove(trajs.size()-1);//移除目标轨迹
+				}
+			}catch(Exception e){
+				actionResult=ERROR;
+				return actionResult;
+			}
+		}
+		
+		long t2=System.currentTimeMillis();
+	    System.out.println("文件读取结束，耗时："+(t2-t1)+"ms");
+				
+		indexes=new int[trajs.size()];
+		similarity=new double[trajs.size()];
+		ArrayList<Similarity> dtwExample=new ArrayList<Similarity>();
+		Similarity dtw;
+		for (int i=0;i<trajs.size();i++){
+			Trajectory traj=trajs.get(i);
+			if(simularDef.getTimeStamp()!=1){
+				 dtw=new SimilarityWithoutTime(objTraj, traj,simularDef);
+			}else{
+				 dtw=new SimilarityWithTime(objTraj,traj,simularDef);
+			}
+			dtwExample.add(dtw);
+			similarity[i]=dtw.getSimilarity();
+		}
+		indexes=Utility.orderByValue(similarity);
+		similarestTraj=dtwExample.get(indexes[0]).getSimilarestTraj();
+		similarestPoint=dtwExample.get(indexes[0]).getSimilarestPoint();
+		createResult(trajs,objTraj.name);
+		readyForViewTrajs(objTraj, trajs);
+		
+	    System.out.println("全部计算结束，耗时："+(System.currentTimeMillis()-t2)+"ms");
+		
+		actionResult=SUCCESS;
+	    return actionResult;
+	}
+
 }
 

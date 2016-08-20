@@ -3,6 +3,7 @@ package com.adx.dataread;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.NumberFormat;
 import java.util.StringTokenizer;
 
 import com.adx.datahandler.NAValueHandler;
@@ -78,7 +79,7 @@ public class CSVReader extends MyFileReader {
 						if(buf==""||buf==null){
 							buf="0.0";
 						}
-						if(status==1||status==1){
+						if(status==1||status==11){
 							longitude=Double.parseDouble(buf);
 						}else{
 							latitude=Double.parseDouble(buf);
@@ -89,7 +90,7 @@ public class CSVReader extends MyFileReader {
 						if(buf==""||buf==null){
 							buf="0.0";
 						}
-						if(status==1||status==1){
+						if(status==1||status==11){
 							latitude=Double.parseDouble(buf);
 						}else{
 							longitude=Double.parseDouble(buf);
@@ -110,9 +111,9 @@ public class CSVReader extends MyFileReader {
 					}
 				}
 			if(timeStamp==1){
-				point=new Point(longitude, latitude, time);
+				point=new Point(round(longitude), round(latitude), time);
 			}else{
-				point=new Point(longitude, latitude);
+				point=new Point(round(longitude), round(latitude));
 				}
 		}catch (NumberFormatException e) {
 				// TODO: handle exception
@@ -158,24 +159,24 @@ public class CSVReader extends MyFileReader {
 				case 1:
 					longitude=Double.parseDouble(st.nextToken());
 					latitude=Double.parseDouble(st.nextToken());
-					point=new Point(longitude, latitude);
+					point=new Point(round(longitude), round(latitude));
 					break;
 				case 11:
 					longitude=Double.parseDouble(st.nextToken());
 					latitude=Double.parseDouble(st.nextToken());
 					time=st.nextToken();
-					point=new Point(longitude, latitude, time);
+					point=new Point(round(longitude), round(latitude), time);
 					break;
 				case 2:
 					latitude=Double.parseDouble(st.nextToken());
 					longitude=Double.parseDouble(st.nextToken());
-					point=new Point(longitude, latitude);
+					point=new Point(round(longitude), round(latitude));
 					break;
 				case 21:
 					latitude=Double.parseDouble(st.nextToken());
 					longitude=Double.parseDouble(st.nextToken());
 					time=st.nextToken();
-					point=new Point(longitude, latitude, time);
+					point=new Point(round(longitude), round(latitude), time);
 					break;
 				default:
 					break;
@@ -185,6 +186,9 @@ public class CSVReader extends MyFileReader {
 			// TODO: handle exception
 			point=readNALine(line, status);
 			int size=traj.getSize();
+			if(size<2){
+				return null;
+			}
 			NAValueHandler na=new NAValueHandler(point,traj.getPoints().get(size-1),
 									traj.getPoints().get(size-2));
 			point=na.NAHandle(timeStamp);
@@ -192,4 +196,12 @@ public class CSVReader extends MyFileReader {
 		}
 		return point; 
 	}
+	public static double round(double x){
+		NumberFormat df=NumberFormat.getNumberInstance() ; 
+		df.setMaximumFractionDigits(6); 
+		String tem=df.format(x);
+		x=Double.parseDouble(tem);
+		return x;
+	}
+
 }

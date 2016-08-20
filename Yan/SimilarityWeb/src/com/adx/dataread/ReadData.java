@@ -6,11 +6,17 @@
 package com.adx.dataread;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Vector;
 
 import com.adx.datahandler.DataHandler;
 import com.adx.entity.*;
+import com.daphnis.dataHandle.MultiThread;
 
 /**
  * file: ReadData.java
@@ -29,6 +35,28 @@ public class ReadData {
 		String[] files=dir.list();
 		return files;
 	}
+	
+	/**
+	 * 读取一个文本文件
+	 * @param path
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	@SuppressWarnings("resource")
+	public static String readATextFile(String path) throws FileNotFoundException, IOException {
+		//读取整个轨迹文件
+ 		RandomAccessFile raf=new RandomAccessFile(path, "r");
+ 		FileChannel fchannel=raf.getChannel();
+ 		ByteBuffer buffer=ByteBuffer.allocate((int)raf.length());
+ 		fchannel.read(buffer);
+ 		fchannel.close();
+ 		buffer.flip();
+ 		String encoding = System.getProperty("file.encoding");
+ 	    CharBuffer cb=Charset.forName(encoding).decode(buffer); 
+ 	    return cb.toString();
+	}
+
 
 	/**
 	 * 读取指定路径下给定数目的轨迹文件
@@ -45,8 +73,7 @@ public class ReadData {
 		}
 		
 		int id=0;
-		for(String file:files){
-			
+		for(String file:files){			
 			File readFile=new File(path+file);
 			CSVReader reader=new CSVReader(readFile,timestamp);
 			int status_reader=reader.readFile();
@@ -67,43 +94,37 @@ public class ReadData {
 	}
 	
 	/**
-	 * 读取出租车数据
-	 * @param fileName
+	 * 读取大量轨迹的缓存数据
+	 * @param path
 	 * @return
+	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static Vector<Trajectory> readTaxiTrajs(String fileName) throws IOException{
-		Vector<Trajectory> trajs=new Vector<Trajectory>();
-		BufferedReader read=new BufferedReader(new FileReader(fileName));		
-		String str;
-		int id=0;
-		while((str=read.readLine())!=null){
-			str=str.replaceAll("\\[|\\]| ", "");
-			String[] strs=str.split(",");
+	public static List<Trajectory> readCacheData(String path) throws FileNotFoundException, IOException {
+		List<Trajectory> trajs=new Vector<Trajectory>();			
+		String[] strTrajs=readATextFile(path).split("\n");		
+		int ts=Integer.parseInt(strTrajs[0]);		
+		for(int ix=2;ix<strTrajs.length-1;ix+=2){
 			Trajectory traj=new Trajectory();
-			traj.ID=id++;
-			double lonMax=-2000,lonMin=2000;
-			double latMax=-2000,latMin=2000;
-			for(int i=0;i<strs.length-1&&i<198;i+=2){
-				double lon=Double.parseDouble(strs[i]),
-						lat=Double.parseDouble(strs[i+1]);
-				lonMax=lonMax<lon? lon:lonMax;
-				lonMin=lonMin>lon? lon:lonMin;
-				latMax=latMax<lat? lat:latMax;
-				latMin=latMin>lat? lat:latMin;
-				Point pt=new Point(lon,lat);
+			String[] strs=strTrajs[ix].split(",");
+			int len=ts!=1? strs.length-1:strs.length-2;
+			for(int i=0;i<len;){
+				double lon=Double.parseDouble(strs[i]),lat=Double.parseDouble(strs[i+1]);
+				Point pt;
+				if(ts!=1){
+					pt=new Point(lon,lat);
+					i+=2;
+				}else{
+					pt=new Point(lon,lat,strs[i+2]); 
+					i+=3;
+				}
 				traj.addPoint(pt);
 			}
-			traj.setCenterTraj(new Point((lonMax+lonMin)/2,(latMax+latMin)/2));
-			double a=lonMax-lonMin,b=latMax-latMin;
-			traj.setTrajLen(a>b? a:b);
-			trajs.addElement(traj);
-		}
-		read.close();
-		
+			setTrajAttr(traj, strTrajs[ix-1]);
+			trajs.add(traj);
+		}			
 		return trajs;
 	}
-
 	/**
 	 * 读取缓存文件
 	 * @param path
@@ -118,7 +139,7 @@ public class ReadData {
 		int ts=Integer.parseInt(line[line.length-1]);
 		setSimularDef(line,ts,sd);
 		while((str=read.readLine())!=null){
-			String tname=str;
+			String attrs=str;
 			str=read.readLine();
 			Vector<Point> points=new Vector<Point>();
 			String[] strs=str.split(",");
@@ -137,11 +158,22 @@ public class ReadData {
 				}
 			}
 			Trajectory traj=new Trajectory(points,ts);
-			traj.name=tname;
+			setTrajAttr(traj, attrs);
 			trajs.add(traj);
 		}
 		read.close();
 		return trajs;
+	}
+	/**
+	 * 设置轨迹 属性
+	 * @param traj
+	 * @param line
+	 */
+	private static void setTrajAttr(Trajectory traj,String line) {
+		String[] attrs=line.split(",");
+		traj.name=attrs[0];
+		traj.setCenterTraj(new Point(Double.parseDouble(attrs[1]), Double.parseDouble(attrs[2])));
+		traj.setTrajLen(Double.parseDouble(attrs[3]));
 	}
 	private static void setSimularDef(String[] strs,int ts,SimularDef sd){
 		sd.setDtwDis_W(Double.parseDouble(strs[0]));
@@ -151,5 +183,22 @@ public class ReadData {
 		sd.setTimeStamp(ts);
 	}
 
+	public static void main(String[] args) throws IOException, InterruptedException {
+		RandomAccessFile raf = new RandomAccessFile("a.txt", "rw");
+		FileChannel fc = raf.getChannel();
+		FileLock fLock=fc.tryLock();
+		if(fLock.isValid()){
+//			fc.lock();
+			System.err.println("success");
+//			raf.close();
+		}
+		MultiThread mThread=new MultiThread(new String[5], 0, 5);
+		mThread.start();
+		Thread.sleep(1000);
+		System.err.println("wake..");
+		raf.close();
+
+	}
+	
 }
 
