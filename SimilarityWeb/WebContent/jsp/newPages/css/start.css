@@ -1,0 +1,37 @@
+
+/*系统顶部标题栏*/
+#sysHeader{
+	margin: -8px -8px;
+	padding: 17px;
+	text-align:center;
+	background:#17C145;
+	color:white;
+}
+
+div#leftDiv{
+	background: #B1D0B9;
+	margin: 0px -8px 100px;
+}
+
+ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+}
+li{
+	float:left;
+}
+a:link,a:visited{
+	display:block;
+	width:120px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:#B1D0B9;
+	text-align:center;
+	padding:4px;
+	text-decoration:none;
+}
+a:hover,a:active{
+	background-color:#17C145;
+}

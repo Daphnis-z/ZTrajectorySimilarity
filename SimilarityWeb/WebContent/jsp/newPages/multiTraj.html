@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <link href="./css/bootstrap-3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-3.3.6/sticky-footer-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/multiTraj.css">
+
+	<title>多轨迹模式</title>
+</head>
+<body>
+    <!-- 导航条 -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="start.html">轨迹相似度计算系统</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="doubleTraj.html">双轨迹模式</a></li>
+            <li class="active"><a href="multiTraj.html">多轨迹模式</a></li>
+            <li><a href="viewTraj.html">可视化轨迹</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container"></div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Similarity_HHU SC2016 </p>
+      </div>
+    </footer>
+
+    <form action="doubleTrajCul.action" method="post" enctype="multipart/form-data">
+      <table border="0">
+        <tr>
+          <td><b>各要素权重：</td>
+          <td>DTW距离</td>
+          <td><input type="text" name="dtwDis_W" value=0.55 size=10 /></td>
+          <td>Edit距离</td>
+          <td align="center"><input type="text" name="editDis_W" value=0.15 size=10 /></td>
+          <td>时间差之和</td>
+          <td><input type="text" name="tsum_W" value=0.15 size=10 /></td>
+          <td>形状差异值</td>
+          <td align="center"><input type="text" name="shapeSum_W" value=0.15 size=10 /></td>
+        </tr>
+        <tr>
+          <td><b>上传文件：</td>
+          <td>轨迹文件：</td>
+          <td colspan="6"><input type="file" name="objectfile" size="10" /></td>
+          <td><input type="checkbox" name="timeStamp" value="1" size="10" />带时间戳</td>
+        </tr>
+        <tr>
+  <!--        <td colspan="9" align="center"><input type="submit" value="开始计算"></td>
+   -->
+          <td ><a href="multiTrajResult.html">开始计算</a></td>  
+        </tr>
+      </table>
+    </form></body>
+</html>
+

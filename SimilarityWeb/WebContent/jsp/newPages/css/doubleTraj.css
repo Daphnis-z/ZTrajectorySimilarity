@@ -1,0 +1,11 @@
+table{
+	margin: auto;
+	margin-top: 5%;
+	padding: 11px 20px;
+	border-collapse: separate;
+	border-spacing: 13px 2px;
+	background: #F2F4F3;
+}
+td{
+	padding: 2px 2px;
+}
